@@ -1,4 +1,5 @@
 <?php
+session_start();
 $view = new stdClass();
 $view->pageTitle = "Index";
 $view->welcomeMessage = "Welcome User!";
