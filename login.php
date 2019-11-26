@@ -13,8 +13,6 @@ if (isset($_POST['submit']))
         // User has successfully Logged in
         $_SESSION['loggedIn'] = true;
         $_SESSION['username'] = $username;
-
-        header("Location: index.php");
     }
-
 }
+header("Location: index.php");
