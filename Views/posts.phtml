@@ -1,0 +1,12 @@
+<?php require_once("template/header.phtml"); ?>
+<ul class="list-group">
+    <?php
+    foreach ($view->dataSet as $post) {
+        echo
+            "<li class='list-group-item'>"
+            . "<h4>" . $post->getTitle() . "</h4>"
+            . "</li>";
+    }
+    ?>
+</ul>
+<?php require_once("template/footer.phtml"); ?>
