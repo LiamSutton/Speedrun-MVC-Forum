@@ -1,12 +1,17 @@
 <?php require_once("template/header.phtml"); ?>
 <ul class="list-group">
     <?php
-    foreach ($view->dataSet as $post) {
-        echo
-            "<li class='list-group-item'>"
-            . "<h4>" . $post->getTitle() . "</h4>"
-            . "</li>";
-    }
+    foreach ($view->dataSet as $post) { ?>
+        <li class="list-group-item">
+            <div>
+                <a href="fullpost.php?id=<?php echo $post->getId()?>">
+                    <h3 class="list-group-item-heading"><?php echo $post->getTitle() ?></h3>
+                    <small><?php echo $post->getPosterUsername() ?></small>
+                    <p><?php echo $post->getContent() ?></p>
+                </a>
+            </div>
+        </li>
+    <?php }
     ?>
 </ul>
 <?php require_once("template/footer.phtml"); ?>

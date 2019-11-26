@@ -3,7 +3,7 @@
 
 class Post
 {
-    protected $_id, $_posterID, $_title, $_content, $_parentID, $_dateCreated;
+    protected $_id, $_posterID, $_posterUsername, $_title, $_content, $_parentID, $_dateCreated;
 
     public function __construct()
     {
@@ -28,6 +28,8 @@ class Post
 
         $instance->_id = $dbRow['p_id'];
         $instance->_title = $dbRow['p_title'];
+        $instance->_posterUsername = $dbRow['u_username'];
+        $instance->_content = $dbRow['p_content'];
 
         return $instance;
     }
@@ -45,6 +47,11 @@ class Post
     public function getPosterID()
     {
         return $this->_posterID;
+    }
+
+    public function getPosterUsername()
+    {
+        return $this->_posterUsername;
     }
 
     /**

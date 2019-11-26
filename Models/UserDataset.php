@@ -27,6 +27,7 @@ class UserDataset
         $statement->execute([$username]);
 
         $user = $statement->fetch(PDO::FETCH_ASSOC);
+        $this->db_instance->destruct();
         if ($user == null)
         {
             return false;

@@ -15,7 +15,13 @@ class PostDataset
 
     public function getBasicPosts()
     {
-        $sqlQuery = "SELECT p_id, p_title FROM Posts WHERE p_parentID IS NULL ORDER BY p_datecreated";
+        $sqlQuery = "SELECT p_id, p_title, p_content, u_username 
+                    FROM Posts 
+                    JOIN Users
+                    ON p_posterID = u_id
+                    WHERE p_parentID IS NULL 
+                    ORDER BY p_datecreated";
+
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute();
         $dataSet = array();
