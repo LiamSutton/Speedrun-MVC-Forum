@@ -5,12 +5,21 @@ class UserDataset
 {
     protected $db_handle, $db_instance;
 
+    /**
+     * UserDataset constructor.
+     */
     public function __construct()
     {
         $this->db_instance = Database::getInstance();
         $this->db_handle = $this->db_instance->getConnection();
     }
 
+
+    /**
+     * @param $username: username of account to authenticate
+     * @param $password: un-hashed password of account to authenticate
+     * @return bool: result of whether the login was successful
+     */
     public function Login($username, $password)
     {
         $sqlQuery = "SELECT * FROM Users WHERE u_username = ?";
@@ -25,6 +34,7 @@ class UserDataset
         else
         {
             $validPassword = password_verify($password, $user['u_password']);
+
             if ($validPassword)
             {
                 return true;
