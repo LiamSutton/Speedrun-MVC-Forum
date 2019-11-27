@@ -10,6 +10,7 @@ class Post
 
     }
 
+    // TODO: fix difference between fullPost and basicPost (Basic Post contains posterUsername whilst full post doesnt)
     public static function fullPost($dbRow)
     {
         $instance = new self();
@@ -20,6 +21,8 @@ class Post
         $instance->_content = $dbRow['p_content'];
         $instance->_parentID = $dbRow['p_parentID'];
         $instance->_dateCreated = $dbRow['p_datecreated'];
+
+        return $instance;
     }
 
     public static function basicPost($dbRow)

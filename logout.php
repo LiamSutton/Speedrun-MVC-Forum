@@ -1,5 +1,5 @@
 <?php
-// Deletes all session data for a user, rendering them not logged in
+// Deletes all session data for a user, logging them out
 session_start();
 session_destroy();
 header("Location: index.php");

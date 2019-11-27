@@ -1,0 +1,52 @@
+<?php require_once("template/header.phtml"); ?>
+<ul class="list-group">
+    <li class="list-group-item">
+        <h3><?php echo $view->mainPost->getTitle() ?></h3>
+        <p><?php echo $view->mainPost->getContent() ?></p>
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Reply
+        </button>
+        <!-- TODO: Only generate modals / buttons if user is authenticated -->
+        <div class="modal fade" tabindex="-1" id="exampleModal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Reply</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="reply.php?id=<?php echo $view->mainPost->getId()?>" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" id="title" class="form-control" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">Comment</label>
+                                <textarea id="comment" class="form-control" name="content"></textarea>
+                            </div>
+                            <p>Modal body text goes here.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" name="submit" class="btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <ul class="list-group">
+            <?php
+            foreach ($view->replies as $reply) { ?>
+                <li class="list-group-item">
+                    <h4><?php echo $reply->getTitle() ?></h4>
+                    <p><?php echo $reply->getContent() ?></p>
+                </li>
+            <?php }
+            ?>
+        </ul>
+    </li>
+</ul>
+<?php require_once("template/footer.phtml"); ?>

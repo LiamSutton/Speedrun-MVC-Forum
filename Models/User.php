@@ -5,14 +5,14 @@ class User
 {
     protected $_id, $_username, $_password, $_firstname, $_lastname, $_datecreated;
 
-    public function __construct($id, $username, $password, $firstname, $lastname, $datecreated)
+    public function __construct($dbRow)
     {
-        $this->_id = $id;
-        $this->_username = $username;
-        $this->_password = $password;
-        $this->_firstname = $firstname;
-        $this->_lastname = $lastname;
-        $this->_datecreated = $datecreated;
+        $this->_id = $dbRow['u_id'];
+        $this->_username = $dbRow['u_username'];
+        $this->_password = $dbRow['u_password'];
+        $this->_firstname = $dbRow['u_firstname'];
+        $this->_lastname = $dbRow['u_lastname'];
+        $this->_datecreated = $dbRow['u_datecreated'];
     }
 
     /**

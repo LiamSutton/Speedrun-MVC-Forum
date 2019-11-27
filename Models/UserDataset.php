@@ -1,5 +1,6 @@
 <?php
 require_once ("Models/Database.php");
+require_once ("Models/User.php");
 
 class UserDataset
 {
@@ -45,5 +46,17 @@ class UserDataset
                 return false;
             }
         }
+    }
+
+    public function getUser($username)
+    {
+        $sqlQuery = "SELECT *
+                     FROM Users
+                     WHERE u_username = ?";
+        $statement = $this->db_handle->prepare($sqlQuery);
+        $statement->execute([$username]);
+
+        $user = $statement->fetch(PDO::FETCH_ASSOC);
+        return new User($user);
     }
 }
