@@ -6,6 +6,7 @@ require_once ("Models/PostDataset.php");
 if (isset($_POST['submit']))
 {
     // TODO: Construct post object maybe?
+    $mainId = $_GET['mainid'];
     $id = $_GET['id'];
     $title = $_POST['title'];
     $content = $_POST['content'];
@@ -14,5 +15,5 @@ if (isset($_POST['submit']))
     $user = $userDataset->getUser($_SESSION['username']);
     $p_parentID = $_GET['id'];
     $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID);
-    header("Location: fullpost.php?id=$p_parentID");
+    header("Location: fullpost.php?id=$mainId");
 }
