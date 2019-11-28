@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once ("Models/PostDataset.php");
 
 $view = new stdClass();

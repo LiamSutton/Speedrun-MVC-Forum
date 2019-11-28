@@ -2,6 +2,7 @@
 require_once ("Models/Database.php");
 require_once ("Models/User.php");
 
+// TODO: Possibly separate the Create / Insert operations into a static class
 class UserDataset
 {
     protected $db_handle, $db_instance;
@@ -48,6 +49,8 @@ class UserDataset
         }
     }
 
+    // TODO: Maybe should return true if succeeds?
+    // TODO: username is guarunteed to be unique but maybe should do it from u_id?
     public function getUser($username)
     {
         $sqlQuery = "SELECT *

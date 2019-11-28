@@ -3,6 +3,7 @@
 require_once ("Models/Database.php");
 require_once ("Models/Post.php");
 
+// TODO: Possibly separate the Create / Insert operations into a static class
 class PostDataset
 {
     protected $_dbHandle, $_dbInstance;
@@ -11,6 +12,7 @@ class PostDataset
     {
         $this->_dbInstance = Database::getInstance();
         $this->_dbHandle = $this->_dbInstance->getConnection();
+        $this->_dbHandle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function getBasicPosts()
@@ -66,6 +68,17 @@ class PostDataset
         return $dataSet;
     }
 
+    // TODO: Maybe should return true if succeeds?
+    public function createPost($posterID, $title, $content) {
+        $sqlQuery = "INSERT INTO Posts
+                     (p_posterID, p_title, p_content, p_parentID, p_datecreated) 
+                     VALUES (?, ?, ?, NULL, NOW())";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute([$posterID, $title, $content]);
+
+    }
+
+    // TODO: Maybe should return true if succeeds?
     public function createReply($posterID, $title, $content, $parentID)
     {
         $sqlQuery = "INSERT INTO Posts
