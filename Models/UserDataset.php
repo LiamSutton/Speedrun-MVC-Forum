@@ -5,15 +5,15 @@ require_once ("Models/User.php");
 // TODO: Possibly separate the Create / Insert operations into a static class
 class UserDataset
 {
-    protected $db_handle, $db_instance;
+    protected $_dbHandle, $_dbInstance;
 
     /**
      * UserDataset constructor.
      */
     public function __construct()
     {
-        $this->db_instance = Database::getInstance();
-        $this->db_handle = $this->db_instance->getConnection();
+        $this->_dbInstance = Database::getInstance();
+        $this->_dbHandle = $this->_dbInstance->getConnection();
     }
 
 
@@ -25,11 +25,11 @@ class UserDataset
     public function Login($username, $password)
     {
         $sqlQuery = "SELECT * FROM Users WHERE u_username = ?";
-        $statement = $this->db_handle->prepare($sqlQuery);
+        $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$username]);
 
         $user = $statement->fetch(PDO::FETCH_ASSOC);
-        $this->db_instance->destruct();
+        $this->_dbInstance->destruct();
         if ($user == null)
         {
             return false;
@@ -56,10 +56,19 @@ class UserDataset
         $sqlQuery = "SELECT *
                      FROM Users
                      WHERE u_username = ?";
-        $statement = $this->db_handle->prepare($sqlQuery);
+        $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$username]);
 
         $user = $statement->fetch(PDO::FETCH_ASSOC);
         return new User($user);
+    }
+
+    public function createUser($username, $password, $firstname, $lastname)
+    {
+        $sqlQuery = "INSERT INTO Users (u_username, u_password, u_firstname, u_lastname, u_datecreated)
+                     VALUES (?, ?, ?, ?, NOW())";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute([$username, $password, $firstname, $lastname]);
+        return true;
     }
 }

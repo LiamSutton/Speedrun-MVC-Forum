@@ -1,0 +1,29 @@
+<?php require_once ("template/header.phtml"); ?>
+<div class="container">
+    <h3 class="text-center">Create New Account</h3>
+    <form class="form-horizontal" action="createuser.php" method="POST">
+        <div class="form-group">
+            <label class="label" for="username">Username</label>
+            <input class="form-control" type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label class="label" for="password">Password</label>
+            <input class="form-control" type="password" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <label class="label" for="firstname">Firstname</label>
+            <input class="form-control" type="text" id="firstname" name="firstname" required>
+        </div>
+
+        <div class="form-group">
+            <label class="label" for="lastname">Lastname</label>
+            <input class="form-control" type="text" id="lastname" name="lastname" required>
+        </div>
+
+        <div class="form-group">
+            <input class="form-control btn btn-primary" type="submit" name="submit" content="submit">
+        </div>
+    </form>
+</div>
+<?php require_once ("template/footer.phtml") ?>
