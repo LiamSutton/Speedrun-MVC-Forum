@@ -1,0 +1,9 @@
+<?php require_once ("template/header.phtml"); ?>
+<!-- TODO: This styling is a mess, just a proof of concept -->
+<div class="container">
+    <div class="row">
+        <h3 class="col-lg-12"><?php echo $view->user->getUsername() ?></h3>
+        <img class=" img-circle" src=<?php echo $view->user->getAvatar()?>>
+    </div>
+</div>
+<?php require_once ("template/footer.phtml"); ?>
