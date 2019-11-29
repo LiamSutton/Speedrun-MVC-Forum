@@ -22,7 +22,7 @@ class PostDataset
                     JOIN Users
                     ON p_posterID = u_id
                     WHERE p_parentID IS NULL 
-                    ORDER BY p_datecreated";
+                    ORDER BY p_datecreated DESC";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute();

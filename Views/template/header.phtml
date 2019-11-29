@@ -67,22 +67,33 @@ if (!isset($_SESSION['username'])) {
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="form-horizontal" action="login.php" method="POST">
+                <form class="form" action="login.php" method="POST">
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label class="label" for="username">Username</label>
-                            <input class="form-control" type="text" id="username" name="username"
-                                   placeholder="Jon@Snow.com">
-                        </div>
-                        <div class="form-group">
-                            <label class="label" for="password">Password</label>
-                            <input class="form-control" type="password" id="password" name="password">
-                        </div>
+                        <div class="container-fluid">
+                            <div class="form-group row text-center">
+                                <label class="control-label col-sm-12 col-md-4" for="username">Username</label>
+                                <input class="form-control col-sm-12 col-md-8" type="text" id="username" name="username"
+                                       placeholder="Jon@Snow.com">
+                            </div>
+                            <div class="form-group row text-center">
+                                <label class="control-label col-sm-12 col-md-4" for="password">Password</label>
+                                <input class="form-control col-sm-12 col-md-8" type="password" id="password"
+                                       name="password">
+                            </div>
+                            <div class="form-group text-center">
+                                <a href="createaccount.php">Not got an account? Create one here!</a>
+                            </div>
 
+                        </div>
                     </div>
+                    <!-- TODO: Change buttons so sm->md they stack and md->* they are side by side 11:57AM 29/11/2019 -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                        </button>
                         <input class="btn btn-primary" type="submit" name="submit" value="submit">
+
                     </div>
                 </form>
             </div>
