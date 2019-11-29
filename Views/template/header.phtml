@@ -39,9 +39,15 @@
                     Account
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#" data-toggle="modal" role="button" data-target="#loginModal">
+                    <?php
+                    if (isset($_SESSION['username'])) {
+                        echo "<a class='dropdown-item' href='logout.php'>Logout</a>";
+                    } else {
+                        echo "<a class=\"dropdown-item\" href=\"#\" data-toggle=\"modal\" role=\"button\" data-target=\"#loginModal\">
                         Login / Create Account
-                    </a>
+                        </a>";
+                    }
+                    ?>
                 </div>
             </li>
         </ul>
