@@ -9,6 +9,6 @@ if (isset($_POST['submit']))
     $lastname = $_POST['lastname'];
 
     $userDataset = new UserDataset();
-    $userDataset->createUser($username, $password, $firstname, $lastname);
+    $userDataset->createUser($username, $password, $firstname, $lastname, 'https://robohash.org/test');
     header("Location: index.php");
 }

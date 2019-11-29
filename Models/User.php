@@ -3,7 +3,7 @@
 
 class User
 {
-    protected $_id, $_username, $_password, $_firstname, $_lastname, $_datecreated;
+    protected $_id, $_username, $_password, $_firstname, $_lastname, $_datecreated, $_avatar;
 
     public function __construct($dbRow)
     {
@@ -13,6 +13,7 @@ class User
         $this->_firstname = $dbRow['u_firstname'];
         $this->_lastname = $dbRow['u_lastname'];
         $this->_datecreated = $dbRow['u_datecreated'];
+        $this->_avatar = $dbRow['u_avatar'];
     }
 
     /**
@@ -63,4 +64,8 @@ class User
         return $this->_datecreated;
     }
 
+    public function getAvatar()
+    {
+        return $this->_avatar;
+    }
 }

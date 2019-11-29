@@ -63,12 +63,12 @@ class UserDataset
         return new User($user);
     }
 
-    public function createUser($username, $password, $firstname, $lastname)
+    public function createUser($username, $password, $firstname, $lastname, $avatar=null)
     {
-        $sqlQuery = "INSERT INTO Users (u_username, u_password, u_firstname, u_lastname, u_datecreated)
-                     VALUES (?, ?, ?, ?, NOW())";
+        $sqlQuery = "INSERT INTO Users (u_username, u_password, u_firstname, u_lastname, u_datecreated, u_avatar)
+                     VALUES (?, ?, ?, ?, NOW(), ?)";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$username, $password, $firstname, $lastname]);
+        $statement->execute([$username, $password, $firstname, $lastname, $avatar]);
         return true;
     }
 }
