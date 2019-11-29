@@ -4,5 +4,8 @@ if (isset($_SESSION['loggedIn'])) {
     // User is logged in and authenticated
     $userFirstName = $_SESSION['username'];
     echo "<h1>Welcome" . $userFirstName . "</h1>";
-} ?>
+}
+else
+    echo "<h1>You are not currently logged in.</h1>";
+    ?>
 <?php require('template/footer.phtml') ?>
