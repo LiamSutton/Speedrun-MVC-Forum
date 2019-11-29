@@ -10,5 +10,7 @@ $userData = new UserDataset();
 $user = $userData->getUser($_SESSION['username']);
 $view = new stdClass();
 $view->pageTitle = $user->getUsername() . "'s Account";
+$view->postCount = $postData->getUserPostCount($user->getId());
+$view->replyCount = $postData->getUserReplyCount($user->getId());
 $view->user = $user;
 require_once ("Views/myaccount.phtml");

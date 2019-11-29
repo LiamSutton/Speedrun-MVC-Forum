@@ -50,6 +50,30 @@ class PostDataset
         return Post::fullPost($post);
     }
 
+    public function getUserPostCount($u_id)
+    {
+        $sqlQuery = "SELECT COUNT(*)
+                     FROM Posts
+                     WHERE p_posterID = ? AND p_parentID IS NULL";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute([$u_id]);
+        $postCount = $statement->fetchColumn();
+
+        return $postCount;
+    }
+    
+    public function getUserReplyCount($u_id)
+    {
+        $sqlQuery = "SELECT COUNT(*)
+                     FROM Posts
+                     WHERE p_posterID = ? AND p_parentID IS NOT NULL";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute([$u_id]);
+        $replyCount = $statement->fetchColumn();
+
+        return $replyCount;
+    }
+
     public function getReplies($p_id)
     {
         $sqlQuery = "SELECT p_id, p_title, p_content, p_parentID, u_username
