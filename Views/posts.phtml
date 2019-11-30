@@ -49,9 +49,9 @@
             <div>
                 <a href="fullpost.php?id=<?php echo $post->getId()?>">
                     <h3 class="list-group-item-heading"><?php echo $post->getTitle() ?></h3>
+                </a>
                     <small><?php echo $post->getPosterUsername() ?></small>
                     <p><?php echo $post->getContent() ?></p>
-                </a>
             </div>
         </li>
     <?php }
