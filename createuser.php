@@ -1,6 +1,6 @@
 <?php
 require_once ("Models/UserDataset.php");
-
+session_start();
 if (isset($_POST['submit']))
 {
     $username = $_POST['username'];
@@ -10,5 +10,9 @@ if (isset($_POST['submit']))
 
     $userDataset = new UserDataset();
     $userDataset->createUser($username, $password, $firstname, $lastname, 'https://robohash.org/test');
+
+    // Log User In
+    $_SESSION['loggedIn'] = true;
+    $_SESSION['username'] = $username;
     header("Location: index.php");
 }
