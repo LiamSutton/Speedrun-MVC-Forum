@@ -41,7 +41,8 @@
                 <div class="dropdown-menu">
                     <?php
                     if (isset($_SESSION['username'])) {
-                        echo "<a class='dropdown-item' href='myaccount.php?id='>My Account</a>";
+                        $id = $_SESSION['id'];
+                        echo "<a class='dropdown-item' href='myaccount.php?id=$id'>My Account</a>";
                         echo "<a class='dropdown-item' href='logout.php'>Logout</a>";
                     } else {
                         echo "<a class=\"dropdown-item\" href=\"#\" data-toggle=\"modal\" role=\"button\" data-target=\"#loginModal\">
