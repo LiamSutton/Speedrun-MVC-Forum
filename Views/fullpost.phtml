@@ -2,6 +2,9 @@
 <ul class="list-group">
     <li class="list-group-item">
         <h3><?php echo $view->mainPost->getTitle() ?></h3>
+        <a href="myaccount.php?id=<?php echo $view->mainPost->getPosterID() ?>">
+            <small><?php echo $view->mainPost->getPosterUsername() ?></small>
+        </a>
         <p><?php echo $view->mainPost->getContent() ?></p>
         <!-- TODO: Rename id's for modals and such to make them meaningful -->
 
@@ -45,6 +48,9 @@
             foreach ($view->replies as $reply) { ?>
                 <li class="list-group-item">
                     <h4><?php echo $reply->getTitle() ?></h4>
+                    <a href="myaccount.php?id=<?php echo $reply->getPosterID() ?>">
+                        <small><?php echo $reply->getPosterUsername() ?></small>
+                    </a>
                     <p><?php echo $reply->getContent() ?></p>
                     <?php if (isset($_SESSION['loggedIn'])) {
                         ?>

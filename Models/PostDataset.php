@@ -38,8 +38,9 @@ class PostDataset
 
     public function getPost($p_id)
     {
-        $sqlQuery = "SELECT * 
+        $sqlQuery = "SELECT p_id, p_posterID, p_title, p_posterID,p_content, p_parentID, p_datecreated, u_username
                     FROM Posts
+                    JOIN Users on p_posterID = u_id
                     WHERE p_id = ?";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
@@ -94,7 +95,7 @@ class PostDataset
 
     public function getReplies($p_id)
     {
-        $sqlQuery = "SELECT p_id, p_title, p_content, p_parentID, u_username
+        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, p_parentID, u_username
                      FROM Posts
                      JOIN Users ON p_posterID = u_id
                      WHERE p_parentID = ?
