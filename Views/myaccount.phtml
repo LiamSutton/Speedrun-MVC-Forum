@@ -7,5 +7,6 @@
         <h3 class="col-lg-12">Number of Posts Made: <?php echo $view->postCount?></h3>
         <h3 class="col-lg-12">Number of Replies: <?php echo $view->replyCount ?></h3>
     </div>
+    <?php echo "<pre>" .var_dump($view->userPosts) . "</pre>"; ?>
 </div>
 <?php require_once ("template/footer.phtml"); ?>

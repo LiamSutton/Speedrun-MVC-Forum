@@ -60,15 +60,18 @@ class UserDataset
         $statement->execute([$username]);
 
         $user = $statement->fetch(PDO::FETCH_ASSOC);
+        $this->_dbInstance->destruct();
         return new User($user);
     }
 
+    // TODO: Add error handling (currently returns true even if it fails?)
     public function createUser($username, $password, $firstname, $lastname, $avatar=null)
     {
         $sqlQuery = "INSERT INTO Users (u_username, u_password, u_firstname, u_lastname, u_datecreated, u_avatar)
                      VALUES (?, ?, ?, ?, NOW(), ?)";
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$username, $password, $firstname, $lastname, $avatar]);
+        $this->_dbInstance->destruct();
         return true;
     }
 }

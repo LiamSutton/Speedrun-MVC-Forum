@@ -12,5 +12,7 @@ $view = new stdClass();
 $view->pageTitle = $user->getUsername() . "'s Account";
 $view->postCount = $postData->getUserPostCount($user->getId());
 $view->replyCount = $postData->getUserReplyCount($user->getId());
+$view->userPosts = $postData->getAllUserPosts($user->getId());
+
 $view->user = $user;
 require_once ("Views/myaccount.phtml");

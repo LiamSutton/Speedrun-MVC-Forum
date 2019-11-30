@@ -1,7 +1,7 @@
 <?php
 
-require_once ("Models/Database.php");
-require_once ("Models/Post.php");
+require_once("Models/Database.php");
+require_once("Models/Post.php");
 
 // TODO: Possibly separate the Create / Insert operations into a static class
 class PostDataset
@@ -27,8 +27,7 @@ class PostDataset
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute();
         $dataSet = array();
-        while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC))
-        {
+        while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC)) {
             array_push($dataSet, Post::basicPost($dbRow));
         }
 
@@ -47,6 +46,7 @@ class PostDataset
         $statement->execute([$p_id]);
 
         $post = $statement->fetch(PDO::FETCH_ASSOC);
+        $this->_dbInstance->destruct();
         return Post::fullPost($post);
     }
 
@@ -58,10 +58,28 @@ class PostDataset
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$u_id]);
         $postCount = $statement->fetchColumn();
-
+        $this->_dbInstance->destruct();
         return $postCount;
     }
-    
+
+    public function getAllUserPosts($u_id)
+    {
+        $sqlQuery = "SELECT p_id, p_title, p_content, u_username
+                     FROM Posts
+                     LEFT JOIN Users on p_posterID = ?
+                     WHERE p_posterID = ?
+                     AND p_parentID IS NULL";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute([$u_id, $u_id]);
+
+        $dataSet = array();
+        while ($row = $statement->fetch()) {
+            array_push($dataSet, $row);
+        }
+        $this->_dbInstance->destruct();
+        return $dataSet;
+    }
+
     public function getUserReplyCount($u_id)
     {
         $sqlQuery = "SELECT COUNT(*)
@@ -70,7 +88,7 @@ class PostDataset
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$u_id]);
         $replyCount = $statement->fetchColumn();
-
+        $this->_dbInstance->destruct();
         return $replyCount;
     }
 
@@ -85,21 +103,22 @@ class PostDataset
         $statement->execute([$p_id]);
 
         $dataSet = array();
-        while ($row = $statement->fetch(PDO::FETCH_ASSOC))
-        {
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
             array_push($dataSet, POST::basicPost($row));
         }
+        $this->_dbInstance->destruct();
         return $dataSet;
     }
 
     // TODO: Maybe should return true if succeeds?
-    public function createPost($posterID, $title, $content) {
+    public function createPost($posterID, $title, $content)
+    {
         $sqlQuery = "INSERT INTO Posts
                      (p_posterID, p_title, p_content, p_parentID, p_datecreated) 
                      VALUES (?, ?, ?, NULL, NOW())";
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$posterID, $title, $content]);
-
+        $this->_dbInstance->destruct();
     }
 
     // TODO: Maybe should return true if succeeds?
@@ -110,6 +129,7 @@ class PostDataset
                      VALUES (?, ?, ?, ?, NOW())";
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$posterID, $title, $content, $parentID]);
+        $this->_dbInstance->destruct();
     }
 
 }
