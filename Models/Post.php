@@ -31,6 +31,7 @@ class Post
 
         $instance->_id = $dbRow['p_id'];
         $instance->_title = $dbRow['p_title'];
+        $instance->_posterID = $dbRow['p_posterID'];
         $instance->_posterUsername = $dbRow['u_username'];
         $instance->_content = $dbRow['p_content'];
 

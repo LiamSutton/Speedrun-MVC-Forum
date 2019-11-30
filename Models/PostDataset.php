@@ -17,7 +17,7 @@ class PostDataset
 
     public function getBasicPosts()
     {
-        $sqlQuery = "SELECT p_id, p_title, p_content, u_username 
+        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, u_username 
                     FROM Posts 
                     JOIN Users
                     ON p_posterID = u_id
@@ -64,7 +64,7 @@ class PostDataset
 
     public function getAllUserPosts($u_id)
     {
-        $sqlQuery = "SELECT p_id, p_title, p_content, u_username
+        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, u_username
                      FROM Posts
                      LEFT JOIN Users on u_id = ?
                      WHERE p_posterID = ?

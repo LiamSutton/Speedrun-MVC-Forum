@@ -64,6 +64,18 @@ class UserDataset
         return new User($user);
     }
 
+    public function getUserByID($id)
+    {
+        $sqlQuery = "SELECT *
+                     FROM Users
+                     WHERE u_id = ?";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute([$id]);
+
+        $user = $statement->fetch(PDO::FETCH_ASSOC);
+        return new User($user);
+    }
+
     // TODO: Add error handling (currently returns true even if it fails?)
     public function createUser($username, $password, $firstname, $lastname, $avatar=null)
     {
