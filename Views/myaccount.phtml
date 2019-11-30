@@ -1,12 +1,23 @@
-<?php require_once ("template/header.phtml"); ?>
+<?php require_once("template/header.phtml"); ?>
 <!-- TODO: This styling is a mess, just a proof of concept -->
 <div class="container">
     <div class="row">
-        <img class=" img-circle" src=<?php echo $view->user->getAvatar()?>>
+        <img class=" img-circle" src=<?php echo $view->user->getAvatar() ?>>
         <h1 class="col-lg-12"><?php echo $view->user->getUsername() ?></h1>
-        <h3 class="col-lg-12">Number of Posts Made: <?php echo $view->postCount?></h3>
+        <h3 class="col-lg-12">Number of Posts Made: <?php echo $view->postCount ?></h3>
         <h3 class="col-lg-12">Number of Replies: <?php echo $view->replyCount ?></h3>
     </div>
-    <?php echo "<pre>" .var_dump($view->userPosts) . "</pre>"; ?>
+    <ul class="list-group">
+        <h2></h2>
+        <?php
+        foreach ($view->userPosts as $post) { ?>
+            <li class="list-group-item">
+                <a href="fullpost.php?id=<?php echo $post->getId()?>">
+                    <h3 class="list-group-item-heading"><?php echo $post->getTitle() ?></h3>
+                    <p><?php echo $post->getContent() ?></p>
+                </a>
+            </li>
+        <?php } ?>
+    </ul>
 </div>
-<?php require_once ("template/footer.phtml"); ?>
+<?php require_once("template/footer.phtml"); ?>

@@ -66,7 +66,7 @@ class PostDataset
     {
         $sqlQuery = "SELECT p_id, p_title, p_content, u_username
                      FROM Posts
-                     LEFT JOIN Users on p_posterID = ?
+                     LEFT JOIN Users on u_id = ?
                      WHERE p_posterID = ?
                      AND p_parentID IS NULL";
         $statement = $this->_dbHandle->prepare($sqlQuery);
@@ -74,7 +74,7 @@ class PostDataset
 
         $dataSet = array();
         while ($row = $statement->fetch()) {
-            array_push($dataSet, $row);
+            array_push($dataSet, Post::basicPost($row));
         }
         $this->_dbInstance->destruct();
         return $dataSet;
