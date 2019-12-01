@@ -14,5 +14,6 @@ if (isset($_POST['submit']))
     // Log User In
     $_SESSION['loggedIn'] = true;
     $_SESSION['username'] = $username;
+    $_SESSION['id'] = $userDataset->getUser($username)->getId();
     header("Location: index.php");
 }
