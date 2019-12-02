@@ -6,8 +6,9 @@ if (isset($_POST['submit']))
     if (isset($_POST['g-recaptcha-response']))
     {
         $resp = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Lc0psUUAAAAAOuaEeY6Q4mEEzPwOaZnPKz2FUbG&response=".$_POST['g-recaptcha-response']);
-        $respData = json_decode($resp);
+        $respData = json_decode($resp, true);
         // Getting response from google, continue if successful // end if false
+        echo $respData['success'];
     }
     else
     {
