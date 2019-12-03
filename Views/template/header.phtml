@@ -16,6 +16,7 @@
     <link href="/css/my-style.css" rel="stylesheet">
 
     <title><?php echo $view->pageTitle; ?></title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body role="document">
@@ -82,6 +83,10 @@ if (!isset($_SESSION['username'])) {
                                 <input class="form-control col-sm-12 col-md-8" type="password" id="password"
                                        name="password">
                             </div>
+                            <div class="text-xs-centre">
+                            <div id="reCaptcha" class="g-recaptcha" data-sitekey="6Lc0psUUAAAAAHbF17kNtEPOcTY_c90mgAHZjhWp"></div>
+                            </div>
+    
                             <div class="form-group text-center">
                                 <a href="createaccount.php">Not got an account? Create one here!</a>
                             </div>
