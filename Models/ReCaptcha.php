@@ -2,10 +2,14 @@
 
 class ReCaptcha
 {
+    static $NOT_COMPLETED = "ReCaptcha Must Be Completed";
+    static $FAILED = "ReCaptcha Failed";
     public function __construct()
     {
 
     }
+
+
 
     public static function getReCaptchaResult($response)
     {
