@@ -34,13 +34,13 @@ if (isset($_POST['submit']))
         // User failed the reCaptcha
         else
         {
-            die("ReCaptcha Failed");
+            die(ReCaptcha::$FAILED);
         }
     }
     // User didn't complete the reCaptcha
     else
     {
-        die("ReCaptcha Must Be Completed");
+        die(ReCaptcha::$NOT_COMPLETED);
     }
 }
 

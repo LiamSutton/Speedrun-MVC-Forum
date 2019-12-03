@@ -31,12 +31,12 @@ if (isset($_POST['submit']))
         }
         else
         {
-            die("ReCaptcha Failed");
+            die(ReCaptcha::$FAILED);
         }
     }
     else
     {
-        die("ReCaptcha must be completed");
+        die(ReCaptcha::$NOT_COMPLETED);
     }
 
     // Redirect

@@ -4,7 +4,9 @@ require_once("Models/ReCaptcha.php");
 require_once("Models/UserDataset.php");
 session_start();
 if (isset($_POST['submit'])) {
-    if (isset($_POST['g-recaptcha-response'])) {
+    
+    // User completed ReCaptcha
+    if (strlen($_POST['g-recaptcha-result']) != 0) {
 
         $reCaptchaResult = ReCaptcha::getReCaptchaResult($_POST['g-recaptcha-response']);
 
@@ -34,7 +36,11 @@ if (isset($_POST['submit'])) {
         // User failed ReCaptcha
         else
         {
-            die("Captcha failed");
+            die(ReCaptcha::$FAILED);
         }
+    }
+    else
+    {
+        die(ReCaptcha::$NOT_COMPLETED);
     }
 }
