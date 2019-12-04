@@ -1,9 +1,11 @@
 <?php
 session_start();
+require_once ("Models/ReCaptcha.php");
+require_once ("Models/FileUpload.php");
 require_once ("Models/UserDataset.php");
 require_once ("Models/PostDataset.php");
-require_once ("Models/ReCaptcha.php");
 
+// TODO: rename to createReply? for consistency
 if (isset($_POST['submit']))
 {
     // User completed the ReCaptcha
@@ -14,6 +16,17 @@ if (isset($_POST['submit']))
         // ReCaptcha validated
         if ($reCaptchaResult)
         {
+            // if a file was uploaded successfully
+            if ($_FILES['reply_image']['error'] == 0)
+            {
+                $avatar = $_FILES['reply_image']['name'];
+                FileUpload::uploadImage("reply_image");
+            }
+            else
+            {
+                $avatar = null;
+            }
+
             // Instanciate user and post data objects
             $userDataset = new UserDataset();
             $postDataset = new PostDataset();
@@ -30,7 +43,7 @@ if (isset($_POST['submit']))
             $p_parentID = $_GET['id'];
 
             // Commit new Reply to the db
-            $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID);
+            $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID, $avatar);
         }
         else
         {

@@ -40,6 +40,13 @@ class Post
 
         return $instance;
     }
+    public static function reply($dbRow)
+    {
+        $instance = self::basicPost($dbRow);
+        $instance->_image = $dbRow['p_image'];
+
+        return $instance;
+    }
     /**
      * @return mixed
      */

@@ -95,7 +95,7 @@ class PostDataset
 
     public function getReplies($p_id)
     {
-        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, p_parentID, u_username
+        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, p_parentID, u_username, p_image
                      FROM Posts
                      JOIN Users ON p_posterID = u_id
                      WHERE p_parentID = ?
@@ -105,7 +105,7 @@ class PostDataset
 
         $dataSet = array();
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-            array_push($dataSet, POST::basicPost($row));
+            array_push($dataSet, POST::reply($row));
         }
         $this->_dbInstance->destruct();
         return $dataSet;
@@ -123,13 +123,13 @@ class PostDataset
     }
 
     // TODO: Maybe should return true if succeeds?
-    public function createReply($posterID, $title, $content, $parentID)
+    public function createReply($posterID, $title, $content, $parentID, $image)
     {
         $sqlQuery = "INSERT INTO Posts
-                     (p_posterID, p_title, p_content, p_parentID, p_datecreated) 
-                     VALUES (?, ?, ?, ?, NOW())";
+                     (p_posterID, p_title, p_content, p_parentID, p_datecreated, p_image) 
+                     VALUES (?, ?, ?, ?, NOW(), ?)";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$posterID, $title, $content, $parentID]);
+        $statement->execute([$posterID, $title, $content, $parentID, $image]);
         $this->_dbInstance->destruct();
     }
 
