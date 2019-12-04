@@ -3,7 +3,7 @@
 
 class Post
 {
-    protected $_id, $_posterID, $_posterUsername, $_title, $_content, $_parentID, $_dateCreated;
+    protected $_id, $_posterID, $_posterUsername, $_title, $_content, $_parentID, $_dateCreated, $_image;
 
     public function __construct()
     {
@@ -23,6 +23,7 @@ class Post
         $instance->_parentID = $dbRow['p_parentID'];
         $instance->_dateCreated = $dbRow['p_datecreated'];
         $instance->_posterUsername = $dbRow['u_username'];
+        $instance->_image = $dbRow['p_image'];
 
         return $instance;
     }
@@ -90,6 +91,11 @@ class Post
     public function getDateCreated()
     {
         return $this->_dateCreated;
+    }
+
+    public function getImage()
+    {
+        return $this->_image;
     }
 
 

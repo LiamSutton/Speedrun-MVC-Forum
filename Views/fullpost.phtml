@@ -9,6 +9,11 @@
         <!-- TODO: Rename id's for modals and such to make them meaningful -->
 
         <?php if (isset($_SESSION['loggedIn'])) { ?>
+            <?php if ($view->mainPost->getImage())
+            { ?>
+              <img src="images/<?php echo $view->mainPost->getImage() ?>">
+            <?php }
+            ?>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                 Reply
             </button>
@@ -75,7 +80,7 @@
                                     <!-- TODO: Maybe passing through the mainPostID like this is janky? -->
                                     <form action="reply.php?id=<?php echo $reply->getId() ?>&&mainid=<?php echo $view->mainPost->getId() ?>"
                                           method="post">
-                                        <div class="modal-body">
+                                        <d class="modal-body">
                                             <div class="form-group">
                                                 <label for="title">Title</label>
                                                 <input type="text" id="title" class="form-control" name="title">
@@ -87,6 +92,7 @@
                                             <div class="text-xs-centre">
                                                 <div id="reCaptcha" class="g-recaptcha" data-sitekey="6Lc0psUUAAAAAHbF17kNtEPOcTY_c90mgAHZjhWp"></div>
                                             </div>
+                                            
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close

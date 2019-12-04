@@ -1,8 +1,10 @@
 <?php
 session_start();
+
+require_once("Models/ReCaptcha.php");
+require_once("Models/FileUpload.php");
 require_once ("Models/UserDataset.php");
 require_once ("Models/PostDataset.php");
-require_once("Models/ReCaptcha.php");
 
 if (isset($_POST['submit']))
 {
@@ -15,9 +17,15 @@ if (isset($_POST['submit']))
         if ($reCaptchaResult)
         {
             // Check if file was uploaded
-            if ($_FILES['post-image']['error'] == 0)
+            if ($_FILES['post_image']['error'] == 0)
             {
-                $postImage = $_FILES['post-image']['name'];
+                $postImage = $_FILES['post_image']['name'];
+//                echo $postImage;
+                FileUpload::uploadImage("post_image");
+            }
+            else
+            {
+                $postImage = null;
             }
             // Instanciate user and post data objects
             $userDataset = new UserDataset();
@@ -32,7 +40,7 @@ if (isset($_POST['submit']))
             $content = $_POST['content'];
 
             // Commit it to DB
-            $postsDataset->createPost($posterID, $title, $content);
+            $postsDataset->createPost($posterID, $title, $content, $postImage);
         }
         else
         {
