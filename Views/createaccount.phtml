@@ -2,7 +2,7 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <div class="container">
     <h3 class="text-center">Create New Account</h3>
-    <form class="form-horizontal" action="createuser.php" method="POST">
+    <form class="form-horizontal" enctype="multipart/form-data" action="createuser.php" method="POST">
         <div class="form-group">
             <label class="label" for="username">Username</label>
             <input class="form-control" type="text" id="username" name="username" required>
@@ -20,6 +20,11 @@
         <div class="form-group">
             <label class="label" for="lastname">Lastname</label>
             <input class="form-control" type="text" id="lastname" name="lastname" required>
+        </div>
+
+        <div class="form-group">
+            <input type="hidden" name="MAX_FILE_SIZE" value="30000">
+            <input type="file" name="csv_file" class="form-control-file">
         </div>
 
         <div class="g-recaptcha" data-sitekey="6Lc0psUUAAAAAHbF17kNtEPOcTY_c90mgAHZjhWp"></div>

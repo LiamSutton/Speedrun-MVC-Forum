@@ -43,4 +43,4 @@ if (isset($_POST['submit'])) {
     {
         die(ReCaptcha::$NOT_COMPLETED);
     }
-}
+ }
