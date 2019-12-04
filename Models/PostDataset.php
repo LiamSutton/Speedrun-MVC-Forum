@@ -38,7 +38,7 @@ class PostDataset
 
     public function getPost($p_id)
     {
-        $sqlQuery = "SELECT p_id, p_posterID, p_title, p_posterID,p_content, p_parentID, p_datecreated, u_username
+        $sqlQuery = "SELECT p_id, p_posterID, p_title, p_posterID,p_content, p_parentID, p_datecreated, p_image, u_username
                     FROM Posts
                     JOIN Users on p_posterID = u_id
                     WHERE p_id = ?";
@@ -112,13 +112,13 @@ class PostDataset
     }
 
     // TODO: Maybe should return true if succeeds?
-    public function createPost($posterID, $title, $content)
+    public function createPost($posterID, $title, $content, $image)
     {
         $sqlQuery = "INSERT INTO Posts
-                     (p_posterID, p_title, p_content, p_parentID, p_datecreated) 
-                     VALUES (?, ?, ?, NULL, NOW())";
+                     (p_posterID, p_title, p_content, p_parentID, p_datecreated, p_image) 
+                     VALUES (?, ?, ?, NULL, NOW(), ?)";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$posterID, $title, $content]);
+        $statement->execute([$posterID, $title, $content, $image]);
         $this->_dbInstance->destruct();
     }
 

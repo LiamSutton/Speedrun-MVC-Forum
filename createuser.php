@@ -1,6 +1,7 @@
 <?php
 
 require_once("Models/ReCaptcha.php");
+require_once("Models/FileUpload.php");
 require_once("Models/UserDataset.php");
 session_start();
 if (isset($_POST['submit'])) {
@@ -13,22 +14,14 @@ if (isset($_POST['submit'])) {
         // User validated from reCaptcha
         if ($reCaptchaResult)
         {
-            $avatar = "";
-            
-            if ($_FILES['user_avatar']['name'] != 'none')
+
+            // error 0: no error
+            // possibly check if it has error 4: no image uploaded?
+            if ($_FILES['user_avatar']['error'] == 0)
             {
+                FileUpload::uploadImage('user_avatar');
+                // maybe get the function to return the avatar file name?
                 $avatar = $_FILES['user_avatar']['name'];
-                $dir = 'images/';
-                $uploadfile = $dir . basename($_FILES['user_avatar']['name']);
-                // TODO: Add Validation, Error Handling
-                if (move_uploaded_file($_FILES['user_avatar']['tmp_name'], $uploadfile))
-                {
-                    echo "<h1>File uploaded and moved</h1>";
-                }
-                else
-                {
-                    echo $_FILES['user_avatar']['error'];
-                }
             }
             else
             {
@@ -64,4 +57,8 @@ if (isset($_POST['submit'])) {
     {
         die(ReCaptcha::$NOT_COMPLETED);
     }
+ }
+ else
+ {
+     echo "<h1>Not Authorised to access this</h1>";
  }

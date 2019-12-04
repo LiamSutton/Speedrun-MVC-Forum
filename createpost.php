@@ -14,6 +14,11 @@ if (isset($_POST['submit']))
         //User successfully completed ReCaptcha
         if ($reCaptchaResult)
         {
+            // Check if file was uploaded
+            if ($_FILES['post-image']['error'] == 0)
+            {
+                $postImage = $_FILES['post-image']['name'];
+            }
             // Instanciate user and post data objects
             $userDataset = new UserDataset();
             $postsDataset = new PostDataset();
