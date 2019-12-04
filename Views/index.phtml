@@ -4,7 +4,7 @@ if (isset($_SESSION['loggedIn'])) {
     // User is logged in and authenticated
     $userFirstName = $_SESSION['username'];
     echo "<h1>Welcome" . $userFirstName . "</h1>";
-    echo "<img src=" . $view->user->getAvatar() . ">";
+    echo "<img src=" . 'images/'.$view->user->getAvatar() . ">";
 }
 else
     echo "<h1>You are not currently logged in.</h1>";
