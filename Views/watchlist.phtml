@@ -11,7 +11,7 @@
          <a href="myaccount.php?id=<?php echo $post->getPosterID()?>">
              <small><?php echo $post->getPosterUsername() ?></small>
          </a>
-         <a href="unsubscribe.php?id=<?php echo $post->getId()?>">Unsubscribe</a>
+         <a href="unsubscribe.php?id=<?php echo $post->getId()?>&from=Watchlist">Unsubscribe</a>
          <p><?php echo $post->getContent() ?></p>
      </li>
 
