@@ -151,4 +151,29 @@ join Users U on P.p_posterID = U.u_id;";
         return $dataSet;
     }
 
+    public function addToWatchlist($userID, $postID)
+    {
+        $sqlQuery = "INSERT INTO Watchlist (w_userID, w_postID) 
+                     VALUES (?, ?)";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute([$userID, $postID]);
+    }
+
+    public function removeFromWatchlist($userID, $postID)
+    {
+        $sqlQuery = "DELETE FROM Watchlist
+                     WHERE w_userID = ? AND w_postID = ?";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute([$userID, $postID]);
+    }
+
+    public function isOnWatchlist($userID, $postID)
+    {
+        $sqlQuery = "SELECT * FROM Watchlist
+                     WHERE w_userID = ? AND w_postID = ?";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute();
+        return $statement->rowCount() > 0;
+    }
+
 }
