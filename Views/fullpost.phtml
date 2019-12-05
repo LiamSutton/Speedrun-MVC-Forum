@@ -16,13 +16,15 @@
             ?>
             <?php
                 if ($view->isOnWatchlist)
-                {
-                    echo "watching";
+                { ?>
+                    <a href="unsubscribe.php?id=<?php echo $view->mainPost->getId() ?>">Unsubscribe</a>
+                <?php
                 }
                 else
-                {
-                    echo "not watching";
-                }
+                { ?>
+                    <a href="subscribe.php?id=<?php echo $view->mainPost->getId() ?>">Subscribe to PewDiePie</a>
+               <?php }
+
             ?>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                 Reply

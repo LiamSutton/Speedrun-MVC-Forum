@@ -8,4 +8,5 @@ $postID = $_GET['id'];
 
 $postData->removeFromWatchlist($userID, $postID);
 
-header("Location: watchlist.php?id=$userID");
+// TODO: should be able to unsubscribe from post AND Watchlist page, need to sort out redirect
+header("Location: fullpost.php?id=$postID");

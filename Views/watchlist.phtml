@@ -11,15 +11,7 @@
          <a href="myaccount.php?id=<?php echo $post->getPosterID()?>">
              <small><?php echo $post->getPosterUsername() ?></small>
          </a>
-         <div class="dropdown">
-             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Options
-             </a>
-
-             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                 <a class="dropdown-item" href="unsubscribe.php?id=<?php echo $post->getId()?>">Unsubscribe</a>
-             </div>
-         </div>
+         <a href="unsubscribe.php?id=<?php echo $post->getId()?>">Unsubscribe</a>
          <p><?php echo $post->getContent() ?></p>
      </li>
 
