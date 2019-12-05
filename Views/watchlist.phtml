@@ -1,0 +1,19 @@
+<?php require_once ("template/header.phtml"); ?>
+<ul class="list-group">
+<?php
+ foreach ($view->userWatchlist as $post)
+ { ?>
+     <li class="list-group-item">
+         <a href="fullpost.php?id=<?php echo $post->getId()?>">
+             <h3 class="list-group-item-heading"><?php echo $post->getTitle() ?></h3>
+         </a>
+         <a href="myaccount.php?id=<?php echo $post->getPosterID()?>">
+             <small><?php echo $post->getPosterUsername() ?></small>
+         </a>
+
+         <p><?php echo $post->getContent() ?></p>
+     </li>
+ <?php }
+?>
+</ul>
+<?php require_once ("template/footer.phtml"); ?>

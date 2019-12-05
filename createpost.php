@@ -19,8 +19,8 @@ if (isset($_POST['submit']))
             // Check if file was uploaded
             if ($_FILES['post_image']['error'] == 0)
             {
+                // TODO: Check the image is of certain file types {.jpg, .png, .jpeg} ect...
                 $postImage = $_FILES['post_image']['name'];
-//                echo $postImage;
                 FileUpload::uploadImage("post_image");
             }
             else

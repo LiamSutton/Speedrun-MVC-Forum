@@ -132,5 +132,23 @@ class PostDataset
         $statement->execute([$posterID, $title, $content, $parentID, $image]);
         $this->_dbInstance->destruct();
     }
+    public function getWatchlist($userID)
+    {
+        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, u_username
+                    FROM Watchlist
+                    JOIN Posts P on Watchlist.w_postID = P.p_id
+                    and w_userID = ?
+join Users U on P.p_posterID = U.u_id;";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute([$userID]);
+
+        $dataSet = array();
+        while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC))
+        {
+            array_push($dataSet, Post::basicPost($dbRow));
+        }
+
+        return $dataSet;
+    }
 
 }
