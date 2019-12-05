@@ -10,6 +10,10 @@ $view->pageTitle = "Post "  .$id;
 $view->mainPost = $dataset->getPost($id);
 $view->replies = $dataset->getReplies($id);
 
-$userID = $_SESSION['id'];
-$view->isOnWatchlist = $dataset->isOnWatchlist($userID, $id);
+if (isset($_SESSION['loggedIn']))
+{
+    $userID = $_SESSION['id'];
+    $view->isOnWatchlist = $dataset->isOnWatchlist($userID, $id);
+}
+
 require_once ("Views/fullpost.phtml");
