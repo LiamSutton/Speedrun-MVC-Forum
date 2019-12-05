@@ -136,9 +136,11 @@ class PostDataset
     {
         $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, u_username
                     FROM Watchlist
-                    JOIN Posts P on Watchlist.w_postID = P.p_id
-                    and w_userID = ?
-                    join Users U on P.p_posterID = U.u_id;";
+                    JOIN Posts P ON Watchlist.w_postID = P.p_id
+                    AND w_userID = ?
+                    JOIN Users U ON P.p_posterID = U.u_id
+                    ORDER BY w_datecreated DESC";
+
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$userID]);
 
@@ -155,8 +157,8 @@ class PostDataset
 
     public function addToWatchlist($userID, $postID)
     {
-        $sqlQuery = "INSERT INTO Watchlist (w_userID, w_postID) 
-                     VALUES (?, ?)";
+        $sqlQuery = "INSERT INTO Watchlist (w_userID, w_postID, w_datecreated) 
+                     VALUES (?, ?, CURRENT_TIMESTAMP(3))";
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$userID, $postID]);
 
