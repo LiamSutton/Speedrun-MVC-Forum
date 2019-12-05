@@ -9,4 +9,7 @@ $view->pageTitle = "Post "  .$id;
 // TODO: Why is the main post treated differently than replies? they are the same thing.
 $view->mainPost = $dataset->getPost($id);
 $view->replies = $dataset->getReplies($id);
+
+$userID = $_SESSION['id'];
+$view->isOnWatchlist = $dataset->isOnWatchlist($userID, $id);
 require_once ("Views/fullpost.phtml");

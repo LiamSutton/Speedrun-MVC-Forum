@@ -182,7 +182,7 @@ class PostDataset
         $sqlQuery = "SELECT * FROM Watchlist
                      WHERE w_userID = ? AND w_postID = ?";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute();
+        $statement->execute([$userID, $postID]);
 
         $this->_dbInstance->destruct();
 
