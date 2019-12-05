@@ -149,7 +149,7 @@ class PostDataset
         }
 
         $this->_dbInstance->destruct();
-        
+
         return $dataSet;
     }
 
