@@ -138,7 +138,7 @@ class PostDataset
                     FROM Watchlist
                     JOIN Posts P on Watchlist.w_postID = P.p_id
                     and w_userID = ?
-join Users U on P.p_posterID = U.u_id;";
+                    join Users U on P.p_posterID = U.u_id;";
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$userID]);
 
@@ -148,6 +148,8 @@ join Users U on P.p_posterID = U.u_id;";
             array_push($dataSet, Post::basicPost($dbRow));
         }
 
+        $this->_dbInstance->destruct();
+        
         return $dataSet;
     }
 
@@ -157,6 +159,10 @@ join Users U on P.p_posterID = U.u_id;";
                      VALUES (?, ?)";
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$userID, $postID]);
+
+        $this->_dbInstance->destruct();
+
+        return true;
     }
 
     public function removeFromWatchlist($userID, $postID)
@@ -165,6 +171,10 @@ join Users U on P.p_posterID = U.u_id;";
                      WHERE w_userID = ? AND w_postID = ?";
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$userID, $postID]);
+
+        $this->_dbInstance->destruct();
+
+        return true;
     }
 
     public function isOnWatchlist($userID, $postID)
@@ -173,6 +183,9 @@ join Users U on P.p_posterID = U.u_id;";
                      WHERE w_userID = ? AND w_postID = ?";
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute();
+
+        $this->_dbInstance->destruct();
+
         return $statement->rowCount() > 0;
     }
 
