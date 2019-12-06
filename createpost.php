@@ -27,7 +27,7 @@ if (isset($_POST['submit']))
             {
                 $postImage = null;
             }
-            // Instanciate user and post data objects
+            // Instantiate user and post data objects
             $userDataset = new UserDataset();
             $postsDataset = new PostDataset();
             

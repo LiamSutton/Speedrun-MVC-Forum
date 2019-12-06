@@ -95,7 +95,7 @@ class PostDataset
 
     public function getReplies($p_id)
     {
-        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, p_parentID, u_username, p_image
+        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, p_parentID, u_username, p_image, p_categoryID
                      FROM Posts
                      JOIN Users ON p_posterID = u_id
                      WHERE p_parentID = ?
