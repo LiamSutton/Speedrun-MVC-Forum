@@ -1,7 +1,4 @@
-li a {
-    color: black;
 
-}
 a:hover {
     color: black;
     text-decoration: none;
@@ -20,4 +17,11 @@ a:hover {
 .post-container
 {
     margin-top: 50px;
+}
+
+.reply
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+
 }
