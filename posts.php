@@ -12,5 +12,8 @@ $categoryData = new CategoryData();
 $categoryID = $_GET['categoryID'];
 $view->posts = $postDataSet->getBasicPosts($categoryID);
 
+// TODO: Maybe a better way of doing this?
+$view->categoryName = $categoryData->getCategoryName($categoryID);
+
 
 require_once ("Views/posts.phtml");

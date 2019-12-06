@@ -28,7 +28,18 @@ class CategoryData
             $data[] = Category::Category($dbRow);
         }
 
+        $this->_dbInstance->destruct();
+
         return $data;
+    }
+
+    public function getCategoryName($id)
+    {
+        $sqlQuery = "SELECT c_name FROM Categories WHERE c_id = ?";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute([$id]);
+
+        return $statement->fetchColumn();
     }
 
 

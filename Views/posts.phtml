@@ -48,10 +48,11 @@
     </div>
 <?php }
 ?>
+<h1 class="text-center display-4"><?php echo $view->categoryName ?></h1>
 <ul class="list-group">
     <?php
     foreach ($view->posts as $post) { ?>
-        <li class="list-group-item">
+        <li class="list-group-item post">
             <div>
                 <a href="fullpost.php?id=<?php echo $post->getId() ?>">
                     <h3 class="list-group-item-heading"><?php echo $post->getTitle() ?></h3>

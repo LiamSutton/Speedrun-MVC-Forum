@@ -2,7 +2,9 @@
     box-sizing: border-box;
 }
 
-
+a {
+    color: black;
+}
 a:hover {
     color: black;
     text-decoration: none;
@@ -39,3 +41,39 @@ a:hover {
 {
     width: 100% !important;
 }
+
+.category
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.post {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.list-group-item
+{
+    border: 1px solid #000000;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: purple;
+    color: white;
+
+}
+
+.navbar, footer {
+    /*background: #7b4397;  !* fallback for old browsers *!*/
+    /*background: -webkit-linear-gradient(to right, #dc2430, #7b4397);  !* Chrome 10-25, Safari 5.1-6 *!*/
+    /*background: linear-gradient(to right, #dc2430, #7b4397); !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
+    background: #43cea2;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #185a9d, #43cea2);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #185a9d, #43cea2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+

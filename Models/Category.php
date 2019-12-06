@@ -21,6 +21,14 @@ class Category
         return $instance;
     }
 
+    public static function CategoryName($dbRow)
+    {
+        $instance = new self();
+        $instance->_categoryName = $dbRow['c_name'];
+
+        return $instance;
+    }
+
     public function getCategoryID()
     {
         return $this->_categoryID;
