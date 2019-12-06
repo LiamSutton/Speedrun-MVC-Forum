@@ -40,7 +40,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form enctype="multipart/form-data" action="reply.php?id=<?php echo $view->mainPost->getId() ?>&&mainid=<?php echo $view->mainPost->getId() ?>"
+                    <form enctype="multipart/form-data" action="reply.php?id=<?php echo $view->mainPost->getId()?>&&mainid=<?php echo $view->mainPost->getId()?> &&categoryID=<?php echo $view->mainPost->getCategoryID()?>"
                           method="post">
                         <div class="modal-body">
                             <div class="form-group">

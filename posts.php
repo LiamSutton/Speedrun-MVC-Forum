@@ -9,7 +9,8 @@ $view->pageTitle = "Posts";
 $postDataSet = new PostDataset();
 $categoryData = new CategoryData();
 
-$view->dataSet = $postDataSet->getBasicPosts();
-$view->categoryData = $categoryData->getAllCategories();
+$categoryID = $_GET['categoryID'];
+$view->posts = $postDataSet->getBasicPosts($categoryID);
+
 
 require_once ("Views/posts.phtml");

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once ("Models/CategoryData.php");
 
 $categoryData = new CategoryData();

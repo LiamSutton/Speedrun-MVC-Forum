@@ -15,17 +15,17 @@ class PostDataset
         $this->_dbHandle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function getBasicPosts()
+    public function getBasicPosts($categoryID)
     {
         $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, u_username 
                     FROM Posts 
                     JOIN Users
                     ON p_posterID = u_id
-                    WHERE p_parentID IS NULL 
+                    WHERE p_categoryID = ? AND p_parentID is null
                     ORDER BY p_datecreated DESC";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute();
+        $statement->execute([$categoryID]);
         $dataSet = array();
         while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC)) {
             array_push($dataSet, Post::basicPost($dbRow));
@@ -38,7 +38,7 @@ class PostDataset
 
     public function getPost($p_id)
     {
-        $sqlQuery = "SELECT p_id, p_posterID, p_title, p_posterID,p_content, p_parentID, p_datecreated, p_image, u_username
+        $sqlQuery = "SELECT p_id, p_posterID, p_title, p_posterID,p_content, p_parentID, p_datecreated, p_image, p_categoryID, u_username
                     FROM Posts
                     JOIN Users on p_posterID = u_id
                     WHERE p_id = ?";
@@ -123,13 +123,13 @@ class PostDataset
     }
 
     // TODO: Maybe should return true if succeeds?
-    public function createReply($posterID, $title, $content, $parentID, $image)
+    public function createReply($posterID, $title, $content, $parentID, $image, $categoryID)
     {
         $sqlQuery = "INSERT INTO Posts
-                     (p_posterID, p_title, p_content, p_parentID, p_datecreated, p_image) 
-                     VALUES (?, ?, ?, ?, NOW(), ?)";
+                     (p_posterID, p_title, p_content, p_parentID, p_datecreated, p_image, p_categoryID) 
+                     VALUES (?, ?, ?, ?, NOW(), ?, ?)";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$posterID, $title, $content, $parentID, $image]);
+        $statement->execute([$posterID, $title, $content, $parentID, $image, $categoryID]);
         $this->_dbInstance->destruct();
     }
     public function getWatchlist($userID)

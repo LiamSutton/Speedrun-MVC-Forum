@@ -41,9 +41,10 @@ if (isset($_POST['submit']))
             $title = $_POST['title'];
             $content = $_POST['content'];
             $p_parentID = $_GET['id'];
+            $categoryID = $_GET['categoryID'];
 
             // Commit new Reply to the db
-            $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID, $avatar);
+            $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID, $avatar, $categoryID);
         }
         else
         {
