@@ -20,6 +20,24 @@
                 </div>
 
                 <div class="col-sm-12">
+                    <?php
+                        if (isset($_SESSION['loggedIn'])) {
+                            if ($view->isOnWatchlist)
+                            { ?>
+                                <a href="unsubscribe.php?id=<?php echo $mainPost->getId()?>">
+                                    <i class='fas fa-bookmark qa'></i>
+                                </a>
+                                <?php
+                            }
+                            else
+                            { ?>
+                                <a href="subscribe.php?id=<?php echo $mainPost->getId()?>">
+                                    <i class='far fa-bookmark qa'></i>
+                                </a>
+                                <?php
+                            }
+                        }
+                    ?>
 
                     <h3 class="text-muted text-center">
                         <a href="myaccount.php?id=<?php echo $mainPost->getPosterID() ?>">
