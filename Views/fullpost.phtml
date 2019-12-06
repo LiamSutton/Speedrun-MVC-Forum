@@ -1,6 +1,9 @@
 <?php require_once("template/header.phtml"); ?>
 
-<?php $mainPost = $view->mainPost ?>
+<?php
+$mainPost = $view->mainPost;
+$loggedIn = isset($_SESSION['loggedIn']);
+?>
 
 <div class="container post-container">
 
@@ -11,34 +14,33 @@
             <div class="row">
 
                 <div class="col-sm-12">
+                    <?php if ($loggedIn)
+                    {
+                        if ($view->isOnWatchlist)
+                        { ?>
+                            <a href="unsubscribe.php?id=<?php echo $mainPost->getId()?>">
+                                <i class='fas fa-bookmark qa'></i>
+                            </a>
+                            <?php
+                        }
+                        else
+                        { ?>
+                            <a href="subscribe.php?id=<?php echo $mainPost->getId()?>">
+                                <i class='far fa-bookmark qa'></i>
+                            </a>
+                            <?php
+                        }
 
+                    }
+                    ?>
                     <h3 class="text-center display-4">
                         <?php echo $mainPost->getTitle()?>
-                        <?php echo $mainPost->getCategoryID() ?>
                     </h3>
 
                 </div>
 
                 <div class="col-sm-12">
-                    <?php
-                        if (isset($_SESSION['loggedIn'])) {
-                            if ($view->isOnWatchlist)
-                            { ?>
-                                <a href="unsubscribe.php?id=<?php echo $mainPost->getId()?>">
-                                    <i class='fas fa-bookmark qa'></i>
-                                </a>
-                                <?php
-                            }
-                            else
-                            { ?>
-                                <a href="subscribe.php?id=<?php echo $mainPost->getId()?>">
-                                    <i class='far fa-bookmark qa'></i>
-                                </a>
-                                <?php
-                            }
-                        }
-                    ?>
-
+                    
                     <h3 class="text-muted text-center">
                         <a href="myaccount.php?id=<?php echo $mainPost->getPosterID() ?>">
                             <?php echo $mainPost->getPosterUsername() ?>
