@@ -38,9 +38,10 @@ if (isset($_POST['submit']))
             $posterID = $user->getId();
             $title = $_POST['title'];
             $content = $_POST['content'];
+            $categoryID = $_POST['category'];
 
             // Commit it to DB
-            $postsDataset->createPost($posterID, $title, $content, $postImage);
+            $postsDataset->createPost($posterID, $title, $content, $postImage, $categoryID);
         }
         else
         {

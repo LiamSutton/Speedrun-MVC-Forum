@@ -112,13 +112,13 @@ class PostDataset
     }
 
     // TODO: Maybe should return true if succeeds?
-    public function createPost($posterID, $title, $content, $image)
+    public function createPost($posterID, $title, $content, $image, $categoryID)
     {
         $sqlQuery = "INSERT INTO Posts
-                     (p_posterID, p_title, p_content, p_parentID, p_datecreated, p_image) 
-                     VALUES (?, ?, ?, NULL, NOW(), ?)";
+                     (p_posterID, p_title, p_content, p_parentID, p_datecreated, p_image, p_categoryID) 
+                     VALUES (?, ?, ?, NULL, current_timestamp(3), ?, ?)";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$posterID, $title, $content, $image]);
+        $statement->execute([$posterID, $title, $content, $image, $categoryID]);
         $this->_dbInstance->destruct();
     }
 

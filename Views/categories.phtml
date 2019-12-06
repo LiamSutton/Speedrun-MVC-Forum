@@ -1,0 +1,18 @@
+<?php require_once ("template/header.phtml"); ?>
+<h1>Categories</h1>
+<ul class="list-group">
+<?php
+foreach ($view->categories as $category)
+{
+ ?>
+    <li class="list-group-item">
+        <a href="posts.php?categoryID=<?php echo $category->getCategoryID()?>">
+            <h3 class="list-group-item-heading"><?php echo $category->getCategoryName()?></h3>
+            <p>Current post count: <?php echo $category->getCategoryPostCount()?></p>
+        </a>
+    </li>
+ <?php
+}
+?>
+</ul>
+<?php require_once ("template/footer.phtml"); ?>

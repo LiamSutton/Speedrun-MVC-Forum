@@ -1,7 +1,8 @@
 <?php
 
-require_once ("Models/Database.php");
-require_once ("Models/Category.php");
+require_once("Models/Database.php");
+require_once("Models/Category.php");
+
 class CategoryData
 {
     protected $_dbHandle, $_dbInstance;
@@ -14,16 +15,21 @@ class CategoryData
 
     public function getAllCategories()
     {
-        $sqlQuery = "SELECT *
-                     FROM Categories";
+        $sqlQuery = "SELECT c_id, c_name, COUNT(p_id) AS c_postCount
+                     FROM Categories
+                    LEFT JOIN Posts P on Categories.c_id = P.p_categoryID
+                    GROUP BY c_id, c_name";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute();
 
         $data = [];
-        while($dbRow = $statement->fetch(PDO::FETCH_ASSOC))
-        {
-            $data[] =  Category::Category($dbRow);
+        while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = Category::Category($dbRow);
         }
+
+        return $data;
     }
+
+
 }
