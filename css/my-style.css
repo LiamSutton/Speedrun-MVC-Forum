@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 
 a:hover {
     color: black;
@@ -19,9 +23,19 @@ a:hover {
     margin-top: 50px;
 }
 
+.reply-container
+{
+    margin-bottom: 20px;
+}
+
 .reply
 {
     margin-top: 20px;
     margin-bottom: 20px;
 
+}
+
+.reply-button
+{
+    width: 100% !important;
 }

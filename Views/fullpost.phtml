@@ -14,6 +14,7 @@
 
                     <h3 class="text-center display-4">
                         <?php echo $mainPost->getTitle()?>
+                        <?php echo $mainPost->getCategoryID() ?>
                     </h3>
 
                 </div>
@@ -28,17 +29,69 @@
 
                 </div>
 
-                <div class="container text-center">
-
-                    <p>
-                      <?php echo $mainPost->getContent() ?>
+                <div class="col-sm-12">
+                    <p class="text-center">
+                        <?php echo $mainPost->getContent() ?>
                     </p>
-
                 </div>
 
-            </div>
+                <?php if(isset($_SESSION['loggedIn']))
+                    {
+                        if ($mainPost->getImage())
+                            { ?>
 
+                                <div class="col-sm-12">
+                                    <img src="images/<?php echo $mainPost->getImage() ?>">
+                                </div>
+                             <?php
+                            } ?>
+                        <div class="col-sm-12">
+                            <button class="btn btn-primary reply-button" data-toggle="modal" data-target="#replyModal">Reply</button>
+                        </div>
+
+                        <div class="modal fade" tabindex="-1" id="replyModal" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Reply</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Only handles top level reply at the moment -->
+                                    <form action="reply.php?id=<?php echo $mainPost->getId()?>&&categoryID=<?php echo $mainPost->getCategoryID() ?>" method="post">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="title">Title</label>
+                                                <input type="text" id="title" class="form-control" name="title">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comment">Comment</label>
+                                                <textarea id="comment" class="form-control" name="content"></textarea>
+                                            </div>
+
+                                            <div class="text-xs-centre">
+                                                <div id="reCaptcha" class="g-recaptcha" data-sitekey="6Lc0psUUAAAAAHbF17kNtEPOcTY_c90mgAHZjhWp"></div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                            <input type="submit" name="submit" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+
+            </div>
         </li>
+    </ul>
+</div>
+
+    <div class="container post-container">
 
         <!-- Reply -->
         <ul class="list-group">
@@ -79,8 +132,7 @@
                 </li>
             <?php } ?>
         </ul>
+    </div>
 
-    </ul>
 
-</div>
 <?php require_once ("template/footer.phtml") ?>

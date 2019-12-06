@@ -16,16 +16,6 @@ if (isset($_POST['submit']))
         // ReCaptcha validated
         if ($reCaptchaResult)
         {
-            // if a file was uploaded successfully
-            if ($_FILES['reply_image']['error'] == 0)
-            {
-                $avatar = $_FILES['reply_image']['name'];
-                FileUpload::uploadImage("reply_image");
-            }
-            else
-            {
-                $avatar = null;
-            }
 
             // Instanciate user and post data objects
             $userDataset = new UserDataset();
@@ -36,7 +26,9 @@ if (isset($_POST['submit']))
 
             // TODO: Construct post object maybe?
             // Get data required to create a Reply
-            $mainId = $_GET['mainid'];
+
+            // Dont need mainID for now
+//          $mainId = $_GET['mainid'];
             $id = $_GET['id'];
             $title = $_POST['title'];
             $content = $_POST['content'];
@@ -44,7 +36,7 @@ if (isset($_POST['submit']))
             $categoryID = $_GET['categoryID'];
 
             // Commit new Reply to the db
-            $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID, $avatar, $categoryID);
+            $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID, NULL, $categoryID);
         }
         else
         {
@@ -57,5 +49,5 @@ if (isset($_POST['submit']))
     }
 
     // Redirect
-    header("Location: fullpost.php?id=$mainId");
+    header("Location: fullpost.php?id=$p_parentID");
 }

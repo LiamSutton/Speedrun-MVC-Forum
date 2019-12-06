@@ -3,7 +3,7 @@
 
 class Post
 {
-    protected $_id, $_posterID, $_posterUsername, $_title, $_content, $_parentID, $_dateCreated, $_image;
+    protected $_id, $_posterID, $_posterUsername, $_title, $_content, $_parentID, $_dateCreated, $_image, $_categoryID;
 
     public function __construct()
     {
@@ -24,6 +24,7 @@ class Post
         $instance->_dateCreated = $dbRow['p_datecreated'];
         $instance->_posterUsername = $dbRow['u_username'];
         $instance->_image = $dbRow['p_image'];
+        $instance->_categoryID = $dbRow['p_categoryID'];
 
         return $instance;
     }
@@ -105,5 +106,9 @@ class Post
         return $this->_image;
     }
 
+    public function getCategoryID()
+    {
+        return $this->_categoryID;
+    }
 
 }

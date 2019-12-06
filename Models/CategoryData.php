@@ -17,7 +17,7 @@ class CategoryData
     {
         $sqlQuery = "SELECT c_id, c_name, COUNT(p_id) AS c_postCount
                      FROM Categories
-                    LEFT JOIN Posts P on Categories.c_id = P.p_categoryID
+                    LEFT JOIN Posts P on Categories.c_id = P.p_categoryID WHERE p_parentID IS NULL
                     GROUP BY c_id, c_name";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
