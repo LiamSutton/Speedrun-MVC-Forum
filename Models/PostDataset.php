@@ -76,10 +76,22 @@ class PostDataset
 
     public function getAllUserPosts($u_id)
     {
-        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, concat(u_firstname, ' ', u_lastname) as 'u_fullname'
-FROM Posts
-    JOIN Users U on Posts.p_posterID = U.u_id
-        WHERE p_posterID = ? AND p_parentID IS NULL";
+        $sqlQuery = "SELECT 
+                     P.p_id, 
+                     P.p_title, 
+                     P.p_posterID, 
+                     P.p_content, 
+                     concat(u_firstname, ' ', u_lastname) 
+                     AS 'u_fullname', 
+                    (SELECT COUNT(*) 
+                        FROM Posts R 
+                            WHERE R.p_parentID = P.p_id
+                    ) 
+                    AS 'p_replycount'
+FROM Posts P
+         JOIN Users U on  P.p_posterID = U.u_id
+WHERE p_posterID = ?
+  AND p_parentID IS NULL";
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$u_id]);
 
