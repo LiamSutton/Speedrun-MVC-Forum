@@ -66,13 +66,31 @@ class UserDataset
 
     public function getUserByID($id)
     {
-        $sqlQuery = "SELECT *
-                     FROM Users
-                     WHERE u_id = ?";
+        $sqlQuery = "SELECT u_id,
+                            u_username,
+                            u_password,
+                            concat(u_firstname, ' ', u_lastname) as 'u_fullname',
+                            u_datecreated,
+                            u_avatar,
+                            (
+                                SELECT COUNT(*) 
+                                FROM Posts 
+                                    WHERE p_posterID = u_id AND p_parentID IS NULL
+                            ) 
+                            AS 'u_postcount',
+                            (
+                                SELECT COUNT(*) 
+                                FROM Posts 
+                                    WHERE p_posterID = u_id AND p_parentID IS NOT NULL
+                            ) 
+                            AS 'u_replycount'
+                            FROM Users
+                                WHERE u_id = ?";
+
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$id]);
 
-        $user = $statement->fetch(PDO::FETCH_ASSOC);
+        $user = $statement->fetch();
         return new User($user);
     }
 

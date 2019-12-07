@@ -3,17 +3,26 @@
 
 class User
 {
-    protected $_id, $_username, $_password, $_firstname, $_lastname, $_datecreated, $_avatar;
+    protected
+        $_id,
+        $_username,
+        $_password,
+        $_fullname,
+        $_datecreated,
+        $_avatar,
+        $_postCount,
+        $_replyCount;
 
     public function __construct($dbRow)
     {
         $this->_id = $dbRow['u_id'];
         $this->_username = $dbRow['u_username'];
         $this->_password = $dbRow['u_password'];
-        $this->_firstname = $dbRow['u_firstname'];
-        $this->_lastname = $dbRow['u_lastname'];
+        $this->_fullname = $dbRow['u_fullname'];
         $this->_datecreated = $dbRow['u_datecreated'];
         $this->_avatar = $dbRow['u_avatar'];
+        $this->_postCount = $dbRow['u_postcount'];
+        $this->_replyCount = $dbRow['u_replycount'];
     }
 
     /**
@@ -43,17 +52,9 @@ class User
     /**
      * @return mixed
      */
-    public function getFirstname()
+    public function getFullname()
     {
-        return $this->_firstname;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastname()
-    {
-        return $this->_lastname;
+        return $this->_fullname;
     }
 
     /**
@@ -67,5 +68,15 @@ class User
     public function getAvatar()
     {
         return $this->_avatar;
+    }
+
+    public function getPostCount()
+    {
+        return $this->_postCount;
+    }
+
+    public function getReplyCount()
+    {
+        return $this->_replyCount;
     }
 }

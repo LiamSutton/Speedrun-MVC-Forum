@@ -17,8 +17,8 @@ $user = $userData->getUserByID($id);
 //$user = $userData->getUser($_SESSION['username']);
 $view = new stdClass();
 $view->pageTitle = $user->getUsername() . "'s Account";
-$view->postCount = $postData->getUserPostCount($user->getId());
-$view->replyCount = $postData->getUserReplyCount($user->getId());
+$view->postCount = $user->getPostCount();
+$view->replyCount = $user->getReplyCount()  ;
 $view->userPosts = $postData->getAllUserPosts($user->getId());
 
 $view->user = $user;

@@ -17,7 +17,7 @@ class PostDataset
 
     public function getBasicPosts($categoryID)
     {
-        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, u_username 
+        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, concat(u_firstname, ' ', u_lastname) as 'full_name'
                     FROM Posts 
                     JOIN Users
                     ON p_posterID = u_id
@@ -38,7 +38,7 @@ class PostDataset
 
     public function getPost($p_id)
     {
-        $sqlQuery = "SELECT p_id, p_posterID, p_title, p_posterID,p_content, p_parentID, p_datecreated, p_image, p_categoryID, u_username
+        $sqlQuery = "SELECT p_id, p_posterID, p_title, p_posterID,p_content, p_parentID, p_datecreated, p_image, p_categoryID, concat(u_firstname, ' ', u_lastname) as 'full_name'
                     FROM Posts
                     JOIN Users on p_posterID = u_id
                     WHERE p_id = ?";

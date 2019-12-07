@@ -3,7 +3,16 @@
 
 class Post
 {
-    protected $_id, $_posterID, $_posterUsername, $_title, $_content, $_parentID, $_dateCreated, $_image, $_categoryID;
+    protected
+        $_id,
+        $_posterID,
+        $_posterFullName,
+        $_title,
+        $_content,
+        $_parentID,
+        $_dateCreated,
+        $_image,
+        $_categoryID;
 
     public function __construct()
     {
@@ -22,7 +31,7 @@ class Post
         $instance->_content = $dbRow['p_content'];
         $instance->_parentID = $dbRow['p_parentID'];
         $instance->_dateCreated = $dbRow['p_datecreated'];
-        $instance->_posterUsername = $dbRow['u_username'];
+        $instance->_posterFullName = $dbRow['full_name'];
         $instance->_image = $dbRow['p_image'];
         $instance->_categoryID = $dbRow['p_categoryID'];
 
@@ -36,7 +45,7 @@ class Post
         $instance->_id = $dbRow['p_id'];
         $instance->_title = $dbRow['p_title'];
         $instance->_posterID = $dbRow['p_posterID'];
-        $instance->_posterUsername = $dbRow['u_username'];
+        $instance->_posterFullName = $dbRow['full_name'];
         $instance->_content = $dbRow['p_content'];
 
         return $instance;
@@ -64,9 +73,9 @@ class Post
         return $this->_posterID;
     }
 
-    public function getPosterUsername()
+    public function getPosterFullName()
     {
-        return $this->_posterUsername;
+        return $this->_posterFullName;
     }
 
     /**
