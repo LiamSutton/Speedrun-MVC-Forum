@@ -34,4 +34,27 @@ class MessageData
 
         return $data;
     }
+
+    public function getSentMessages($userID)
+    {
+        $sqlQuery = "SELECT m.m_id, m.m_senderID, m.m_recipientID, m.m_content, s.u_username as 'sender', r.u_username as 'recipient'
+                     FROM Messages m
+                        JOIN Users s on s.u_id = m.m_senderID
+                        JOIN Users r on r.u_id = m.m_senderID
+                            WHERE m.m_senderID = ?
+                     ORDER BY m.m_datecreated DESC";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute([$userID]);
+
+        $data = [];
+
+        while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC))
+        {
+            $data[] = Message::Message($dbRow);
+        }
+
+        $this->_dbInstance->destruct();
+
+        return $data;
+    }
 }
