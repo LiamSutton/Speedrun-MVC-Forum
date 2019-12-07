@@ -12,14 +12,14 @@ class Post
         $_parentID,
         $_dateCreated,
         $_image,
-        $_categoryID;
+        $_categoryID,
+        $_replyCount;
 
     public function __construct()
     {
 
     }
 
-    // TODO: fix difference between fullPost and basicPost (Basic Post contains posterUsername whilst full post doesnt)
     public static function fullPost($dbRow)
     {
         $instance = new self();
@@ -31,7 +31,7 @@ class Post
         $instance->_content = $dbRow['p_content'];
         $instance->_parentID = $dbRow['p_parentID'];
         $instance->_dateCreated = $dbRow['p_datecreated'];
-        $instance->_posterFullName = $dbRow['full_name'];
+        $instance->_posterFullName = $dbRow['u_fullname'];
         $instance->_image = $dbRow['p_image'];
         $instance->_categoryID = $dbRow['p_categoryID'];
 
@@ -45,11 +45,13 @@ class Post
         $instance->_id = $dbRow['p_id'];
         $instance->_title = $dbRow['p_title'];
         $instance->_posterID = $dbRow['p_posterID'];
-        $instance->_posterFullName = $dbRow['full_name'];
+        $instance->_posterFullName = $dbRow['u_fullname'];
         $instance->_content = $dbRow['p_content'];
+        $instance->_replyCount = $dbRow['p_replycount'];
 
         return $instance;
     }
+    // TODO: This needs to go
     public static function reply($dbRow)
     {
         $instance = self::basicPost($dbRow);
@@ -118,6 +120,11 @@ class Post
     public function getCategoryID()
     {
         return $this->_categoryID;
+    }
+
+    public function getReplyCount()
+    {
+        return $this->_replyCount;
     }
 
 }

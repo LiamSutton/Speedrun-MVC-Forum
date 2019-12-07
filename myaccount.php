@@ -18,8 +18,8 @@ $user = $userData->getUserByID($id);
 $view = new stdClass();
 $view->pageTitle = $user->getUsername() . "'s Account";
 $view->postCount = $user->getPostCount();
-$view->replyCount = $user->getReplyCount()  ;
-$view->userPosts = $postData->getAllUserPosts($user->getId());
+$view->replyCount = $user->getReplyCount();
+$view->userPosts = $postData->getAllUserPosts($id);
 
 $view->user = $user;
 require_once ("Views/myaccount.phtml");

@@ -9,6 +9,6 @@ $view->welcomeMessage = "Welcome User!";
 
 if (isset($_SESSION['loggedIn']))
 {
-    $view->user = $userData->getUser($_SESSION['username']);
+    $view->user = $userData->getUserByID($_SESSION['id']);
 }
 require_once ("Views/index.phtml");

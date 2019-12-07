@@ -61,6 +61,7 @@
                     <small><?php echo $post->getPosterFullName() ?></small>
                 </a>
                 <p><?php echo $post->getContent() ?></p>
+                <p>Number of comments: <?php echo $post->getReplyCount() ?></p>
             </div>
         </li>
     <?php }

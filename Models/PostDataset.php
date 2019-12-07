@@ -15,14 +15,26 @@ class PostDataset
         $this->_dbHandle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    public function getAllPosts()
+    {
+
+    }
+
     public function getBasicPosts($categoryID)
     {
-        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, concat(u_firstname, ' ', u_lastname) as 'full_name'
-                    FROM Posts 
-                    JOIN Users
-                    ON p_posterID = u_id
-                    WHERE p_categoryID = ? AND p_parentID is null
-                    ORDER BY p_datecreated DESC";
+        $sqlQuery = "SELECT P.p_id,
+                            P.p_posterID,
+                            P.p_title,
+                           P.p_posterID,
+                           P.p_content,
+                           P.p_parentID,
+                           P.p_datecreated,
+                           concat(u_firstname, ' ', u_lastname) as 'u_fullname',
+                           (SELECT COUNT(*) FROM Posts R WHERE R.p_parentID = P.p_id) as 'p_replycount'
+                    FROM Posts P
+                             JOIN Users on P.p_posterID = u_id
+                    WHERE P.p_parentID IS NULL AND P.p_categoryID = ?
+                    ORDER BY P.p_datecreated DESC";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$categoryID]);
@@ -38,10 +50,21 @@ class PostDataset
 
     public function getPost($p_id)
     {
-        $sqlQuery = "SELECT p_id, p_posterID, p_title, p_posterID,p_content, p_parentID, p_datecreated, p_image, p_categoryID, concat(u_firstname, ' ', u_lastname) as 'full_name'
-                    FROM Posts
-                    JOIN Users on p_posterID = u_id
-                    WHERE p_id = ?";
+        $sqlQuery = "SELECT P.p_id,
+                            P.p_posterID,
+                            P.p_title,
+                           P.p_posterID,
+                           P.p_content,
+                           P.p_parentID,
+                           P.p_datecreated,
+                           P.p_image,
+                           P.p_categoryID,
+                           concat(u_firstname, ' ', u_lastname) as 'u_fullname',
+                           (SELECT COUNT(*) FROM Posts R WHERE R.p_parentID = P.p_id) as 'p_replycount'
+                    FROM Posts P
+                             JOIN Users on P.p_posterID = u_id
+                    WHERE P.p_parentID IS NULL
+                    ORDER BY P.p_datecreated DESC";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$p_id]);
@@ -51,27 +74,14 @@ class PostDataset
         return Post::fullPost($post);
     }
 
-    public function getUserPostCount($u_id)
-    {
-        $sqlQuery = "SELECT COUNT(*)
-                     FROM Posts
-                     WHERE p_posterID = ? AND p_parentID IS NULL";
-        $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$u_id]);
-        $postCount = $statement->fetchColumn();
-        $this->_dbInstance->destruct();
-        return $postCount;
-    }
-
     public function getAllUserPosts($u_id)
     {
-        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, u_username
-                     FROM Posts
-                     LEFT JOIN Users on u_id = ?
-                     WHERE p_posterID = ?
-                     AND p_parentID IS NULL";
+        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, concat(u_firstname, ' ', u_lastname) as 'u_fullname'
+FROM Posts
+    JOIN Users U on Posts.p_posterID = U.u_id
+        WHERE p_posterID = ? AND p_parentID IS NULL";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$u_id, $u_id]);
+        $statement->execute([$u_id]);
 
         $dataSet = array();
         while ($row = $statement->fetch()) {
@@ -81,21 +91,10 @@ class PostDataset
         return $dataSet;
     }
 
-    public function getUserReplyCount($u_id)
-    {
-        $sqlQuery = "SELECT COUNT(*)
-                     FROM Posts
-                     WHERE p_posterID = ? AND p_parentID IS NOT NULL";
-        $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$u_id]);
-        $replyCount = $statement->fetchColumn();
-        $this->_dbInstance->destruct();
-        return $replyCount;
-    }
 
     public function getReplies($p_id)
     {
-        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, p_parentID, u_username, p_image, p_categoryID
+        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, p_parentID, concat(u_firstname, ' ', u_lastname) as 'u_fullname', p_image, p_categoryID
                      FROM Posts
                      JOIN Users ON p_posterID = u_id
                      WHERE p_parentID = ?
@@ -132,6 +131,7 @@ class PostDataset
         $statement->execute([$posterID, $title, $content, $parentID, $image, $categoryID]);
         $this->_dbInstance->destruct();
     }
+
     public function getWatchlist($userID)
     {
         $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, u_username
@@ -145,8 +145,7 @@ class PostDataset
         $statement->execute([$userID]);
 
         $dataSet = array();
-        while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC))
-        {
+        while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC)) {
             array_push($dataSet, Post::basicPost($dbRow));
         }
 
