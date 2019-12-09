@@ -5,6 +5,9 @@
  foreach ($view->userWatchlist as $post)
  { ?>
      <li class="list-group-item list-element">
+         <a href="unsubscribe.php?id=<?php echo $post->getId()?>&from=Watchlist">
+             <i class='fas fa-bookmark icon-lg'></i>
+         </a>
          <a href="fullpost.php?id=<?php echo $post->getId()?>">
              <h3 class="list-group-item-heading"><?php echo $post->getTitle() ?>
              </h3>
@@ -12,7 +15,6 @@
          <a href="myaccount.php?id=<?php echo $post->getPosterID()?>">
              <small><?php echo $post->getPosterFullname() ?></small>
          </a>
-         <a href="unsubscribe.php?id=<?php echo $post->getId()?>&from=Watchlist">Unsubscribe</a>
          <p><?php echo $post->getContent() ?></p>
          <p>Number of Comments: <?php echo $post->getReplyCount() ?></p>
      </li>

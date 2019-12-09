@@ -19,14 +19,14 @@ $loggedIn = isset($_SESSION['loggedIn']);
                         if ($view->isOnWatchlist)
                         { ?>
                             <a href="unsubscribe.php?id=<?php echo $mainPost->getId()?>">
-                                <i class='fas fa-bookmark qa'></i>
+                                <i class='fas fa-bookmark icon-lg'></i>
                             </a>
                             <?php
                         }
                         else
                         { ?>
                             <a href="subscribe.php?id=<?php echo $mainPost->getId()?>">
-                                <i class='far fa-bookmark qa'></i>
+                                <i class='far fa-bookmark icon-lg'></i>
                             </a>
                             <?php
                         }
