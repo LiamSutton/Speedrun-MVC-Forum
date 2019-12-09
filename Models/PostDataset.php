@@ -146,12 +146,17 @@ WHERE p_posterID = ?
 
     public function getWatchlist($userID)
     {
-        $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, u_username
-                    FROM Watchlist
-                    JOIN Posts P ON Watchlist.w_postID = P.p_id
-                    AND w_userID = ?
-                    JOIN Users U ON P.p_posterID = U.u_id
-                    ORDER BY w_datecreated DESC";
+        $sqlQuery = "SELECT 
+                            p_id,
+                           p_title,
+                           p_posterID,
+                           p_content,
+                           concat(u_firstname, ' ', u_lastname) as 'u_fullname',
+                           (SELECT COUNT(*) FROM Posts R WHERE R.p_parentID = P.p_id) AS 'p_replycount'
+                                FROM Watchlist W
+                                    JOIN Posts P on W.w_postID = P.p_id AND w_userID = ?
+                                    JOIN Users U on P.p_posterID = U.u_id
+                                ORDER BY w_datecreated DESC";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$userID]);

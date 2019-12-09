@@ -35,28 +35,14 @@ a:hover {
     margin-bottom: 20px;
 }
 
-.reply
-{
-    margin-top: 20px;
-    margin-bottom: 20px;
-
-}
 
 .reply-button
 {
     width: 100% !important;
 }
 
-.category
+.list-element
 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    -webkit-box-shadow: -4px 7px 5px -1px rgba(0,0,0,0.75);
-    -moz-box-shadow: -4px 7px 5px -1px rgba(0,0,0,0.75);
-    box-shadow: -4px 7px 5px -1px rgba(0,0,0,0.75);
-}
-
-.post {
     margin-top: 20px;
     margin-bottom: 20px;
     -webkit-box-shadow: -4px 7px 5px -1px rgba(0,0,0,0.75);
