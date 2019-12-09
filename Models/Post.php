@@ -51,11 +51,18 @@ class Post
 
         return $instance;
     }
-    // TODO: This needs to go
+
     public static function reply($dbRow)
     {
-        $instance = self::basicPost($dbRow);
-        $instance->_image = $dbRow['p_image'];
+        $instance = new self();
+
+        $instance->_id = $dbRow['p_id'];
+        $instance->_posterID = $dbRow['p_posterID'];
+        $instance->_title = $dbRow['p_title'];
+        $instance->_posterFullName = $dbRow['u_fullname'];
+        $instance->_content = $dbRow['p_content'];
+
+        return $instance;
 
         return $instance;
     }
