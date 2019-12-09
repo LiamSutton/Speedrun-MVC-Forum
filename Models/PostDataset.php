@@ -34,7 +34,7 @@ class PostDataset
                     FROM Posts P
                              JOIN Users on P.p_posterID = u_id
                     WHERE P.p_parentID IS NULL AND P.p_categoryID = ?
-                    ORDER BY P.p_datecreated DESC";
+                    ORDER BY p_replycount, p_datecreated DESC ";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$categoryID]);
