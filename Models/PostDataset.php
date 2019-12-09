@@ -63,7 +63,7 @@ class PostDataset
                            (SELECT COUNT(*) FROM Posts R WHERE R.p_parentID = P.p_id) as 'p_replycount'
                     FROM Posts P
                              JOIN Users on P.p_posterID = u_id
-                    WHERE P.p_parentID IS NULL
+                    WHERE P.p_id = ?
                     ORDER BY P.p_datecreated DESC";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
