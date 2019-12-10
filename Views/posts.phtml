@@ -2,11 +2,6 @@
 
 <?php if (isset($_SESSION['loggedIn'])) { ?>
     <div>
-        <button type="button" class="btn btn-primary" data-toggle="modal"
-                data-target="#createPost">
-            New Post
-        </button>
-
         <div class="modal fade" tabindex="-1" id="createPost">"
             role="dialog">
             <div class="modal-dialog" role="document">
@@ -67,6 +62,11 @@
     <?php }
     ?>
 </ul>
+
+<button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal"
+        data-target="#createPost">
+    New Post
+</button>
 
 
 <?php require_once ("template/pagination.phtml") ?>

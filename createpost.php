@@ -54,5 +54,6 @@ if (isset($_POST['submit']))
     }
 
     // Redirect
-    header("Location: posts.php?categoryID=$categoryID");
+    //TODO: Hard coding this might not be the best way
+    header("Location: posts.php?categoryID=$categoryID&page=1&limit=25");
 }

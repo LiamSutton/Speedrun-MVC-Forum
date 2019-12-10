@@ -35,7 +35,7 @@ class PostDataset
                     FROM Posts P
                              JOIN Users on P.p_posterID = u_id
                     WHERE P.p_parentID IS NULL AND P.p_categoryID = :categoryID
-                    ORDER BY p_replycount DESC , p_datecreated DESC
+                    ORDER BY  p_datecreated DESC
                     LIMIT :offset, :limit";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
