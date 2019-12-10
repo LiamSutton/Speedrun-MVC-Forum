@@ -10,7 +10,9 @@ $postDataSet = new PostDataset();
 $categoryData = new CategoryData();
 
 $categoryID = $_GET['categoryID'];
-$view->posts = $postDataSet->getBasicPosts($categoryID);
+$page = $_GET['page'];
+$limit = $_GET['limit'];
+$view->posts = $postDataSet->getBasicPosts($categoryID, $limit, $page);
 
 // TODO: Maybe a better way of doing this?
 $view->categoryName = $categoryData->getCategoryName($categoryID);

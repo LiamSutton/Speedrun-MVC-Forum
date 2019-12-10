@@ -20,8 +20,9 @@ class PostDataset
 
     }
 
-    public function getBasicPosts($categoryID)
+    public function getBasicPosts($categoryID, $limit, $page)
     {
+        $offset = ($page - 1) * $limit;
         $sqlQuery = "SELECT P.p_id,
                             P.p_posterID,
                             P.p_title,
@@ -33,11 +34,16 @@ class PostDataset
                            (SELECT COUNT(*) FROM Posts R WHERE R.p_parentID = P.p_id) as 'p_replycount'
                     FROM Posts P
                              JOIN Users on P.p_posterID = u_id
-                    WHERE P.p_parentID IS NULL AND P.p_categoryID = ?
-                    ORDER BY p_replycount DESC , p_datecreated DESC ";
+                    WHERE P.p_parentID IS NULL AND P.p_categoryID = :categoryID
+                    ORDER BY p_replycount DESC , p_datecreated DESC
+                    LIMIT :offset, :limit";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$categoryID]);
+
+        $statement->bindValue(':categoryID', $categoryID, PDO::PARAM_INT);
+        $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $statement->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $statement->execute();
         $dataSet = array();
         while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC)) {
             array_push($dataSet, Post::basicPost($dbRow));
