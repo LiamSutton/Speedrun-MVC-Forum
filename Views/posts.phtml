@@ -1,6 +1,7 @@
 <?php require_once("template/header.phtml"); ?>
 
 <h1 class="text-center display-4"><?php echo $view->categoryName ?></h1>
+<?php require_once("template/searchbar.phtml"); ?>
 <ul class="list-group">
     <?php
     foreach ($view->posts as $post) { ?>

@@ -1,0 +1,28 @@
+<form class="form-inline"
+      action="posts.php?categoryID=<?php echo $view->currentCategory?>&page=1"
+      method="POST">
+    <div class="form-group">
+        <label class="label">Post Title: </label>
+        <input class="form-control" type="text" name="title">
+
+        <label class="label"># of posts per page</label>
+        <select name="limit">
+            <option>5</option>
+            <option>10</option>
+            <option>15</option>
+            <option>20</option>
+            <option>25</option>
+            <option>50</option>
+        </select>
+
+        <label>Sort By</label>
+        <select name="sort">
+            <option>Newest First</option>
+            <option>Oldest First</option>
+            <option>Most Comments</option>
+            <option>Least Comments</option>
+        </select>
+    </div>
+
+    <input type="submit" name="submit">
+</form>

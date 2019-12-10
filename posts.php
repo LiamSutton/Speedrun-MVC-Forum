@@ -9,12 +9,20 @@ $view->pageTitle = "Posts";
 $postDataSet = new PostDataset();
 $categoryData = new CategoryData();
 
-$categoryID = $_GET['categoryID'];
+if (isset($_POST['submit']))
+{
+    $title = $_POST['title'];
+    $limit = $_POST['limit'];
+}
+else
+{
+    $limit = $_GET['limit'];
+}
 $page = $_GET['page'];
-$limit = $_GET['limit'];
+$categoryID = $_GET['categoryID'];
 $view->posts = $postDataSet->getBasicPosts($categoryID, $limit, $page);
 
-$view->pageCount =  $postDataSet->getPageCount($categoryID, $limit);
+$view->pageCount = $postDataSet->getPageCount($categoryID, $limit);
 
 // TODO: Maybe a better way of doing this?
 $view->categoryName = $categoryData->getCategoryName($categoryID);
@@ -24,5 +32,6 @@ $view->next2 = $view->nextPage+1;
 $view->previousPage = $page-1;
 $view->previous2 = $view->previousPage-1;
 $view->currentCategory = $categoryID;
+$view->limit = $limit;
 
 require_once ("Views/posts.phtml");

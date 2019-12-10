@@ -9,14 +9,14 @@
 
         <li class="page-item">
             <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previous2?>&limit=2">
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previous2?>&limit=<?php echo $view->limit ?>">
                 <?php echo $view->previous2?>
             </a>
         </li>
 
         <li class="page-item">
             <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previousPage?>&limit=2">
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previousPage?>&limit=<?php echo $view->limit ?>">
                 <?php echo $view->previousPage?>
             </a>
         </li>
@@ -28,21 +28,21 @@
 
         <li class="page-item">
             <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=2">
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=<?php echo $view->limit ?>">
                 <?php echo $view->nextPage?>
             </a>
         </li>
 
         <li class="page-item">
             <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->next2?>&limit=2">
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->next2?>&limit=<?php echo $view->limit ?>">
                 <?php echo $view->next2?>
             </a>
         </li>
 
         <li class="page-item">
             <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=2">
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=<?php echo $view->limit ?>">
                 Next
             </a>
         </li>
