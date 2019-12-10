@@ -6,7 +6,7 @@
                 data-target="#createPost">
             New Post
         </button>
-        <p><?php echo $view->pageCount ?></p>
+        
         <div class="modal fade" tabindex="-1" id="createPost">"
             role="dialog">
             <div class="modal-dialog" role="document">
@@ -67,4 +67,12 @@
     <?php }
     ?>
 </ul>
+<a type="button" class="btn btn-secondary" role="button"
+        href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previousPage?>&limit=2">
+    Previous
+</a>
+<a type="button" class="btn btn-primary" role="button"
+        href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=2">
+    Next
+</a>
 <?php require_once("template/footer.phtml"); ?>
