@@ -83,14 +83,14 @@ class PostDataset
     {
         $sqlQuery = "SELECT COUNT(*)
                      FROM Posts
-                     WHERE p_categoryID = :categoryID";
+                     WHERE p_categoryID = :categoryID and p_parentID IS NULL";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->bindValue('categoryID', $categoryID);
 
         $statement->execute();
 
-        $postCount = $statement->fetchColumn(0);
+        $postCount = $statement->fetchColumn();
         $pageCount = ceil($postCount / $limit);
 
         return $pageCount;
@@ -109,10 +109,11 @@ class PostDataset
                             WHERE R.p_parentID = P.p_id
                     ) 
                     AS 'p_replycount'
-FROM Posts P
-         JOIN Users U on  P.p_posterID = U.u_id
-WHERE p_posterID = ?
-  AND p_parentID IS NULL";
+                    FROM Posts P
+                        JOIN Users U on  P.p_posterID = U.u_id
+                    WHERE p_posterID = ?
+                    AND p_parentID IS NULL";
+
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->execute([$u_id]);
 
