@@ -20,7 +20,9 @@ $view->pageCount =  $postDataSet->getPageCount($categoryID, $limit);
 $view->categoryName = $categoryData->getCategoryName($categoryID);
 $view->currentPage = $page;
 $view->nextPage = $page+1;
+$view->next2 = $view->nextPage+1;
 $view->previousPage = $page-1;
+$view->previous2 = $view->previousPage-1;
 $view->currentCategory = $categoryID;
 
 require_once ("Views/posts.phtml");

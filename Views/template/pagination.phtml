@@ -1,0 +1,50 @@
+<nav id="pagination" aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link"
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previousPage?>&limit=2">
+                Previous
+            </a>
+        </li>
+
+        <li class="page-item">
+            <a class="page-link"
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previous2?>&limit=2">
+                <?php echo $view->previous2?>
+            </a>
+        </li>
+
+        <li class="page-item">
+            <a class="page-link"
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previousPage?>&limit=2">
+                <?php echo $view->previousPage?>
+            </a>
+        </li>
+
+        <li class="page-item active"><a class="page-link" href="#">
+                <?php echo $view->currentPage ?>
+            </a>
+        </li>
+
+        <li class="page-item">
+            <a class="page-link"
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=2">
+                <?php echo $view->nextPage?>
+            </a>
+        </li>
+
+        <li class="page-item">
+            <a class="page-link"
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->next2?>&limit=2">
+                <?php echo $view->next2?>
+            </a>
+        </li>
+
+        <li class="page-item">
+            <a class="page-link"
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=2">
+                Next
+            </a>
+        </li>
+    </ul>
+</nav>
