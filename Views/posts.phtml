@@ -1,6 +1,32 @@
 <?php require_once("template/header.phtml"); ?>
 
+<h1 class="text-center display-4"><?php echo $view->categoryName ?></h1>
+<ul class="list-group">
+    <?php
+    foreach ($view->posts as $post) { ?>
+        <li class="list-group-item list-element">
+            <div>
+                <a href="fullpost.php?id=<?php echo $post->getId() ?>">
+                    <h3 class="list-group-item-heading"><?php echo $post->getTitle() ?></h3>
+                </a>
+                <a href="myaccount.php?id=<?php echo $post->getPosterID()?>">
+                    <small><?php echo $post->getPosterFullName() ?></small>
+                </a>
+                <p><?php echo $post->getContent() ?></p>
+                <p>Number of comments: <?php echo $post->getReplyCount() ?></p>
+            </div>
+        </li>
+    <?php }
+    ?>
+</ul>
+
 <?php if (isset($_SESSION['loggedIn'])) { ?>
+
+    <button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal"
+            data-target="#createPost">
+        New Post
+    </button>
+
     <div>
         <div class="modal fade" tabindex="-1" id="createPost">"
             role="dialog">
@@ -43,31 +69,6 @@
     </div>
 <?php }
 ?>
-<h1 class="text-center display-4"><?php echo $view->categoryName ?></h1>
-<ul class="list-group">
-    <?php
-    foreach ($view->posts as $post) { ?>
-        <li class="list-group-item list-element">
-            <div>
-                <a href="fullpost.php?id=<?php echo $post->getId() ?>">
-                    <h3 class="list-group-item-heading"><?php echo $post->getTitle() ?></h3>
-                </a>
-                <a href="myaccount.php?id=<?php echo $post->getPosterID()?>">
-                    <small><?php echo $post->getPosterFullName() ?></small>
-                </a>
-                <p><?php echo $post->getContent() ?></p>
-                <p>Number of comments: <?php echo $post->getReplyCount() ?></p>
-            </div>
-        </li>
-    <?php }
-    ?>
-</ul>
-
-<button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal"
-        data-target="#createPost">
-    New Post
-</button>
-
 
 <?php require_once ("template/pagination.phtml") ?>
 
