@@ -14,6 +14,8 @@ $page = $_GET['page'];
 $limit = $_GET['limit'];
 $view->posts = $postDataSet->getBasicPosts($categoryID, $limit, $page);
 
+$view->pageCount =  $postDataSet->getPageCount($categoryID, $limit);
+
 // TODO: Maybe a better way of doing this?
 $view->categoryName = $categoryData->getCategoryName($categoryID);
 

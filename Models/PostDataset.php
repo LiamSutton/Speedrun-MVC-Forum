@@ -79,7 +79,22 @@ class PostDataset
         $this->_dbInstance->destruct();
         return Post::fullPost($post);
     }
+    public function getPageCount($categoryID, $limit)
+    {
+        $sqlQuery = "SELECT COUNT(*)
+                     FROM Posts
+                     WHERE p_categoryID = :categoryID";
 
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->bindValue('categoryID', $categoryID);
+
+        $statement->execute();
+
+        $postCount = $statement->fetchColumn(0);
+        $pageCount = ceil($postCount / $limit);
+
+        return $pageCount;
+    }
     public function getAllUserPosts($u_id)
     {
         $sqlQuery = "SELECT 
