@@ -85,10 +85,13 @@ class UserDataset
                             ) 
                             AS 'u_replycount'
                             FROM Users
-                                WHERE u_id = ?";
+                                WHERE u_id = :id";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$id]);
+
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $statement->execute();
 
         $user = $statement->fetch();
         return new User($user);
@@ -97,11 +100,22 @@ class UserDataset
     // TODO: Add error handling (currently returns true even if it fails?)
     public function createUser($username, $password, $firstname, $lastname, $avatar=null)
     {
+        $password = password_hash($password, PASSWORD_DEFAULT);
+
         $sqlQuery = "INSERT INTO Users (u_username, u_password, u_firstname, u_lastname, u_datecreated, u_avatar)
-                     VALUES (?, ?, ?, ?, NOW(), ?)";
+                     VALUES (:username, :password, :firstname, :lastname, NOW(), :avatar)";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$username, $password, $firstname, $lastname, $avatar]);
+
+        $statement->bindValue(':username', $username, PDO::PARAM_STR);
+        $statement->bindValue(':password', $password, PDO::PARAM_STR);
+        $statement->bindValue(':firstname', $firstname, PDO::PARAM_STR);
+        $statement->bindValue(':lastname', $lastname, PDO::PARAM_STR);
+        $statement->bindValue(':avatar', $avatar, PDO::PARAM_STR);
+
+        $statement->execute();
+
         $this->_dbInstance->destruct();
+
         return true;
     }
 }

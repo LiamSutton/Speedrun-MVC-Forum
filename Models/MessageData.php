@@ -19,10 +19,13 @@ class MessageData
         from Messages m
             join Users s on m.m_senderID = s.u_id
             join Users r on m.m_recipientID = r.u_id
-                where m.m_recipientID = ?
+                where m.m_recipientID = :id
         ORDER BY m_datecreated DESC";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$userID]);
+
+        $statement->bindValue(':id', $userID, PDO::PARAM_INT);
+
+        $statement->execute();
 
         $data = [];
         while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC))
@@ -41,10 +44,14 @@ class MessageData
                      FROM Messages m
                         JOIN Users s on s.u_id = m.m_senderID
                         JOIN Users r on r.u_id = m.m_senderID
-                            WHERE m.m_senderID = ?
+                            WHERE m.m_senderID = :id
                      ORDER BY m.m_datecreated DESC";
+
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$userID]);
+
+        $statement->bindValue(':id', $userID, PDO::PARAM_INT);
+
+        $statement->execute();
 
         $data = [];
 

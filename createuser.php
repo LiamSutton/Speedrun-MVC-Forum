@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
             }
             // Setup user details
             $username = $_POST['username'];
-            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $password = $_POST['password'];
             $firstname = $_POST['firstname'];
             $lastname = $_POST['lastname'];
 
