@@ -37,8 +37,8 @@ $view->distMax = $view->pageCount - $page;
 $view->distMin = $page - 1;
 
 $view->renderBelow = $view->distMin;
-echo "<h2>DIST MAX $view->distMax</h2>";
-echo "<h2>DIST MIN $view->distMin</h2>";
+//echo "<h2>DIST MAX $view->distMax</h2>";
+//echo "<h2>DIST MIN $view->distMin</h2>";
 // TODO: Maybe a better way of doing this?
 $view->categoryName = $categoryData->getCategoryName($categoryID);
 $view->currentPage = $page;
