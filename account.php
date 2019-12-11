@@ -22,4 +22,4 @@ $view->replyCount = $user->getReplyCount();
 $view->userPosts = $postData->getAllUserPosts($id);
 
 $view->user = $user;
-require_once ("Views/myaccount.phtml");
+require_once("Views/account.phtml");

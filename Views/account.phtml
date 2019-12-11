@@ -26,7 +26,7 @@
         foreach ($view->userPosts as $post) { ?>
             <li class="list-group-item list-element">
                 <h3> <a href="fullpost.php?id=<?php echo $post->getId() ?>"> <?php echo $post->getTitle() ?></a></h3>
-                <small> <a href="myaccount.php?id=<?php echo $post->getPosterId()?>"><?php echo $post->getPosterFullName()?></a></small>
+                <small> <a href="account.php?id=<?php echo $post->getPosterId()?>"><?php echo $post->getPosterFullName()?></a></small>
                 <p><?php echo $post->getContent() ?></p>
                 <p>Number Of Comments: <?php echo $post->getReplyCount() ?></p>
             </li>
