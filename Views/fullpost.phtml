@@ -80,7 +80,7 @@ $loggedIn = isset($_SESSION['loggedIn']);
                                     </div>
 
                                     <!-- Only handles top level reply at the moment -->
-                                    <form action="reply.php?id=<?php echo $mainPost->getId()?>&&categoryID=<?php echo $mainPost->getCategoryID() ?>" method="post">
+                                    <form action="createReply.php?id=<?php echo $mainPost->getId()?>&&categoryID=<?php echo $mainPost->getCategoryID() ?>" method="post">
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="title">Title</label>

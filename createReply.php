@@ -36,7 +36,7 @@ if (isset($_POST['submit']))
             $categoryID = $_GET['categoryID'];
 
             // Commit new Reply to the db
-            $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID, NULL, $categoryID);
+            $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID, $categoryID);
         }
         else
         {

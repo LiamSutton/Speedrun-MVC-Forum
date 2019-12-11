@@ -216,7 +216,7 @@ class PostDataset
 
     public function getWatchlist($userID)
     {
-        $sqlQuery = "SELECT 
+        $sqlQuery = "SELECT r
                             p_id,
                            p_title,
                            p_posterID,
