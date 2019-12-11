@@ -27,8 +27,6 @@ class PostDataset
         // clamp limit value
         $limit = $limit > 25 ? 25 : $limit;
 
-        // increment limit as LIMIT is exclusive not inclusive
-        $limit++;
 
         switch ($sortBy):
             case 1:
@@ -44,52 +42,48 @@ class PostDataset
                 $sortBy = "p_replycount";
                 break;
             default:
-                $sort = "p_replycount DESC";
+                $sortBy = "p_replycount DESC";
         endswitch;
+
 
         $offset = ($page - 1) * $limit;
 
-        $sqlQuery = "SELECT P.p_id,
-                            P.p_posterID,
-                            P.p_title,
-                           P.p_posterID,
-                           P.p_content,
-                           P.p_parentID,
-                           P.p_datecreated,
-                           concat(u_firstname, ' ', u_lastname) as 'u_fullname',
-                           (SELECT COUNT(*) FROM Posts R WHERE R.p_parentID = P.p_id) as 'p_replycount'
-                    FROM Posts P
-                             JOIN Users on P.p_posterID = u_id
-                    WHERE P.p_parentID IS NULL AND P.p_categoryID = :categoryID AND  P.p_title LIKE concat(:title, '%')
-                    ORDER BY $sortBy
-                    LIMIT :limit OFFSET :offset";
+        $sqlQuery = "SELECT 
+                P.p_id,
+                P.p_posterID,
+                P.p_title,
+                P.p_posterID,
+                P.p_content,
+                P.p_parentID,
+                P.p_datecreated,
+                concat(u_firstname, ' ', u_lastname) as 'u_fullname',
+                (SELECT COUNT(*) FROM Posts R WHERE R.p_parentID = P.p_id) as 'p_replycount'
+                FROM Posts P
+                JOIN Users on P.p_posterID = u_id
+                WHERE p_categoryID = :categoryID
+                AND p_parentID IS NULL
+                AND p_title LIKE CONCAT(:title, '%')
+                ORDER BY $sortBy
+                LIMIT :limit OFFSET :offset";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
 
+//        echo "<pre>$sqlQuery</pre>";
         $statement->bindValue(':categoryID', $categoryID, PDO::PARAM_INT);
         $statement->bindValue(':title', $title, PDO::PARAM_STR);
         $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
         $statement->bindValue(':offset', $offset, PDO::PARAM_INT);
 
+        $statement->execute();
 
-            $statement->execute();
+        $data = array();
 
-
-
-        $result = $statement->fetch();
-        $dataSet = array();
-        if ($statement->rowCount() != 0)
+        while ($dbRow = $statement->fetch())
         {
-            while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC)) {
-                array_push($dataSet, Post::basicPost($dbRow));
-            }
-
+            array_push($data, POST::basicPost($dbRow));
         }
 
-
-        $this->_dbInstance->destruct();
-
-        return $dataSet;
+        return $data;
 
     }
 
@@ -120,6 +114,7 @@ class PostDataset
         $this->_dbInstance->destruct();
         return Post::fullPost($post);
     }
+
     public function getPageCount($categoryID, $limit, $title)
     {
         $sqlQuery = "SELECT COUNT(*)
@@ -139,6 +134,7 @@ class PostDataset
 
         return $pageCount;
     }
+
     public function getAllUserPosts($u_id)
     {
         $sqlQuery = "SELECT 
@@ -228,11 +224,6 @@ class PostDataset
         $statement->execute();
         $this->_dbInstance->destruct();
     }
-
-
-
-
-
 
 
 }
