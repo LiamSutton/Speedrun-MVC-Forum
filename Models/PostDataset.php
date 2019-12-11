@@ -41,7 +41,9 @@ class PostDataset
             default:
                 $sort = "p_replycount DESC";
         endswitch;
+
         $offset = ($page - 1) * $limit;
+
         $sqlQuery = "SELECT P.p_id,
                             P.p_posterID,
                             P.p_title,
@@ -91,11 +93,13 @@ class PostDataset
                            (SELECT COUNT(*) FROM Posts R WHERE R.p_parentID = P.p_id) as 'p_replycount'
                     FROM Posts P
                              JOIN Users on P.p_posterID = u_id
-                    WHERE P.p_id = ?
+                    WHERE P.p_id = :id
                     ORDER BY P.p_datecreated DESC";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$p_id]);
+
+        $statement->bindValue(':id', $p_id, PDO::PARAM_INT);
+        $statement->execute();
 
         $post = $statement->fetch(PDO::FETCH_ASSOC);
         $this->_dbInstance->destruct();
@@ -136,11 +140,13 @@ class PostDataset
                     AS 'p_replycount'
                     FROM Posts P
                         JOIN Users U on  P.p_posterID = U.u_id
-                    WHERE p_posterID = ?
+                    WHERE p_posterID = :id
                     AND p_parentID IS NULL";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$u_id]);
+        $statement->bindValue(':id', $u_id, PDO::PARAM_INT);
+
+        $statement->execute();
 
         $dataSet = array();
         while ($row = $statement->fetch()) {
@@ -156,10 +162,13 @@ class PostDataset
         $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, p_parentID, concat(u_firstname, ' ', u_lastname) as 'u_fullname', p_image, p_categoryID
                      FROM Posts
                      JOIN Users ON p_posterID = u_id
-                     WHERE p_parentID = ?
+                     WHERE p_parentID = :id
                      ORDER BY p_datecreated";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$p_id]);
+
+        $statement->bindValue(':id', $p_id, PDO::PARAM_INT);
+
+        $statement->execute();
 
         $dataSet = array();
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
@@ -174,20 +183,34 @@ class PostDataset
     {
         $sqlQuery = "INSERT INTO Posts
                      (p_posterID, p_title, p_content, p_parentID, p_datecreated, p_image, p_categoryID) 
-                     VALUES (?, ?, ?, NULL, current_timestamp(3), ?, ?)";
+                     VALUES (:id, :title, :content, NULL, current_timestamp(3), :image, :categoryID)";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$posterID, $title, $content, $image, $categoryID]);
+
+        $statement->bindValue(':id', $posterID, PDO::PARAM_INT);
+        $statement->bindValue(':title', $title, PDO::PARAM_STR);
+        $statement->bindValue(':content', $content, PDO::PARAM_STR);
+        $statement->bindValue(':image', $image, PDO::PARAM_STR);
+        $statement->bindValue(':categoryID', $categoryID, PDO::PARAM_INT);
+
+        $statement->execute();
         $this->_dbInstance->destruct();
     }
 
     // TODO: Maybe should return true if succeeds?
-    public function createReply($posterID, $title, $content, $parentID, $image, $categoryID)
+    public function createReply($posterID, $title, $content, $parentID, $categoryID)
     {
         $sqlQuery = "INSERT INTO Posts
-                     (p_posterID, p_title, p_content, p_parentID, p_datecreated, p_image, p_categoryID) 
-                     VALUES (?, ?, ?, ?, NOW(), ?, ?)";
+                     (p_posterID, p_title, p_content, p_parentID, p_datecreated, p_categoryID) 
+                     VALUES (:id, :title, :content, :parentID, NOW(), :categoryID)";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$posterID, $title, $content, $parentID, $image, $categoryID]);
+
+        $statement->bindValue(':id', $posterID, PDO::PARAM_INT);
+        $statement->bindValue(':title', $title, PDO::PARAM_STR);
+        $statement->bindValue(':content', $content, PDO::PARAM_STR);
+        $statement->bindValue(':parentID', $parentID, PDO::PARAM_INT);
+        $statement->bindValue(':categoryID', $categoryID, PDO::PARAM_INT);
+
+        $statement->execute();
         $this->_dbInstance->destruct();
     }
 
@@ -201,12 +224,15 @@ class PostDataset
                            concat(u_firstname, ' ', u_lastname) as 'u_fullname',
                            (SELECT COUNT(*) FROM Posts R WHERE R.p_parentID = P.p_id) AS 'p_replycount'
                                 FROM Watchlist W
-                                    JOIN Posts P on W.w_postID = P.p_id AND w_userID = ?
+                                    JOIN Posts P on W.w_postID = P.p_id AND w_userID = :id
                                     JOIN Users U on P.p_posterID = U.u_id
                                 ORDER BY w_datecreated DESC";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$userID]);
+
+        $statement->bindValue(':id', $userID, PDO::PARAM_INT);
+
+        $statement->execute();
 
         $dataSet = array();
         while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC)) {
@@ -221,9 +247,13 @@ class PostDataset
     public function addToWatchlist($userID, $postID)
     {
         $sqlQuery = "INSERT INTO Watchlist (w_userID, w_postID, w_datecreated) 
-                     VALUES (?, ?, CURRENT_TIMESTAMP(3))";
+                     VALUES (:userID, :postID, CURRENT_TIMESTAMP(3))";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$userID, $postID]);
+
+        $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
+        $statement->bindValue(':postID', $postID, PDO::PARAM_INT);
+
+        $statement->execute();
 
         $this->_dbInstance->destruct();
 
@@ -233,9 +263,13 @@ class PostDataset
     public function removeFromWatchlist($userID, $postID)
     {
         $sqlQuery = "DELETE FROM Watchlist
-                     WHERE w_userID = ? AND w_postID = ?";
+                     WHERE w_userID = :userID AND w_postID = :postID";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$userID, $postID]);
+
+        $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
+        $statement->bindValue(':postID', $postID, PDO::PARAM_INT);
+
+        $statement->execute();
 
         $this->_dbInstance->destruct();
 
@@ -245,9 +279,13 @@ class PostDataset
     public function isOnWatchlist($userID, $postID)
     {
         $sqlQuery = "SELECT * FROM Watchlist
-                     WHERE w_userID = ? AND w_postID = ?";
+                     WHERE w_userID = :userID AND w_postID = :postID";
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$userID, $postID]);
+
+        $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
+        $statement->bindValue(':postID', $postID, PDO::PARAM_INT);
+
+        $statement->execute();
 
         $this->_dbInstance->destruct();
 
