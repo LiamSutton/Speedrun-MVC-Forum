@@ -1,50 +1,63 @@
 <nav id="pagination" aria-label="Page navigation example">
     <ul class="pagination justify-content-centre">
-        <li class="page-item">
+
+        <li class="page-item <?php if($view->currentPage <= 1) echo "disabled" ?>">
             <a class="page-link"
                href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previousPage?>&limit=<?php echo $view->limit?>&sort=<?php echo $view->sortBy?>&title=<?php echo $view->title?>">
                 Previous
             </a>
         </li>
 
-        <li class="page-item">
+        <?php
+            // Generate Lower
+        $i = -4;
+        while ($i < 0)
+        {
+            if ($i + $view->currentPage > 0)
+            { ?>
+                <li class="page-item">
+                    <a class="page-link"
+                       href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $i + $view->currentPage?>&limit=<?php echo $view->limit?>&sort=<?php echo $view->sortBy?>&title=<?php echo $view->title?>">
+                        <?php echo $i + $view->currentPage ?>
+                    </a>
+                </li>
+            <?php
+            }
+            $i++;
+        }
+        ?>
+<!--        Generate middle-->
+        <li class="page-item active">
             <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previous2?>&limit=<?php echo $view->limit ?>&sort=<?php echo $view->sortBy?>&title=<?php echo $view->title?>">
-                <?php echo $view->previous2?>
-            </a>
-        </li>
-
-        <li class="page-item">
-            <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previousPage?>&limit=<?php echo $view->limit?>&sort=<?php echo $view->sortBy?>&title=<?php echo $view->title?>">
-                <?php echo $view->previousPage?>
-            </a>
-        </li>
-
-        <li class="page-item active"><a class="page-link" href="#">
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->currentPage?>&limit=<?php echo $view->limit?>&sort=<?php echo $view->sortBy?>&title=<?php echo $view->title?>">
                 <?php echo $view->currentPage ?>
             </a>
         </li>
 
-        <li class="page-item">
-            <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=<?php echo $view->limit ?>&sort=<?php echo $view->sortBy?>&title=<?php echo $view->title?>">
-                <?php echo $view->nextPage?>
-            </a>
-        </li>
+        <?php
+        // Generate Lower
+        $i = $view->currentPage + 1;
 
-        <li class="page-item">
-            <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->next2?>&limit=<?php echo $view->limit ?>&sort=<?php echo $view->sortBy?>&title=<?php echo $view->title?>">
-                <?php echo $view->next2?>
-            </a>
-        </li>
+        while ($i < $view->currentPage + 5 && $i < $view->pageCount +1)
+        {
+            ?>
+            <li class="page-item">
+                <a class="page-link"
+                   href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $i ?>&limit=<?php echo $view->limit?>&sort=<?php echo $view->sortBy?>&title=<?php echo $view->title?>">
+                    <?php echo $i?>
+                </a>
+            </li>
+            <?php
+            $i++;
+        }
+        ?>
 
-        <li class="page-item">
+        <li class="page-item <?php if($view->currentPage == $view->pageCount) echo "disabled" ?>">
             <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=<?php echo $view->limit?>&sort=<?php echo $view->sortBy ?>&title=<?php echo $view->title?>">
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=<?php echo $view->limit?>&sort=<?php echo $view->sortBy?>&title=<?php echo $view->title?>">
                 Next
             </a>
         </li>
+
     </ul>
 </nav>

@@ -27,10 +27,18 @@ $page = $_GET['page'];
 $page = $page > 0 ? $page: 1;
 
 $categoryID = $_GET['categoryID'];
-$view->posts = $postDataSet->getBasicPosts($categoryID, $limit, $page, $sortBy, $title);
-
 $view->pageCount = $postDataSet->getPageCount($categoryID, $limit, $title);
 
+$page = $page < $view->pageCount ? $page : $view->pageCount;
+
+$view->posts = $postDataSet->getBasicPosts($categoryID, $limit, $page, $sortBy, $title);
+
+$view->distMax = $view->pageCount - $page;
+$view->distMin = $page - 1;
+
+$view->renderBelow = $view->distMin;
+echo "<h2>DIST MAX $view->distMax</h2>";
+echo "<h2>DIST MIN $view->distMin</h2>";
 // TODO: Maybe a better way of doing this?
 $view->categoryName = $categoryData->getCategoryName($categoryID);
 $view->currentPage = $page;
