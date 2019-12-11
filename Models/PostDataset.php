@@ -12,7 +12,7 @@ class PostDataset
     {
         $this->_dbInstance = Database::getInstance();
         $this->_dbHandle = $this->_dbInstance->getConnection();
-        $this->_dbHandle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->_dbHandle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
     public function getAllPosts()
@@ -23,20 +23,25 @@ class PostDataset
     public function getBasicPosts($categoryID, $limit, $page, $sortBy, $title)
     {
         // TODO: note: placeholders (ie: :sort) cannot be used in an ORDER BY clause therefore variable must be passed in as it cannot be bound :( luckily the variable im using cannot be injected as a conversion happens before hand
+
+        // clamp limit value
         $limit = $limit > 25 ? 25 : $limit;
+
+        // increment limit as LIMIT is exclusive not inclusive
+        $limit++;
 
         switch ($sortBy):
             case 1:
                 $sortBy = 'P.p_datecreated DESC';
                 break;
             case 2:
-                $sortBy = "P.p_datecreated ASC";
+                $sortBy = "P.p_datecreated";
                 break;
             case 3:
                 $sortBy = "p_replycount DESC";
                 break;
             case 4:
-                $sortBy = "p_replycount ASC";
+                $sortBy = "p_replycount";
                 break;
             default:
                 $sort = "p_replycount DESC";
@@ -55,9 +60,9 @@ class PostDataset
                            (SELECT COUNT(*) FROM Posts R WHERE R.p_parentID = P.p_id) as 'p_replycount'
                     FROM Posts P
                              JOIN Users on P.p_posterID = u_id
-                    WHERE P.p_parentID IS NULL AND P.p_categoryID = :categoryID AND P.p_title LIKE concat(:title, '%')
+                    WHERE P.p_parentID IS NULL AND P.p_categoryID = :categoryID AND  P.p_title LIKE concat(:title, '%')
                     ORDER BY $sortBy
-                    LIMIT :offset, :limit";
+                    LIMIT :limit OFFSET :offset";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
 
@@ -67,15 +72,25 @@ class PostDataset
         $statement->bindValue(':offset', $offset, PDO::PARAM_INT);
 
 
-        $statement->execute();
+            $statement->execute();
+
+
+
+        $result = $statement->fetch();
         $dataSet = array();
-        while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC)) {
-            array_push($dataSet, Post::basicPost($dbRow));
+        if ($statement->rowCount() != 0)
+        {
+            while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC)) {
+                array_push($dataSet, Post::basicPost($dbRow));
+            }
+
         }
+
 
         $this->_dbInstance->destruct();
 
         return $dataSet;
+
     }
 
     public function getPost($p_id)

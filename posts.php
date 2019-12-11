@@ -22,14 +22,13 @@ else
     $sortBy = $_GET['sort'];
 }
 
-
-$page = $_GET['page'];
-$page = $page > 0 ? $page: 1;
-
 $categoryID = $_GET['categoryID'];
+$page = $_GET['page'];
+
 $view->pageCount = $postDataSet->getPageCount($categoryID, $limit, $title);
 
 $page = $page < $view->pageCount ? $page : $view->pageCount;
+$page = $page > 0 ? $page: 1;
 
 $view->posts = $postDataSet->getBasicPosts($categoryID, $limit, $page, $sortBy, $title);
 
