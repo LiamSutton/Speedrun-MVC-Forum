@@ -1,12 +1,12 @@
 <?php
 session_start();
-require_once ("Models/PostDataset.php");
+require_once ("Models/WatchlistData.php");
 
-$postData = new PostDataset();
+$watchlistData = new WatchlistData();
 $userID = $_SESSION['id'];
 $postID = $_GET['id'];
 $from = $_GET['from'];
-$postData->removeFromWatchlist($userID, $postID);
+$watchlistData->removeFromWatchlist($userID, $postID);
 
 //TODO: maybe users should be able to subscribe / unsubscribe from the basic posts page?
 

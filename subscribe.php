@@ -1,14 +1,14 @@
 <?php
 session_start();
-require_once ("Models/PostDataset.php");
+require_once ("Models/WatchlistData.php");
 
-$postData = new PostDataset();
+$watchlistData = new WatchlistData();
 
 $userID = $_SESSION['id'];
 $postID = $_GET['id'];
 $from = $_GET['from'];
 
-$postData->addToWatchlist($userID, $postID);
+$watchlistData->addToWatchlist($userID, $postID);
 
 if ($from == "Watchlist")
 {
