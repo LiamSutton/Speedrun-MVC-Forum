@@ -43,7 +43,7 @@ class PostDataset
         endswitch;
 
         $offset = ($page - 1) * $limit;
-
+        
         $sqlQuery = "SELECT P.p_id,
                             P.p_posterID,
                             P.p_title,
@@ -216,7 +216,7 @@ class PostDataset
 
     public function getWatchlist($userID)
     {
-        $sqlQuery = "SELECT r
+        $sqlQuery = "SELECT 
                             p_id,
                            p_title,
                            p_posterID,
