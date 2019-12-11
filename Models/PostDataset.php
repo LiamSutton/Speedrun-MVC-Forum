@@ -20,8 +20,27 @@ class PostDataset
 
     }
 
-    public function getBasicPosts($categoryID, $limit, $page)
+    public function getBasicPosts($categoryID, $limit, $page, $sortBy, $title)
     {
+        // TODO: note: placeholders (ie: :sort) cannot be used in an ORDER BY clause therefore variable must be passed in as it cannot be bound :( luckily the variable im using cannot be injected as a conversion happens before hand
+        $limit = $limit > 25 ? 25 : $limit;
+
+        switch ($sortBy):
+            case 1:
+                $sortBy = 'P.p_datecreated DESC';
+                break;
+            case 2:
+                $sortBy = "P.p_datecreated ASC";
+                break;
+            case 3:
+                $sortBy = "p_replycount DESC";
+                break;
+            case 4:
+                $sortBy = "p_replycount ASC";
+                break;
+            default:
+                $sort = "p_replycount DESC";
+        endswitch;
         $offset = ($page - 1) * $limit;
         $sqlQuery = "SELECT P.p_id,
                             P.p_posterID,
@@ -34,15 +53,18 @@ class PostDataset
                            (SELECT COUNT(*) FROM Posts R WHERE R.p_parentID = P.p_id) as 'p_replycount'
                     FROM Posts P
                              JOIN Users on P.p_posterID = u_id
-                    WHERE P.p_parentID IS NULL AND P.p_categoryID = :categoryID
-                    ORDER BY  p_datecreated DESC
+                    WHERE P.p_parentID IS NULL AND P.p_categoryID = :categoryID AND P.p_title LIKE concat(:title, '%')
+                    ORDER BY $sortBy
                     LIMIT :offset, :limit";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
 
         $statement->bindValue(':categoryID', $categoryID, PDO::PARAM_INT);
+        $statement->bindValue(':title', $title, PDO::PARAM_STR);
         $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
         $statement->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+
         $statement->execute();
         $dataSet = array();
         while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC)) {
@@ -79,14 +101,17 @@ class PostDataset
         $this->_dbInstance->destruct();
         return Post::fullPost($post);
     }
-    public function getPageCount($categoryID, $limit)
+    public function getPageCount($categoryID, $limit, $title)
     {
         $sqlQuery = "SELECT COUNT(*)
                      FROM Posts
-                     WHERE p_categoryID = :categoryID and p_parentID IS NULL";
+                     WHERE p_categoryID = :categoryID 
+                     and p_parentID IS NULL
+                     and p_title LIKE concat(:title, '%')";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->bindValue('categoryID', $categoryID);
+        $statement->bindValue(':categoryID', $categoryID, PDO::PARAM_INT);
+        $statement->bindValue(':title', $title, PDO::PARAM_STR);
 
         $statement->execute();
 

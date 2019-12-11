@@ -6,23 +6,22 @@
         <input class="form-control" type="text" name="title">
 
         <label class="label"># of posts per page</label>
-        <select name="limit">
-            <option>5</option>
-            <option>10</option>
-            <option>15</option>
-            <option>20</option>
-            <option>25</option>
-            <option>50</option>
+        <select class="form-control" name="limit">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
         </select>
 
         <label>Sort By</label>
-        <select name="sort">
-            <option>Newest First</option>
-            <option>Oldest First</option>
-            <option>Most Comments</option>
-            <option>Least Comments</option>
+        <select class="form-control" name="sort">
+            <option value="1">Newest First</option>
+            <option value="2">Oldest First</option>
+            <option value="3">Most Comments</option>
+            <option value="4">Least Comments</option>
         </select>
     </div>
 
-    <input type="submit" name="submit">
+    <input class="btn btn-outline-primary" type="submit" name="submit">
 </form>
