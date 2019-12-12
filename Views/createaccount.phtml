@@ -1,11 +1,11 @@
 <?php require_once ("template/header.phtml"); ?>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <div class="container">
-    <h3 class="text-center">Create New Account</h3>
+    <h1 class="text-center display-4">Create New Account</h1>
     <form class="form-horizontal" enctype="multipart/form-data" action="createuser.php" method="POST">
         <div class="form-group">
             <label class="label" for="username">Username</label>
-            <input class="form-control" type="text" id="username" name="username" required>
+            <input class="form-control" type="text" id="username" name="username" placeholder="Arya@Stark.com" required>
         </div>
         <div class="form-group">
             <label class="label" for="password">Password</label>
@@ -14,12 +14,12 @@
 
         <div class="form-group">
             <label class="label" for="firstname">Firstname</label>
-            <input class="form-control" type="text" id="firstname" name="firstname" required>
+            <input class="form-control" type="text" id="firstname" name="firstname" placeholder="Arya" required>
         </div>
 
         <div class="form-group">
             <label class="label" for="lastname">Lastname</label>
-            <input class="form-control" type="text" id="lastname" name="lastname" required>
+            <input class="form-control" type="text" id="lastname" name="lastname" placeholder="Stark" required>
         </div>
 
         <div class="form-group">
@@ -33,7 +33,9 @@
         </div>
 
         <div class="form-group">
-            <input class="form-control btn btn-primary" type="submit" name="submit" content="submit">
+            <button class="form-control btn btn-outline-primary" type="submit" name="submit">
+                Create Account
+            </button>
         </div>
     </form>
 </div>
