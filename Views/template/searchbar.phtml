@@ -1,33 +1,41 @@
-<form class="form-inline"
+<form class="form"
       action="posts.php?categoryID=<?php echo $view->currentCategory?>&page=1"
       method="POST">
-    <div class="form-group">
-        <label class="label">Post Title: </label>
-        <input class="form-control" type="text" name="title">
+    <div class="form-row text-center">
+        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+            <input class="form-control" type="text" placeholder="Post Title" name="title">
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-2">
+            <select class="form-control" name="limit">
+                <option value="0">Posts Per Page</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+            </select>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-2">
+            <select class="form-control" name="comment">
+                <option value="0">&#35 Comments</option>
+                <option value="1">High to Low</option>
+                <option value="2">Low to High</option>
+            </select>
+        </div>
 
-        <label class="label"># of posts per page</label>
-        <select class="form-control" name="limit">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="25">25</option>
-        </select>
+        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-2">
+            <select class="form-control" name="date">
+                <option value="0">Sort by Date</option>
+                <option value="1">Newest First</option>
+                <option value="2">Oldest First</option>
+            </select>
+        </div>
 
-        <label>Sort By Number of Comments:</label>
-        <select class="form-control" name="comment">
-            <option value="1">Most Comments</option>
-            <option value="2">Least Comments</option>
-        </select>
-
-        <label>Sort By Date</label>
-        <select class="form-control" name="date">
-            <option value="1">Newest First</option>
-            <option value="2">Oldest First</option>
-            <option value="3">Most Comments</option>
-            <option value="4">Least Comments</option>
-        </select>
+        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-2">
+            <button class="btn btn-outline-primary btn-block" type="submit" name="submit">
+                Search
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+        </div>
     </div>
-
-    <input class="btn btn-outline-primary" type="submit" name="submit">
 </form>

@@ -13,14 +13,14 @@ $categoryData = new CategoryData();
 if (isset($_POST['submit']))
 {
     $title = $_POST['title'];
-    $limit = $_POST['limit'];
+    $limit = $_POST['limit'] <= 0 ? 5 : $_POST['limit'];
     $dateOrder = $_POST['date'];
     $commentOrder = $_POST['comment'];
 }
 else
 {
     $title = $_GET['title'];
-    $limit = $_GET['limit'];
+    $limit = $_GET['limit'] <= 0 ? 5 : $_GET['limit'];
     $dateOrder = $_GET['date'];
     $commentOrder = $_GET['comment'];
 }
@@ -38,19 +38,11 @@ $view->availablePages = Pagination::generatePages($view->pageCount, $page, 2);
 
 $view->posts = $postDataSet->getBasicPosts($categoryID, $limit, $page, $dateOrder, $title, $commentOrder);
 
-$view->distMax = $view->pageCount - $page;
-$view->distMin = $page - 1;
-
-$view->renderBelow = $view->distMin;
-//echo "<h2>DIST MAX $view->distMax</h2>";
-//echo "<h2>DIST MIN $view->distMin</h2>";
 // TODO: Maybe a better way of doing this?
 $view->categoryName = $categoryData->getCategoryName($categoryID);
 $view->currentPage = $page;
 $view->nextPage = $page+1;
-$view->next2 = $view->nextPage+1;
 $view->previousPage = $page-1;
-$view->previous2 = $view->previousPage-1;
 $view->currentCategory = $categoryID;
 $view->limit = $limit;
 $view->dateOrder = $dateOrder;

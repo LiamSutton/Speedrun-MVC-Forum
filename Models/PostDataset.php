@@ -35,12 +35,6 @@ class PostDataset
             case 2:
                 $dateOrder = "P.p_datecreated";
                 break;
-            case 3:
-                $dateOrder = "p_replycount DESC";
-                break;
-            case 4:
-                $dateOrder = "p_replycount";
-                break;
             default:
                 $dateOrder = "p_replycount DESC";
         endswitch;
@@ -51,6 +45,9 @@ class PostDataset
                 break;
             case 2:
                 $commentOrder = "p_replycount";
+                break;
+            default:
+                $commentOrder = "p_replycount DESC";
             endswitch;
 
 
