@@ -15,8 +15,8 @@ if (isset($_POST['submit']))
         if ($reCaptchaResult)
         {
             // Parse the potential login details
-            $username =  htmlspecialchars($_POST['username']);
-            $password = htmlspecialchars($_POST['password']);
+            $username =  htmlentities($_POST['username']);
+            $password = htmlentities($_POST['password']);
 
             // instantiate the user data class
             $userData = new UserDataset();
@@ -32,14 +32,14 @@ if (isset($_POST['submit']))
             else
             {
                 // user couldn't log in
-                header("Location: index.php?failed");
+                header("Location: categories.php?loginfailed");
                 exit;
             }
         }
         // User failed the reCaptcha
         else
         {
-            header("Location: index.php?recaptcha");
+            header("Location: categories.php?recaptcha");
             exit();
 
         }
@@ -47,10 +47,10 @@ if (isset($_POST['submit']))
     // User didn't complete the reCaptcha
     else
     {
-        header("Location: index.php?recaptcha");
+        header("Location: categories.php?recaptcha");
         exit();
     }
 }
 
 // Redirect the user to index page
-header("Location: index.php");
+header("Location: categories.php?loginsuccess");

@@ -9,7 +9,7 @@ require_once ("Models/PostDataset.php");
 if (isset($_POST['submit']))
 {
     // User completed the reCaptcha
-    if (strlen($_POST['g-recaptcha-response']) != 0)
+    if (strlen(htmlentities($_POST['g-recaptcha-response'])) != 0)
     {
         $reCaptchaResult = ReCaptcha::getReCaptchaResult($_POST['g-recaptcha-response']);
 
@@ -36,9 +36,9 @@ if (isset($_POST['submit']))
             
             // get data required to create a Post
             $posterID = $user->getId();
-            $title = $_POST['title'];
-            $content = $_POST['content'];
-            $categoryID = $_GET['categoryID'];
+            $title = htmlentities($_POST['title']);
+            $content = htmlentities($_POST['content']);
+            $categoryID = htmlentities($_GET['categoryID']);
 
             // Commit it to DB
             $success = $postsDataset->createPost($posterID, $title, $content, $postImage, $categoryID);
