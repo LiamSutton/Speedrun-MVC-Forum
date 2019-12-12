@@ -2,6 +2,9 @@
     box-sizing: border-box;
 }
 
+.form-row select, input {
+    margin-bottom: 15px;
+}
 body
 {
     padding-bottom: 100px;
@@ -91,3 +94,6 @@ footer {
     margin-bottom: 50px;
 }
 
+#createPostButton {
+    margin-top: 15px;
+}

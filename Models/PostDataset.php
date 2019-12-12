@@ -88,6 +88,8 @@ class PostDataset
             array_push($data, POST::basicPost($dbRow));
         }
 
+        $this->_dbInstance->destruct();
+
         return $data;
 
     }
@@ -136,6 +138,8 @@ class PostDataset
 
         $postCount = $statement->fetchColumn();
         $pageCount = ceil($postCount / $limit);
+
+        $this->_dbInstance->destruct();
 
         return $pageCount;
     }
