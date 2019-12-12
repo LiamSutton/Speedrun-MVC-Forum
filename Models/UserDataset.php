@@ -62,23 +62,23 @@ class UserDataset
      * @param $username
      * @return User
      */
-//    public function getUser($username)
-//    {
-//        $sqlQuery = "SELECT *
-//                     FROM Users
-//                     WHERE u_username = ?";
-//        $statement = $this->_dbHandle->prepare($sqlQuery);
-//        $statement->execute([$username]);
-//
-//        $user = $statement->fetch(PDO::FETCH_ASSOC);
-//        $this->_dbInstance->destruct();
-//        return new User($user);
-//    }
+    public function getUser($username)
+    {
+        $sqlQuery = "SELECT *
+                     FROM Users
+                     WHERE u_username = ?";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->execute([$username]);
+
+        $user = $statement->fetch(PDO::FETCH_ASSOC);
+        $this->_dbInstance->destruct();
+        return new User($user);
+    }
 
     /**
      * @param $id - the ID of the user to retrieve
      * @return User - a user object for the given user
-     */
+//     */
     public function getUserByID($id)
     {
         $sqlQuery = "SELECT u_id,

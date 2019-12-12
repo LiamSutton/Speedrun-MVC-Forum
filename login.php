@@ -28,6 +28,7 @@ if (isset($_POST['submit']))
                 $_SESSION['loggedIn'] = true;
                 $_SESSION['username'] = $username;
                 $_SESSION['id'] = $userData->getUser($username)->getId();
+
             }
             else
             {
