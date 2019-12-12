@@ -3,11 +3,26 @@
 require_once("Models/Database.php");
 require_once("Models/Post.php");
 
-// TODO: Possibly separate the Create / Insert operations into a static class
+// This Model is used to perform DataBase queries on data that can be structured into post objects
+
+/**
+ * Class PostDataset
+ */
 class PostDataset
 {
+    /**
+     * @var PDO
+     */
+    /**
+     * @var Database|PDO|null
+     */
     protected $_dbHandle, $_dbInstance;
 
+    // Get reference to the database connection and set PDO to display errors
+
+    /**
+     * PostDataset constructor.
+     */
     public function __construct()
     {
         $this->_dbInstance = Database::getInstance();
@@ -15,19 +30,25 @@ class PostDataset
         $this->_dbHandle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
-    public function getAllPosts()
-    {
 
-    }
-
+    /**
+     * @param $categoryID - the category we want posts from
+     * @param $limit - the upper limit of how many posts we want to return
+     * @param $page - the current page the user is on
+     * @param $dateOrder - how to order posts by their date created
+     * @param $title - a string to get Posts with title similar to this
+     * @param $commentOrder - how to order Posts by their number of comments
+     * @return array - an array containing BasicPost Objects
+     */
     public function getBasicPosts($categoryID, $limit, $page, $dateOrder, $title, $commentOrder)
     {
-        // TODO: note: placeholders (ie: :sort) cannot be used in an ORDER BY clause therefore variable must be passed in as it cannot be bound :( luckily the variable im using cannot be injected as a conversion happens before hand
+
 
         // clamp limit value
         $limit = $limit > 25 ? 25 : $limit;
 
 
+        // convert date order into SQL syntax
         switch ($dateOrder):
             case 1:
                 $dateOrder = 'P.p_datecreated DESC';
@@ -39,6 +60,7 @@ class PostDataset
                 $dateOrder = "p_replycount DESC";
         endswitch;
 
+        // Convert commentOrder into SQL syntax
         switch ($commentOrder):
             case 1:
                 $commentOrder = "p_replycount DESC";
@@ -50,7 +72,7 @@ class PostDataset
                 $commentOrder = "p_replycount DESC";
             endswitch;
 
-
+        // the row to start gathering data from, we -1 the current page so that page 1 -> 1 -1 = 0 and 0 * anything will be 0 so it always starts from the first posts
         $offset = ($page - 1) * $limit;
 
         $sqlQuery = "SELECT 
@@ -73,7 +95,8 @@ class PostDataset
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
 
-//        echo "<pre>$sqlQuery</pre>";
+        // Bind the values used in our query to prevent SQL Injection
+        // ORDER BY clause requires string literals that's why we dont bind it (its still safe as users cannot interfere with it as it is converted)
         $statement->bindValue(':categoryID', $categoryID, PDO::PARAM_INT);
         $statement->bindValue(':title', $title, PDO::PARAM_STR);
         $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
@@ -83,17 +106,24 @@ class PostDataset
 
         $data = array();
 
+        // Iterate over the data and convert them into BasicPost Objects
         while ($dbRow = $statement->fetch())
         {
             array_push($data, POST::basicPost($dbRow));
         }
 
+        // Release the current connection
         $this->_dbInstance->destruct();
+
 
         return $data;
 
     }
 
+    /**
+     * @param $p_id - the ID of the post we want to find
+     * @return Post - The found post object
+     */
     public function getPost($p_id)
     {
         $sqlQuery = "SELECT P.p_id,
@@ -114,7 +144,9 @@ class PostDataset
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
 
+        // Bind Values to prevent SQL INJECTION
         $statement->bindValue(':id', $p_id, PDO::PARAM_INT);
+
         $statement->execute();
 
         $post = $statement->fetch(PDO::FETCH_ASSOC);
@@ -122,6 +154,12 @@ class PostDataset
         return Post::fullPost($post);
     }
 
+    /**
+     * @param $categoryID - the category we want information from
+     * @param $limit - used to calculate how many pages are required
+     * @param $title - a string to get Posts with title similar to this
+     * @return float - the number of pages needed to generate pagination for
+     */
     public function getPageCount($categoryID, $limit, $title)
     {
         $sqlQuery = "SELECT COUNT(*)
@@ -131,12 +169,16 @@ class PostDataset
                      and p_title LIKE concat(:title, '%')";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
+
+        // Bind values
         $statement->bindValue(':categoryID', $categoryID, PDO::PARAM_INT);
         $statement->bindValue(':title', $title, PDO::PARAM_STR);
 
         $statement->execute();
 
         $postCount = $statement->fetchColumn();
+
+        // gives us the number of pages the results will span over
         $pageCount = ceil($postCount / $limit);
 
         $this->_dbInstance->destruct();
@@ -144,6 +186,10 @@ class PostDataset
         return $pageCount;
     }
 
+    /**
+     * @param $u_id - the ID of a user
+     * @return array - returns an array of BasicPost Objects posted by a given user
+     */
     public function getAllUserPosts($u_id)
     {
         $sqlQuery = "SELECT 
@@ -164,6 +210,8 @@ class PostDataset
                     AND p_parentID IS NULL";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
+
+        //Bind values
         $statement->bindValue(':id', $u_id, PDO::PARAM_INT);
 
         $statement->execute();
@@ -177,6 +225,10 @@ class PostDataset
     }
 
 
+    /**
+     * @param $p_id - the ID of the current post
+     * @return array - an array of Reply Objects that are children of the current post
+     */
     public function getReplies($p_id)
     {
         $sqlQuery = "SELECT p_id, p_title, p_posterID, p_content, p_parentID, concat(u_firstname, ' ', u_lastname) as 'u_fullname', p_image, p_categoryID
@@ -186,6 +238,7 @@ class PostDataset
                      ORDER BY p_datecreated DESC";
         $statement = $this->_dbHandle->prepare($sqlQuery);
 
+        // Bind Values
         $statement->bindValue(':id', $p_id, PDO::PARAM_INT);
 
         $statement->execute();
@@ -198,7 +251,15 @@ class PostDataset
         return $dataSet;
     }
 
-    // TODO: Maybe should return true if succeeds?
+
+    /**
+     * @param $posterID - the ID of the posting user
+     * @param $title - the title of the post
+     * @param $content - the content for the post
+     * @param $image - an optional image supplied
+     * @param $categoryID - the category the post fits into
+     * @return bool - returns whether creating the post was a success
+     */
     public function createPost($posterID, $title, $content, $image, $categoryID)
     {
         $sqlQuery = "INSERT INTO Posts
@@ -206,6 +267,7 @@ class PostDataset
                      VALUES (:id, :title, :content, NULL, current_timestamp(3), :image, :categoryID)";
         $statement = $this->_dbHandle->prepare($sqlQuery);
 
+        // Bind Values against SQL Injection
         $statement->bindValue(':id', $posterID, PDO::PARAM_INT);
         $statement->bindValue(':title', $title, PDO::PARAM_STR);
         $statement->bindValue(':content', $content, PDO::PARAM_STR);
@@ -227,14 +289,25 @@ class PostDataset
 
     }
 
-    // TODO: Maybe should return true if succeeds?
+
+    /**
+     * @param $posterID - the ID of the posting user
+     * @param $title - the title of the post
+     * @param $content - the content of the post
+     * @param $parentID - the ID of the post being replied to
+     * @param $categoryID - the category the parent post is in
+     * @return bool - whether creating the reply was a success
+     */
+    // i know i could have made one function and changed things around :( (ran out of time)
     public function createReply($posterID, $title, $content, $parentID, $categoryID)
     {
         $sqlQuery = "INSERT INTO Posts
                      (p_posterID, p_title, p_content, p_parentID, p_datecreated, p_categoryID) 
                      VALUES (:id, :title, :content, :parentID, NOW(), :categoryID)";
+
         $statement = $this->_dbHandle->prepare($sqlQuery);
 
+        //  Bind the values
         $statement->bindValue(':id', $posterID, PDO::PARAM_INT);
         $statement->bindValue(':title', $title, PDO::PARAM_STR);
         $statement->bindValue(':content', $content, PDO::PARAM_STR);
