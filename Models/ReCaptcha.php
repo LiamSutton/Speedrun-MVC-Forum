@@ -25,7 +25,7 @@ class ReCaptcha
 
     /**
      * @param $response - a string that when 0 means the user didnt attempt it
-     * @return bool - whether google says the person is a beep boop robot 
+     * @return bool - whether google says the person is a beep boop robot
      */
     public static function getReCaptchaResult($response)
     {

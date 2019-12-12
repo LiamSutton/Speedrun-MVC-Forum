@@ -1,8 +1,35 @@
 <?php
 
 
+/**
+ * Class User
+ */
 class User
 {
+    /**
+     * @var mixed
+     */
+    /**
+     * @var mixed
+     */
+    /**
+     * @var mixed
+     */
+    /**
+     * @var mixed
+     */
+    /**
+     * @var mixed
+     */
+    /**
+     * @var mixed
+     */
+    /**
+     * @var mixed
+     */
+    /**
+     * @var mixed
+     */
     protected
         $_id,
         $_username,
@@ -13,6 +40,10 @@ class User
         $_postCount,
         $_replyCount;
 
+    /**
+     * User constructor.
+     * @param $dbRow - information to create a user from the DB
+     */
     public function __construct($dbRow)
     {
         $this->_id = $dbRow['u_id'];
@@ -65,16 +96,25 @@ class User
         return $this->_datecreated;
     }
 
+    /**
+     * @return mixed
+     */
     public function getAvatar()
     {
         return $this->_avatar;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPostCount()
     {
         return $this->_postCount;
     }
 
+    /**
+     * @return mixed
+     */
     public function getReplyCount()
     {
         return $this->_replyCount;
