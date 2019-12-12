@@ -1,4 +1,17 @@
 <?php require_once ("template/header.phtml"); ?>
+
+<?php
+    if (isset($view->message))
+    {
+        require_once ("template/info.phtml");
+    }
+
+    if (isset($view->error))
+    {
+        require_once ("template/error.phtml");
+    }
+?>
+
 <h3 class="display-4 text-center">Watchlist</h3>
 <ul class="list-group">
 <?php

@@ -51,11 +51,17 @@ class WatchlistData
         $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
         $statement->bindValue(':postID', $postID, PDO::PARAM_INT);
 
-        $statement->execute();
-
-        $this->_dbInstance->destruct();
-
-        return true;
+        try
+        {
+            $statement->execute();
+            $this->_dbInstance->destruct();
+            return true;
+        }
+        catch (PDOException $ex) {
+            error_log($ex);
+            $this->_dbInstance->destruct();
+            return false;
+        }
     }
 
     public function removeFromWatchlist($userID, $postID)
@@ -67,9 +73,19 @@ class WatchlistData
         $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
         $statement->bindValue(':postID', $postID, PDO::PARAM_INT);
 
-        $statement->execute();
+        try
+        {
+            $statement->execute();
+            $this->_dbInstance->destruct();
+            return true;
+        }
+        catch (PDOException $ex)
+        {
+            error_log($ex->getMessage());
+            $this->_dbInstance->destruct();
+            return false;
+        }
 
-        $this->_dbInstance->destruct();
 
         return true;
     }
