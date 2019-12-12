@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    font-size: 1em;
 }
 
 .form-row select, input {
@@ -96,5 +97,10 @@ footer {
 
 #createPostButton {
     margin-top: 15px;
+}
+
+#pageHeading {
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 

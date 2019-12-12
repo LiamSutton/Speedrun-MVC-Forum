@@ -12,7 +12,7 @@ if (isset($view->message))
 }
 ?>
 
-<h1 class="text-center display-4"><?php echo $view->categoryName ?></h1>
+<h1  id="pageHeading" class="text-center display-4 col-sm-12"><?php echo $view->categoryName ?></h1>
 <?php require_once("template/searchbar.phtml"); ?>
 
 <?php if(isset($_SESSION['loggedIn']))
@@ -23,16 +23,16 @@ if (isset($view->message))
 <ul class="list-group">
     <?php
     foreach ($view->posts as $post) { ?>
-        <li class="list-group-item list-element">
+        <li class="list-group-item list-element col-sm-12">
             <div>
                 <a href="fullpost.php?id=<?php echo $post->getId() ?>">
-                    <h3 class="list-group-item-heading"><?php echo $post->getTitle() ?></h3>
+                    <h1 class="list-group-item-heading text-center"><?php echo $post->getTitle() ?></h1>
                 </a>
                 <a href="account.php?id=<?php echo $post->getPosterID()?>">
-                    <small><?php echo $post->getPosterFullName() ?></small>
+                    <h4 class="text-muted text-center"><?php echo $post->getPosterFullName() ?></h4>
                 </a>
-                <p><?php echo $post->getContent() ?></p>
-                <p>Number of comments: <?php echo $post->getReplyCount() ?></p>
+                <h4 class="lead"><?php echo $post->getContent() ?></h4>
+                <h5 class="text-center">Number of comments: <?php echo $post->getReplyCount() ?></h5>
             </div>
         </li>
     <?php }

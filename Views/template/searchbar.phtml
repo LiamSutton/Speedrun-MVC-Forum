@@ -2,10 +2,10 @@
       action="posts.php?categoryID=<?php echo $view->currentCategory?>&page=1"
       method="POST">
     <div class="form-row">
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="col-xs-12 col-lg-3">
             <input class="form-control" type="text" placeholder="Post Title" name="title">
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <div class="col-xs-12 col-lg-2">
             <select class="form-control" name="limit">
                 <option value="0">Posts Per Page</option>
                 <option value="5">5</option>
@@ -15,7 +15,7 @@
                 <option value="25">25</option>
             </select>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <div class="col-xs-12 col-lg-2">
             <select class="form-control" name="comment">
                 <option value="0">&#35 Comments</option>
                 <option value="1">High to Low</option>
@@ -23,7 +23,7 @@
             </select>
         </div>
 
-        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-2">
+        <div class="col-xs-6 col-lg-3">
             <select class="form-control" name="date">
                 <option value="0">Sort by Date</option>
                 <option value="1">Newest First</option>
@@ -31,7 +31,7 @@
             </select>
         </div>
 
-        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-2">
+        <div class="col-xs-6 col-lg-2">
             <button class="btn btn-outline-primary btn-block" type="submit" name="submit">
                 Search
                 <i class="fas fa-search" aria-hidden="true"></i>
