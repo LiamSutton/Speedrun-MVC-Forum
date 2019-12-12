@@ -183,7 +183,7 @@ class PostDataset
                      FROM Posts
                      JOIN Users ON p_posterID = u_id
                      WHERE p_parentID = :id
-                     ORDER BY p_datecreated";
+                     ORDER BY p_datecreated DESC";
         $statement = $this->_dbHandle->prepare($sqlQuery);
 
         $statement->bindValue(':id', $p_id, PDO::PARAM_INT);
