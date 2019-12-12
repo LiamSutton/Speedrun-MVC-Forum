@@ -3,7 +3,7 @@
 
         <li class="page-item <?php if($view->currentPage <= 1) echo "disabled" ?>">
             <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previousPage?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&title=<?php echo $view->title?>">
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->previousPage?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&comment=<?php echo $view->commentOrder ?>&title=<?php echo $view->title?>">
                 Previous
             </a>
         </li>
@@ -17,7 +17,7 @@
             { ?>
                 <li class="page-item">
                     <a class="page-link"
-                       href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $i + $view->currentPage?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&title=<?php echo $view->title?>">
+                       href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $i + $view->currentPage?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&comment=<?php echo $view->commentOrder ?>&title=<?php echo $view->title?>">
                         <?php echo $i + $view->currentPage ?>
                     </a>
                 </li>
@@ -29,7 +29,7 @@
 <!--        Generate middle-->
         <li class="page-item active">
             <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->currentPage?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&title=<?php echo $view->title?>">
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->currentPage?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&comment=<?php echo $view->commentOrder ?>&title=<?php echo $view->title?>">
                 <?php echo $view->currentPage ?>
             </a>
         </li>
@@ -43,7 +43,7 @@
             ?>
             <li class="page-item">
                 <a class="page-link"
-                   href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $i ?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&title=<?php echo $view->title?>">
+                   href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $i ?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&comment=<?php echo $view->commentOrder ?>&title=<?php echo $view->title?>">
                     <?php echo $i?>
                 </a>
             </li>
@@ -54,7 +54,7 @@
 
         <li class="page-item <?php if($view->currentPage == $view->pageCount) echo "disabled" ?>">
             <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&title=<?php echo $view->title?>">
+               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&comment=<?php echo $view->commentOrder ?>&title=<?php echo $view->title?>">
                 Next
             </a>
         </li>

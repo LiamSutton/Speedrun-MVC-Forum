@@ -20,7 +20,7 @@ class PostDataset
 
     }
 
-    public function getBasicPosts($categoryID, $limit, $page, $dateOrder, $title)
+    public function getBasicPosts($categoryID, $limit, $page, $dateOrder, $title, $commentOrder)
     {
         // TODO: note: placeholders (ie: :sort) cannot be used in an ORDER BY clause therefore variable must be passed in as it cannot be bound :( luckily the variable im using cannot be injected as a conversion happens before hand
 
@@ -45,6 +45,14 @@ class PostDataset
                 $dateOrder = "p_replycount DESC";
         endswitch;
 
+        switch ($commentOrder):
+            case 1:
+                $commentOrder = "p_replycount DESC";
+                break;
+            case 2:
+                $commentOrder = "p_replycount";
+            endswitch;
+
 
         $offset = ($page - 1) * $limit;
 
@@ -63,7 +71,7 @@ class PostDataset
                 WHERE p_categoryID = :categoryID
                 AND p_parentID IS NULL
                 AND p_title LIKE CONCAT(:title, '%')
-                ORDER BY $dateOrder
+                ORDER BY $commentOrder, $dateOrder
                 LIMIT :limit OFFSET :offset";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);

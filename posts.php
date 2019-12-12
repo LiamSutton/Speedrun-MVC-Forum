@@ -14,12 +14,14 @@ if (isset($_POST['submit']))
     $title = $_POST['title'];
     $limit = $_POST['limit'];
     $dateOrder = $_POST['date'];
+    $commentOrder = $_POST['comment'];
 }
 else
 {
     $title = $_GET['title'];
     $limit = $_GET['limit'];
     $dateOrder = $_GET['date'];
+    $commentOrder = $_GET['comment'];
 }
 
 $categoryID = $_GET['categoryID'];
@@ -30,7 +32,7 @@ $view->pageCount = $postDataSet->getPageCount($categoryID, $limit, $title);
 $page = $page < $view->pageCount ? $page : $view->pageCount;
 $page = $page > 0 ? $page: 1;
 
-$view->posts = $postDataSet->getBasicPosts($categoryID, $limit, $page, $dateOrder, $title);
+$view->posts = $postDataSet->getBasicPosts($categoryID, $limit, $page, $dateOrder, $title, $commentOrder);
 
 $view->distMax = $view->pageCount - $page;
 $view->distMin = $page - 1;
@@ -48,6 +50,7 @@ $view->previous2 = $view->previousPage-1;
 $view->currentCategory = $categoryID;
 $view->limit = $limit;
 $view->dateOrder = $dateOrder;
+$view->commentOrder = $commentOrder;
 $view->title = $title;
 
 require_once ("Views/posts.phtml");
