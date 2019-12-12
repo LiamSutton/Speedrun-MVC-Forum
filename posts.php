@@ -12,10 +12,10 @@ $categoryData = new CategoryData();
 
 if (isset($_POST['submit']))
 {
-    $title = $_POST['title'];
-    $limit = $_POST['limit'] <= 0 ? 5 : $_POST['limit'];
-    $dateOrder = $_POST['date'];
-    $commentOrder = $_POST['comment'];
+    $title = htmlentities($_POST['title']);
+    $limit = htmlentities($_POST['limit'] <= 0 ? 5 : $_POST['limit']);
+    $dateOrder = htmlentities($_POST['date']);
+    $commentOrder = htmlentities($_POST['comment']);
 }
 else
 {
