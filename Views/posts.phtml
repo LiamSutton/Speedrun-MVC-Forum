@@ -31,7 +31,7 @@ if (isset($view->message))
                 <a href="account.php?id=<?php echo $post->getPosterID()?>">
                     <h4 class="text-muted text-center"><?php echo $post->getPosterFullName() ?></h4>
                 </a>
-                <h4 class="lead"><?php echo $post->getContent() ?></h4>
+                <h4 class="lead text-center"><?php echo $post->getContent() ?></h4>
                 <h5 class="text-center">Number of comments: <?php echo $post->getReplyCount() ?></h5>
             </div>
         </li>

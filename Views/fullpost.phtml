@@ -44,24 +44,24 @@ $loggedIn = isset($_SESSION['loggedIn']);
 
                     }
                     ?>
-                    <h3 class="text-center display-4">
+                    <h1 class="text-center">
                         <?php echo $mainPost->getTitle()?>
-                    </h3>
+                    </h1>
 
                 </div>
 
                 <div class="col-sm-12">
 
-                    <h3 class="text-muted text-center">
+                    <h4 class="text-muted text-center">
                         <a href="myaccount.php?id=<?php echo $mainPost->getPosterID() ?>">
                             <?php echo $mainPost->getPosterFullName() ?>
                         </a>
-                    </h3>
+                    </h4>
 
                 </div>
 
                 <div class="col-sm-12">
-                    <p class="text-center">
+                    <p class="text-center lead">
                         <?php echo $mainPost->getContent() ?>
                     </p>
                 </div>
@@ -134,29 +134,27 @@ $loggedIn = isset($_SESSION['loggedIn']);
                     <div class="row">
 
                         <div class="col-sm-12">
-                            <h3>
+                            <h2 class=text-center>
                                 <?php echo $reply->getTitle() ?>
-                            </h3>
+                            </h2>
                         </div>
 
                         <div class="col-sm-12">
 
-                            <small class="text-muted">
+                            <h4 class="text-muted text-center">
 
                                 <a href="account.php?id=<?php echo $reply->getPosterID() ?>">
                                     <?php echo $reply->getPosterFullname() ?>
                                 </a>
 
-                            </small>
+                            </h4>
                         </div>
 
                         <div class="col-sm-12">
-                            <p>
+                            <p class="lead text-center">
                                 <?php echo $reply->getContent() ?>
                             </p>
                         </div>
-
-
 
                     </div>
 

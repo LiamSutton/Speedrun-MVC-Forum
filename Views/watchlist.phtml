@@ -12,24 +12,24 @@
     }
 ?>
 
-<h3 class="display-4 text-center">Watchlist</h3>
+<h1 id="pageHeading" class="text-center display-4">Watchlist</h1>
 <ul class="list-group">
 <?php
  foreach ($view->userWatchlist as $post)
  { ?>
-     <li class="list-group-item list-element">
+     <li class="list-group-item list-element col-sm-12">
          <a href="unsubscribe.php?id=<?php echo $post->getId()?>&from=Watchlist">
              <i class='fas fa-bookmark icon-lg'></i>
          </a>
          <a href="fullpost.php?id=<?php echo $post->getId()?>">
-             <h3 class="list-group-item-heading"><?php echo $post->getTitle() ?>
-             </h3>
+             <h1 class="list-group-item-heading text-center"><?php echo $post->getTitle() ?>
+             </h1>
          </a>
          <a href="account.php?id=<?php echo $post->getPosterID()?>">
-             <small><?php echo $post->getPosterFullname() ?></small>
+             <h4 class="text-muted text-center"><?php echo $post->getPosterFullname() ?></h4>
          </a>
-         <p><?php echo $post->getContent() ?></p>
-         <p>Number of Comments: <?php echo $post->getReplyCount() ?></p>
+         <p class="text-center lead"><?php echo $post->getContent() ?></p>
+         <h4 class="text-center">Number of Comments: <?php echo $post->getReplyCount() ?></h4>
      </li>
 
  <?php }

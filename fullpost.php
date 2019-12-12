@@ -42,4 +42,9 @@ if (isset($_GET['successfullsub']))
     $view->message = "Item added to your watchlist successfully";
 }
 
+if (isset($_GET['successunsub']))
+{
+    $view->message = "Item succesfully removed from your watchlist";
+}
+
 require_once ("Views/fullpost.phtml");
