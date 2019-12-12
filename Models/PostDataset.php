@@ -20,7 +20,7 @@ class PostDataset
 
     }
 
-    public function getBasicPosts($categoryID, $limit, $page, $sortBy, $title)
+    public function getBasicPosts($categoryID, $limit, $page, $dateOrder, $title)
     {
         // TODO: note: placeholders (ie: :sort) cannot be used in an ORDER BY clause therefore variable must be passed in as it cannot be bound :( luckily the variable im using cannot be injected as a conversion happens before hand
 
@@ -28,21 +28,21 @@ class PostDataset
         $limit = $limit > 25 ? 25 : $limit;
 
 
-        switch ($sortBy):
+        switch ($dateOrder):
             case 1:
-                $sortBy = 'P.p_datecreated DESC';
+                $dateOrder = 'P.p_datecreated DESC';
                 break;
             case 2:
-                $sortBy = "P.p_datecreated";
+                $dateOrder = "P.p_datecreated";
                 break;
             case 3:
-                $sortBy = "p_replycount DESC";
+                $dateOrder = "p_replycount DESC";
                 break;
             case 4:
-                $sortBy = "p_replycount";
+                $dateOrder = "p_replycount";
                 break;
             default:
-                $sortBy = "p_replycount DESC";
+                $dateOrder = "p_replycount DESC";
         endswitch;
 
 
@@ -63,7 +63,7 @@ class PostDataset
                 WHERE p_categoryID = :categoryID
                 AND p_parentID IS NULL
                 AND p_title LIKE CONCAT(:title, '%')
-                ORDER BY $sortBy
+                ORDER BY $dateOrder
                 LIMIT :limit OFFSET :offset";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
