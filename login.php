@@ -29,6 +29,11 @@ if (isset($_POST['submit']))
                 $_SESSION['username'] = $username;
                 $_SESSION['id'] = $userData->getUser($username)->getId();
             }
+            else
+            {
+                header("Location: index.php?failed");
+                exit;
+            }
         }
         // User failed the reCaptcha
         else

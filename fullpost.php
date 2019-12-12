@@ -18,4 +18,14 @@ if (isset($_SESSION['loggedIn']))
     $view->isOnWatchlist = $watchlistData->isOnWatchlist($userID, $id);
 }
 
+if (isset($_GET['posted']))
+{
+    $view->message = "Reply Posted!";
+}
+
+if (isset($_GET['recaptcha']))
+{
+    $view->error = "ReCaptcha must be completed!";
+}
+
 require_once ("Views/fullpost.phtml");

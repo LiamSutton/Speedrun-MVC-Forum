@@ -5,6 +5,17 @@ $mainPost = $view->mainPost;
 $loggedIn = isset($_SESSION['loggedIn']);
 ?>
 
+<?php
+    if (isset($view->message))
+    {
+        require_once ("template/info.phtml");
+    }
+
+    if (isset($view->error))
+    {
+        require_once ("template/error.phtml");
+    }
+?>
 <div class="container post-container">
 
     <ul class="list-group">

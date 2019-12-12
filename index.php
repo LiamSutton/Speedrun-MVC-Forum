@@ -16,4 +16,9 @@ if(isset($_GET['recaptcha']))
 {
     $view->error = "ReCaptcha must be completed";
 }
+
+if (isset($_GET['failed']))
+{
+    $view->error = "Incorrect Login Credentials Provided";
+}
 require_once ("Views/index.phtml");

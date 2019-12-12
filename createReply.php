@@ -8,6 +8,13 @@ require_once ("Models/PostDataset.php");
 // TODO: rename to createReply? for consistency
 if (isset($_POST['submit']))
 {
+
+    $id = $_GET['id'];
+    $title = $_POST['title'];
+    $content = $_POST['content'];
+    $p_parentID = $_GET['id'];
+    $categoryID = $_GET['categoryID'];
+
     // User completed the ReCaptcha
     if (strlen($_POST['g-recaptcha-response']) != 0)
     {
@@ -28,26 +35,27 @@ if (isset($_POST['submit']))
             // Get data required to create a Reply
 
             // Dont need mainID for now
-//          $mainId = $_GET['mainid'];
-            $id = $_GET['id'];
-            $title = $_POST['title'];
-            $content = $_POST['content'];
-            $p_parentID = $_GET['id'];
-            $categoryID = $_GET['categoryID'];
+//          $mainId = $_GET['mainid'];;
 
             // Commit new Reply to the db
             $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID, $categoryID);
         }
         else
         {
-            die(ReCaptcha::$FAILED);
+            header("Location: fullpost.php?id=$p_parentID&recaptcha");
+            exit();
+
         }
+
     }
     else
     {
-        die(ReCaptcha::$NOT_COMPLETED);
+        header("Location: fullpost.php?id=$p_parentID&posted");
+            exit();
     }
 
     // Redirect
-    header("Location: fullpost.php?id=$p_parentID");
+//    header("Location: fullpost.php?id=$p_parentID?posted");
+      header("Location: fullpost.php?id=$p_parentID&posted");
+    exit();
 }
