@@ -25,6 +25,7 @@ if (isset($_GET['unauthorized']))
 {
     $view->error = "You are not authorized to access that location";
 }
+
 if (isset($_GET['loggedout']))
 {
     $view->message = "You have been successfully logged out";
