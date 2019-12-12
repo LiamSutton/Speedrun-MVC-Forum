@@ -2,16 +2,33 @@
 
 require_once ("Models/Database.php");
 require_once ("Models/Post.php");
+
+/**
+ * Class WatchlistData
+ */
 class WatchlistData
 {
+    /**
+     * @var PDO
+     */
+    /**
+     * @var Database|PDO|null
+     */
     protected  $_dbHandle, $_dbInstance;
 
+    /**
+     * WatchlistData constructor.
+     */
     public function __construct()
     {
         $this->_dbInstance = Database::getInstance();
         $this->_dbHandle = $this->_dbInstance->getConnection();
     }
 
+    /**
+     * @param $userID - the ID of the user
+     * @return array - an array containing basic posts that a user has subscribed to
+     */
     public function getUserWatchlist($userID)
     {
         $sqlQuery = "SELECT 
@@ -42,6 +59,11 @@ class WatchlistData
         return $dataSet;
     }
 
+    /**
+     * @param $userID - the id of the user
+     * @param $postID - the id of the post
+     * @return bool - whether adding the post to the watchlist was a success
+     */
     public function addToWatchlist($userID, $postID)
     {
         $sqlQuery = "INSERT INTO Watchlist (w_userID, w_postID, w_datecreated) 
@@ -64,6 +86,11 @@ class WatchlistData
         }
     }
 
+    /**
+     * @param $userID - the id of the user
+     * @param $postID - the id of the post
+     * @return bool - whether removing the post was a success
+     */
     public function removeFromWatchlist($userID, $postID)
     {
         $sqlQuery = "DELETE FROM Watchlist
@@ -85,11 +112,13 @@ class WatchlistData
             $this->_dbInstance->destruct();
             return false;
         }
-
-
-        return true;
     }
 
+    /**
+     * @param $userID - the id of the user
+     * @param $postID - the id of the post
+     * @return bool - whether the current user has the given post on their watchlist
+     */
     public function isOnWatchlist($userID, $postID)
     {
         $sqlQuery = "SELECT * FROM Watchlist
