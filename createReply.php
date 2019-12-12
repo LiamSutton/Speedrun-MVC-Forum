@@ -5,13 +5,14 @@ require_once ("Models/FileUpload.php");
 require_once ("Models/UserDataset.php");
 require_once ("Models/PostDataset.php");
 
-// TODO: rename to createReply? for consistency
+
 if (isset($_POST['submit']))
 {
 
+    // get info to create reply
     $id = $_GET['id'];
-    $title = $_POST['title'];
-    $content = $_POST['content'];
+    $title = htmlentities($_POST['title']);
+    $content = htmlentities($_POST['content']);
     $p_parentID = $_GET['id'];
     $categoryID = $_GET['categoryID'];
 
@@ -24,28 +25,28 @@ if (isset($_POST['submit']))
         if ($reCaptchaResult)
         {
 
-            // Instanciate user and post data objects
+            // Instantiate user and post data objects
             $userDataset = new UserDataset();
             $postDataset = new PostDataset();
 
             // Get the User making the Reply
             $user = $userDataset->getUser($_SESSION['username']);
 
-            // TODO: Construct post object maybe?
-            // Get data required to create a Reply
 
-            // Dont need mainID for now
-//          $mainId = $_GET['mainid'];;
 
-            // Commit new Reply to the db
+            // returns whether the new reply was created successfully
             $success = $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID, $categoryID);
+
+            // redirect error
             if (!$success)
             {
                 header("Location: fullpost.php?id=$p_parentID&failed");
+                exit();
             }
         }
         else
         {
+            // redirect error
             header("Location: fullpost.php?id=$p_parentID&recaptcha");
             exit();
 
@@ -54,12 +55,12 @@ if (isset($_POST['submit']))
     }
     else
     {
-        header("Location: fullpost.php?id=$p_parentID&posted");
+        // redirect error
+        header("Location: fullpost.php?id=$p_parentID&recaptcha");
             exit();
     }
 
-    // Redirect
-//    header("Location: fullpost.php?id=$p_parentID?posted");
+    // Redirect success
       header("Location: fullpost.php?id=$p_parentID&posted");
     exit();
 }

@@ -40,25 +40,28 @@ if (isset($_POST['submit']))
             $content = htmlentities($_POST['content']);
             $categoryID = htmlentities($_GET['categoryID']);
 
-            // Commit it to DB
+            // whether creating the post is successfull
             $success = $postsDataset->createPost($posterID, $title, $content, $postImage, $categoryID);
+
+            // redirect error
             if (!$success)
             {
                 header("Location: posts.php?&categoryid=$categoryID&page=1&limit=5&date=1&comment=2&title&failed");
             }
         }
         else
-        {
+        {// redirect error
             header("Location: posts.php?&categoryid=$categoryID&page=1&limit=5&date=1&comment=1&title&recaptcha");
             exit();
         }
     }
     else
     {
+        // redirect error
         header("Location: posts.php?&categoryID=$categoryID&page=1&limit=5&date=1&comment=1&title&recaptcha");
         exit();
     }
 
-    // Redirect
+    // Redirect success
     header("Location: posts.php?categoryID=$categoryID&page=1&limit=5&date=1&comment=1&title&posted");
 }

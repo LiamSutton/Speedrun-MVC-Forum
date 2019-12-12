@@ -18,12 +18,3 @@ else
 {
     header("Location: fullpost.php?id=$postID&successfullsub");
 }
-
-//if ($from == "Watchlist")
-//{
-//    header("Location: watchlist.php?id=$userID");
-//}
-//else
-//{
-
-//}

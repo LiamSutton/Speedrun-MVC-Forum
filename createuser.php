@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
             $firstname = htmlentities($_POST['firstname']);
             $lastname = htmlentities($_POST['lastname']);
 
-            // Instanciate data class
+            // Instantiate data class
             $userDataset = new UserDataset();
 
             // Insert new user into the db

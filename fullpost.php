@@ -8,7 +8,6 @@ $watchlistData = new WatchlistData();
 $view = new stdClass();
 $id = $_GET['id'];
 $view->pageTitle = "Post "  .$id;
-// TODO: Why is the main post treated differently than replies? they are the same thing.
 $view->mainPost = $postData->getPost($id);
 $view->replies = $postData->getReplies($id);
 
