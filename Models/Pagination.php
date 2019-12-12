@@ -1,15 +1,26 @@
 <?php
 
 
+/**
+ * Class Pagination
+ */
 class Pagination
 {
+    /**
+     * Pagination constructor.
+     */
     public function __construct()
     {
     }
 
+    /**
+     * @param $maxPage - the max page the results can go to
+     * @param $currentPage - the page the user is currently on
+     * @param $n - the number of items above and below to generate
+     * @return array - an array of page numbers the pagination should render in the view
+     */
     public static function generatePages($maxPage, $currentPage, $n)
     {
-        //echo "MAX_PAGE: $maxPage </br> CURRENT_PAGE: $currentPage </br> N: $n </br>";
         $pages = array();
 
         for ($i = $currentPage -$n; $i <= $currentPage +$n && $i <= $maxPage; $i++)

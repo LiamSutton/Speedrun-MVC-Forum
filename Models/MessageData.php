@@ -25,7 +25,7 @@ class MessageData
         $this->_dbHandle = $this->_dbInstance->getConnection();
     }
 
-    // i know this isnt worth any marks but i built it before i got your email saying you just need to hide contact detils
+    // i know this isnt worth any marks but i built it before i got your email saying you just need to hide contact details
     // feels-bad-man.jpg
     /**
      * @param $userID - the id of the logged in user to retrieve messages for
