@@ -2,4 +2,4 @@
 // Deletes all session data for a user, logging them out
 session_start();
 session_destroy();
-header("Location: index.php");
+header("Location: categories.php?loggedout");
