@@ -45,15 +45,16 @@ if (isset($_POST['submit']))
         }
         else
         {
-            die(ReCaptcha::$FAILED);
+            header("Location: posts.php?&categoryid=$categoryID&page=1&limit=5&date=1&comment=1&title&recaptcha");
+            exit();
         }
     }
     else
     {
-        die(ReCaptcha::$NOT_COMPLETED);
+        header("Location: posts.php?&categoryID=$categoryID&page=1&limit=5&date=1&comment=1&title&recaptcha");
+        exit();
     }
 
     // Redirect
-    //TODO: Hard coding this might not be the best way
-    header("Location: posts.php?categoryID=$categoryID&page=1&limit=5&sort=1&title=");
+    header("Location: posts.php?categoryID=$categoryID&page=1&limit=5&date=1&comment=1&title&posted");
 }

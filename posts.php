@@ -38,6 +38,15 @@ $view->availablePages = Pagination::generatePages($view->pageCount, $page, 2);
 
 $view->posts = $postDataSet->getBasicPosts($categoryID, $limit, $page, $dateOrder, $title, $commentOrder);
 
+if (isset($_GET['posted']))
+{
+    $view->message = "Post submitted";
+}
+if (isset($_GET['recaptcha']))
+{
+    $view->error = "ReCaptcha must be completed";
+}
+
 // TODO: Maybe a better way of doing this?
 $view->categoryName = $categoryData->getCategoryName($categoryID);
 $view->currentPage = $page;

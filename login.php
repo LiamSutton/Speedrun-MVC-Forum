@@ -15,11 +15,10 @@ if (isset($_POST['submit']))
         if ($reCaptchaResult)
         {
             // Parse the potential login details
-            // TODO: Sanitize input against SQL injection
-            $username = $_POST['username'];
-            $password = $_POST['password'];
+            $username =  htmlspecialchars($_POST['username']);
+            $password = htmlspecialchars($_POST['password']);
 
-            // instanciate the user data class
+            // instantiate the user data class
             $userData = new UserDataset();
 
             // attempt to login the user
@@ -34,13 +33,16 @@ if (isset($_POST['submit']))
         // User failed the reCaptcha
         else
         {
-            die(ReCaptcha::$FAILED);
+            header("Location: index.php?recaptcha");
+            exit();
+
         }
     }
     // User didn't complete the reCaptcha
     else
     {
-        die(ReCaptcha::$NOT_COMPLETED);
+        header("Location: index.php?recaptcha");
+        exit();
     }
 }
 

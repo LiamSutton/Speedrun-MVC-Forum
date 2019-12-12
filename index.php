@@ -11,4 +11,9 @@ if (isset($_SESSION['loggedIn']))
 {
     $view->user = $userData->getUserByID($_SESSION['id']);
 }
+
+if(isset($_GET['recaptcha']))
+{
+    $view->error = "ReCaptcha must be completed";
+}
 require_once ("Views/index.phtml");

@@ -1,5 +1,17 @@
 <?php require_once("template/header.phtml"); ?>
 
+<?php
+if (isset($view->error))
+{
+    require_once ("template/error.phtml");
+}
+
+if (isset($view->message))
+{
+    require_once ("template/info.phtml");
+}
+?>
+
 <h1 class="text-center display-4"><?php echo $view->categoryName ?></h1>
 <?php require_once("template/searchbar.phtml"); ?>
 

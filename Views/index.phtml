@@ -5,8 +5,16 @@ if (isset($_SESSION['loggedIn'])) {
     $userFirstName = $_SESSION['username'];
     echo "<h1>Welcome" . $userFirstName . "</h1>";
     echo "<img src=" . 'images/'.$view->user->getAvatar() . ">";
-}
-else
-    echo "<h1>You are not currently logged in.</h1>";
-    ?>
+} ?>
+
+<?php if (isset($view->error))
+    { ?>
+        <div class="alert show fade  alert-danger text-center" role="alert">
+            <?php echo $view->error ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      <?php
+    } ?>
 <?php require('template/footer.phtml') ?>
