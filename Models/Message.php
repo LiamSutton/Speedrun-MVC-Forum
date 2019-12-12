@@ -1,15 +1,43 @@
 <?php
 
 
+/**
+ * Class Message
+ */
 class Message
 {
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
     protected $_messageID, $_messageSenderID, $_messageRecipientID, $_messageContent, $_messageSenderUsername, $_messageRecipientUsername;
 
+    /**
+     * Message constructor.
+     */
     public function __construct()
     {
 
     }
 
+    /**
+     * @param $dbRow - dbRow containing data to create message
+     * @return Message - a new message object containing information from the db
+     */
     public static function Message($dbRow)
     {
         $instance = new self();
@@ -24,31 +52,49 @@ class Message
         return $instance;
     }
 
+    /**
+     * @return mixed
+     */
     public function getMessageID()
     {
         return $this->_messageID;
     }
 
+    /**
+     * @return mixed
+     */
     public function getMessageSenderID()
     {
         return $this->_messageSenderID;
     }
 
+    /**
+     * @return mixed
+     */
     public function getMessageRecipientID()
     {
         return $this->_messageRecipientID;
     }
 
+    /**
+     * @return mixed
+     */
     public function getMessageContent()
     {
         return $this->_messageContent;
     }
 
+    /**
+     * @return mixed
+     */
     public function getMessageSenderUsername()
     {
         return $this->_messageSenderUsername;
     }
 
+    /**
+     * @return mixed
+     */
     public function getMessageRecipientUsername()
     {
         return $this->_messageRecipientUsername;
