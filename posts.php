@@ -2,6 +2,7 @@
 session_start();
 require_once ("Models/PostDataset.php");
 require_once ("Models/CategoryData.php");
+require_once ("Models/Pagination.php");
 
 $view = new stdClass();
 $view->pageTitle = "Posts";
@@ -31,6 +32,9 @@ $view->pageCount = $postDataSet->getPageCount($categoryID, $limit, $title);
 
 $page = $page < $view->pageCount ? $page : $view->pageCount;
 $page = $page > 0 ? $page: 1;
+
+$view->availablePages = Pagination::generatePages($view->pageCount, $page, 2);
+
 
 $view->posts = $postDataSet->getBasicPosts($categoryID, $limit, $page, $dateOrder, $title, $commentOrder);
 

@@ -9,55 +9,23 @@
         </li>
 
         <?php
-            // Generate Lower
-        $i = -4;
-        while ($i < 0)
-        {
-            if ($i + $view->currentPage > 0)
-            { ?>
-                <li class="page-item">
-                    <a class="page-link"
-                       href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $i + $view->currentPage?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&comment=<?php echo $view->commentOrder ?>&title=<?php echo $view->title?>">
-                        <?php echo $i + $view->currentPage ?>
-                    </a>
-                </li>
-            <?php
-            }
-            $i++;
-        }
-        ?>
-<!--        Generate middle-->
-        <li class="page-item active">
-            <a class="page-link"
-               href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->currentPage?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&comment=<?php echo $view->commentOrder ?>&title=<?php echo $view->title?>">
-                <?php echo $view->currentPage ?>
-            </a>
-        </li>
-
-        <?php
-        // Generate Upper
-        $i = $view->currentPage + 1;
-
-        while ($i < $view->currentPage + 5 && $i < $view->pageCount +1)
-        {
-            ?>
-            <li class="page-item">
+        foreach ($view->availablePages as $p)
+        { ?>
+            <li class="page-item <?php echo $p == $view->currentPage ? 'active' :'f' ?>">
                 <a class="page-link"
-                   href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $i ?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&comment=<?php echo $view->commentOrder ?>&title=<?php echo $view->title?>">
-                    <?php echo $i?>
+                    href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $p?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&comment=<?php echo $view->commentOrder ?>&title=<?php echo $view->title?>">
+                    <?php echo $p?>
                 </a>
             </li>
-            <?php
-            $i++;
+          <?php
         }
         ?>
 
-        <li class="page-item <?php if($view->currentPage == $view->pageCount) echo "disabled" ?>">
+        <li class="page-item <?php if($view->currentPage >= $view->pageCount) echo "disabled" ?>">
             <a class="page-link"
                href="posts.php?categoryID=<?php echo $view->currentCategory?>&page=<?php echo $view->nextPage?>&limit=<?php echo $view->limit?>&date=<?php echo $view->dateOrder?>&comment=<?php echo $view->commentOrder ?>&title=<?php echo $view->title?>">
                 Next
             </a>
         </li>
-
     </ul>
 </nav>
