@@ -27,5 +27,9 @@ if (isset($_GET['recaptcha']))
 {
     $view->error = "ReCaptcha must be completed!";
 }
+if (isset($_GET['failed']))
+{
+    $view->error = "Failed to post Reply";
+}
 
 require_once ("Views/fullpost.phtml");

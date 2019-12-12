@@ -31,6 +31,7 @@ if (isset($_POST['submit']))
             }
             else
             {
+                // user couldn't log in
                 header("Location: index.php?failed");
                 exit;
             }

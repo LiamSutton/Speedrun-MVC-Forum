@@ -38,7 +38,11 @@ if (isset($_POST['submit']))
 //          $mainId = $_GET['mainid'];;
 
             // Commit new Reply to the db
-            $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID, $categoryID);
+            $success = $postDataset->createReply($user->getId(), $_POST['title'], $_POST['content'], $p_parentID, $categoryID);
+            if (!$success)
+            {
+                header("Location: fullpost.php?id=$p_parentID&failed");
+            }
         }
         else
         {
