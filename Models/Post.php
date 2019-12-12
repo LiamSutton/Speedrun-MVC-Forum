@@ -1,8 +1,41 @@
 <?php
 
 
+/**
+ * Class Post
+ */
 class Post
 {
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
+    /**
+     * @var
+     */
     protected
         $_id,
         $_posterID,
@@ -15,11 +48,18 @@ class Post
         $_categoryID,
         $_replyCount;
 
+    /**
+     * Post constructor.
+     */
     public function __construct()
     {
 
     }
 
+    /**
+     * @param $dbRow - Db row containing data to create Post
+     * @return Post - a fullPost object
+     */
     public static function fullPost($dbRow)
     {
         $instance = new self();
@@ -38,6 +78,10 @@ class Post
         return $instance;
     }
 
+    /**
+     * @param $dbRow - db information to create post
+     * @return Post - a basicPost Object
+     */
     public static function basicPost($dbRow)
     {
         $instance = new self();
@@ -52,6 +96,7 @@ class Post
         return $instance;
     }
 
+    // creates a Reply object using information from db
     public static function reply($dbRow)
     {
         $instance = new self();
@@ -64,7 +109,6 @@ class Post
 
         return $instance;
 
-        return $instance;
     }
     /**
      * @return mixed
