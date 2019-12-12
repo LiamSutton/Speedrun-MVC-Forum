@@ -1,12 +1,24 @@
 <?php
 
 
+/**
+ * Class FileUpload
+ */
 class FileUpload
 {
+    /**
+     * FileUpload constructor.
+     *
+     */
     public function __construct()
     {
     }
 
+
+    /**
+     * @param $image - the image to upload
+     * @return bool - false if it fails, not sophisticated but legit forgot about this :(
+     */
     public static function uploadImage($image)
     {
         $postImage = $_FILES[$image]['name'];
@@ -15,11 +27,11 @@ class FileUpload
 
         if (move_uploaded_file($_FILES[$image]['tmp_name'], $uploadFile))
         {
-            // do nothing
+            return true;
         }
         else
         {
-            // error handling
+            return false;
         }
     }
 }
