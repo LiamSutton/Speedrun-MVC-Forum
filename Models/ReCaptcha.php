@@ -1,16 +1,32 @@
 <?php
 
+/**
+ * Class ReCaptcha
+ */
 class ReCaptcha
 {
+    /**
+     * @var string
+     */
     static $NOT_COMPLETED = "ReCaptcha Must Be Completed";
+    /**
+     * @var string
+     */
     static $FAILED = "ReCaptcha Failed";
+
+    /**
+     * ReCaptcha constructor.
+     */
     public function __construct()
     {
 
     }
 
 
-
+    /**
+     * @param $response - a string that when 0 means the user didnt attempt it
+     * @return bool - whether google says the person is a beep boop robot 
+     */
     public static function getReCaptchaResult($response)
     {
         if (strlen($response) == 0)
