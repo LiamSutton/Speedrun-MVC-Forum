@@ -3,7 +3,7 @@ session_start();
 require_once ("Models/WatchlistData.php");
 
 $watchlistData = new WatchlistData();
-$userID = $_SESSION['id'];
+$userID = htmlentities($_SESSION['id']);
 $postID = $_GET['id'];
 $from = $_GET['from'];
 

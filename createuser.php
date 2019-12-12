@@ -28,10 +28,10 @@ if (isset($_POST['submit'])) {
                 $avatar = 'default_avatar.jpg';
             }
             // Setup user details
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $firstname = $_POST['firstname'];
-            $lastname = $_POST['lastname'];
+            $username = htmlentities($_POST['username']);
+            $password = htmlentities($_POST['password']);
+            $firstname = htmlentities($_POST['firstname']);
+            $lastname = htmlentities($_POST['lastname']);
 
             // Instanciate data class
             $userDataset = new UserDataset();
