@@ -8,13 +8,22 @@ $userID = $_SESSION['id'];
 $postID = $_GET['id'];
 $from = $_GET['from'];
 
-$watchlistData->addToWatchlist($userID, $postID);
+$success = $watchlistData->addToWatchlist($userID, $postID);
 
-if ($from == "Watchlist")
+if (!$success)
 {
-    header("Location: watchlist.php?id=$userID");
+    header("Location: fullpost.php?id=$postID&failedsub");
 }
 else
 {
-    header("Location: fullpost.php?id=$postID");
+    header("Location: fullpost.php?id=$postID&successfullsub");
 }
+
+//if ($from == "Watchlist")
+//{
+//    header("Location: watchlist.php?id=$userID");
+//}
+//else
+//{
+
+//}

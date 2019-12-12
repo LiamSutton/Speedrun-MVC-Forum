@@ -21,4 +21,4 @@ if (isset($_GET['failed']))
 {
     $view->error = "Incorrect Login Credentials Provided";
 }
-require_once ("Views/index.phtml");
+header("Location: categories.php");

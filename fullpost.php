@@ -32,4 +32,14 @@ if (isset($_GET['failed']))
     $view->error = "Failed to post Reply";
 }
 
+if (isset($_GET['failedsub']))
+{
+    $view->error = "Failed to add item to your Watchlist";
+}
+
+if (isset($_GET['successfullsub']))
+{
+    $view->message = "Item added to your watchlist successfully";
+}
+
 require_once ("Views/fullpost.phtml");

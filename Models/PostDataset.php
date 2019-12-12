@@ -68,7 +68,7 @@ class PostDataset
                 WHERE p_categoryID = :categoryID
                 AND p_parentID IS NULL
                 AND p_title LIKE CONCAT(:title, '%')
-                ORDER BY $commentOrder, $dateOrder
+                ORDER BY $dateOrder, $commentOrder
                 LIMIT :limit OFFSET :offset";
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
