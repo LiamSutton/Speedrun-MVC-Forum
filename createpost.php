@@ -41,7 +41,11 @@ if (isset($_POST['submit']))
             $categoryID = $_GET['categoryID'];
 
             // Commit it to DB
-            $postsDataset->createPost($posterID, $title, $content, $postImage, $categoryID);
+            $success = $postsDataset->createPost($posterID, $title, $content, $postImage, $categoryID);
+            if (!$success)
+            {
+                header("Location: posts.php?&categoryid=$categoryID&page=1&limit=5&date=1&comment=2&title&failed");
+            }
         }
         else
         {

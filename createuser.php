@@ -45,20 +45,23 @@ if (isset($_POST['submit'])) {
             $_SESSION['id'] = $userDataset->getUser($username)->getId();
 
             // redirect to index page
-            header("Location: index.php");
+            header("Location: categories.php?success");
+            exit();
         }
         // User failed ReCaptcha
         else
         {
-            die(ReCaptcha::$FAILED);
+            header("Location: categories.php?recaptcha");
+            exit();
         }
     }
     else
     {
-        die(ReCaptcha::$NOT_COMPLETED);
+        header("Location: categories.php?recaptcha");
+        exit();
     }
  }
  else
  {
-     echo "<h1>Not Authorised to access this</h1>";
+     header("Location: categories.php?unauthorized");
  }

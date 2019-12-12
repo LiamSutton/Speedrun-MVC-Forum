@@ -47,6 +47,11 @@ if (isset($_GET['recaptcha']))
     $view->error = "ReCaptcha must be completed";
 }
 
+if (isset($_GET['failed']))
+{
+    $view->error = "Unable to create post";
+}
+
 // TODO: Maybe a better way of doing this?
 $view->categoryName = $categoryData->getCategoryName($categoryID);
 $view->currentPage = $page;

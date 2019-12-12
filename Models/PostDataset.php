@@ -212,8 +212,19 @@ class PostDataset
         $statement->bindValue(':image', $image, PDO::PARAM_STR);
         $statement->bindValue(':categoryID', $categoryID, PDO::PARAM_INT);
 
-        $statement->execute();
-        $this->_dbInstance->destruct();
+        try
+        {
+            $statement->execute();
+            $this->_dbInstance->destruct();
+            return true;
+        }
+        catch(PDOException $ex)
+        {
+            error_log($ex);
+            $this->_dbInstance->destruct();
+            return false;
+        }
+
     }
 
     // TODO: Maybe should return true if succeeds?
