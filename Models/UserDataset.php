@@ -2,9 +2,18 @@
 require_once ("Models/Database.php");
 require_once ("Models/User.php");
 
-// TODO: Possibly separate the Create / Insert operations into a static class
+
+/**
+ * Class UserDataset
+ */
 class UserDataset
 {
+    /**
+     * @var PDO
+     */
+    /**
+     * @var Database|PDO|null
+     */
     protected $_dbHandle, $_dbInstance;
 
     /**
@@ -49,21 +58,27 @@ class UserDataset
         }
     }
 
-    // TODO: Maybe should return true if succeeds?
-    // TODO: username is guarunteed to be unique but maybe should do it from u_id?
-    public function getUser($username)
-    {
-        $sqlQuery = "SELECT *
-                     FROM Users
-                     WHERE u_username = ?";
-        $statement = $this->_dbHandle->prepare($sqlQuery);
-        $statement->execute([$username]);
+    /**
+     * @param $username
+     * @return User
+     */
+//    public function getUser($username)
+//    {
+//        $sqlQuery = "SELECT *
+//                     FROM Users
+//                     WHERE u_username = ?";
+//        $statement = $this->_dbHandle->prepare($sqlQuery);
+//        $statement->execute([$username]);
+//
+//        $user = $statement->fetch(PDO::FETCH_ASSOC);
+//        $this->_dbInstance->destruct();
+//        return new User($user);
+//    }
 
-        $user = $statement->fetch(PDO::FETCH_ASSOC);
-        $this->_dbInstance->destruct();
-        return new User($user);
-    }
-
+    /**
+     * @param $id - the ID of the user to retrieve
+     * @return User - a user object for the given user
+     */
     public function getUserByID($id)
     {
         $sqlQuery = "SELECT u_id,
@@ -89,6 +104,7 @@ class UserDataset
 
         $statement = $this->_dbHandle->prepare($sqlQuery);
 
+        // bind values to prevent SQL INJECTION
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
 
         $statement->execute();
@@ -97,7 +113,15 @@ class UserDataset
         return new User($user);
     }
 
-    // TODO: Add error handling (currently returns true even if it fails?)
+
+    /**
+     * @param $username - the username of the new user
+     * @param $password - the unhashed password of the new user
+     * @param $firstname - the firstname of the new user
+     * @param $lastname - the lastname of the new user
+     * @param null $avatar - an optional user avatar image
+     * @return bool - whether creating a new user was a success
+     */
     public function createUser($username, $password, $firstname, $lastname, $avatar=null)
     {
         $password = password_hash($password, PASSWORD_DEFAULT);
