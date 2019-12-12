@@ -71,9 +71,9 @@ $loggedIn = isset($_SESSION['loggedIn']);
                         if ($mainPost->getImage())
                             { ?>
 
-                                <div class="col-sm-12">
-                                    <img src="images/<?php echo $mainPost->getImage() ?>">
-                                </div>
+
+                                    <img class="col-sm-4 mx-auto" src="images/<?php echo $mainPost->getImage() ?>">
+
                              <?php
                             } ?>
                         <div class="col-sm-12">

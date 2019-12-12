@@ -104,3 +104,17 @@ footer {
     margin-bottom: 15px;
 }
 
+img {
+    height: auto;
+    width: auto;
+}
+
+/*#avatar-base {*/
+/*    width: 200px; !* Your chosen height *!*/
+/*    height: auto; !* Must be auto *!*/
+/*}*/
+
+/*#logo-base img {*/
+/*    width: 100%; !* Must be 100% *!*/
+/*    height: auto; !* Must be auto *!*/
+/*}*/
