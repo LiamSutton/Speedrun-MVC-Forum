@@ -7,6 +7,7 @@
     let comment = <?php echo $view->commentOrder?>;
 
     function getNextPosts() {
+        page++;
         fetch(`getNextPosts.php?categoryID=${categoryID}&page=${page}&limit=${limit}&date=${dateOrder}&comment=${comment}&title=${title}`).then((result) => {
             return result.text()
         }).then((data) => {
@@ -16,7 +17,6 @@
             posts.forEach((post) => {
             a.appendChild(new Post(post._id, post._title, post._posterID, post._posterFullName, post._content, post._replyCount).build());
             });
-            page++;
         }).catch((error) => {
             console.error(error)
         })
