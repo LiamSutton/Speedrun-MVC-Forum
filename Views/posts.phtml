@@ -1,5 +1,6 @@
 <script>
     let page = Number(<?php echo $view->currentPage?>);
+    let pageCount = Number(<?php echo $view->pageCount?>);
     let categoryID = Number(<?php echo $view->currentCategory?>);
     let limit = Number(<?php echo $view->limit?>);
     let dateOrder = Number(<?php echo $view->dateOrder?>);
@@ -12,11 +13,18 @@
             return result.text()
         }).then((data) => {
             const posts = JSON.parse(data);
-            console.log(posts);
             let a = document.getElementById('a');
-            posts.forEach((post) => {
-            a.appendChild(new Post(post._id, post._title, post._posterID, post._posterFullName, post._content, post._replyCount).build());
-            });
+            if (posts.length === 0) {
+                let alert = document.createElement("div");
+                alert.setAttribute("role", "alert");
+                alert.className = "alert alert-danger";
+                alert.innerHTML = "Theres nothing more UwU";
+                a.appendChild(alert)
+            }
+                posts.forEach((post) => {
+                    a.appendChild(new Post(post._id, post._title, post._posterID, post._posterFullName, post._content, post._replyCount).build());
+                });
+
         }).catch((error) => {
             console.error(error)
         })
@@ -26,7 +34,9 @@
         if (document.body.scrollHeight ==
             document.body.scrollTop +
             window.innerHeight) {
-            getNextPosts();
+            if (page <= pageCount) {
+                getNextPosts();
+            }
         }
     });
     /*
@@ -64,12 +74,14 @@
             g.className = "lead text-center";
             h.className = "text-center";
 
+            c.href = `fullpost.php?id=${this.id}`;
+            e.href = `account.php?id=${this.posterID}`;
             // c.innerHTML = this.id;
             d.innerHTML = this.title;
             // e.innerHTML = this.posterID;
             f.innerHTML = this.posterFullName;
             g.innerHTML = this.content;
-            h.innerHTML = this.replyCount;
+            h.innerHTML = `Number of Comments: ${this.replyCount}`;
 
             a.append(b);
             b.appendChild(c);
@@ -124,7 +136,5 @@ if (isset($view->message))
     <?php }
     ?>
 </ul>
-
-<?php require_once ("template/pagination.phtml") ?>
 
 <?php require_once("template/footer.phtml"); ?>
