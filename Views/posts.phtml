@@ -1,3 +1,89 @@
+<script>
+    let page = Number(<?php echo $view->currentPage?>);
+    let categoryID = Number(<?php echo $view->currentCategory?>);
+    let limit = Number(<?php echo $view->limit?>);
+    let dateOrder = Number(<?php echo $view->dateOrder?>);
+    let title = "<?php echo $view->title?>";
+    let comment = <?php echo $view->commentOrder?>;
+
+    function getNextPosts() {
+        fetch(`getNextPosts.php?categoryID=${categoryID}&page=${page}&limit=${limit}&date=${dateOrder}&comment=${comment}&title=${title}`).then((result) => {
+            return result.text()
+        }).then((data) => {
+            const posts = JSON.parse(data);
+            console.log(posts);
+            let a = document.getElementById('a');
+            posts.forEach((post) => {
+            a.appendChild(new Post(post._id, post._title, post._posterID, post._posterFullName, post._content, post._replyCount).build());
+            });
+            page++;
+        }).catch((error) => {
+            console.error(error)
+        })
+    }
+
+    document.addEventListener('scroll', function (event) {
+        if (document.body.scrollHeight ==
+            document.body.scrollTop +
+            window.innerHeight) {
+            getNextPosts();
+        }
+    });
+    /*
+    $instance->_id = $dbRow['p_id'];
+        $instance->_title = $dbRow['p_title'];
+        $instance->_posterID = $dbRow['p_posterID'];
+        $instance->_posterFullName = $dbRow['u_fullname'];
+        $instance->_content = $dbRow['p_content'];
+        $instance->_replyCount = $dbRow['p_replycount'];
+     */
+
+    class Post {
+        constructor(id, title, posterID, posterFullName, content, replyCount) {
+            this.id = id;
+            this.title = title;
+            this.posterID = posterID;
+            this.posterFullName = posterFullName;
+            this.content = content;
+            this.replyCount = replyCount;
+        }
+
+        build() {
+            let a = document.createElement("li");
+            let b = document.createElement("div");
+            let c = document.createElement("a");
+            let d = document.createElement("h1");
+            let e = document.createElement("a");
+            let f = document.createElement("h4");
+            let g = document.createElement("h4");
+            let h = document.createElement("h5");
+
+            a.className = "list-group-item list-element col-sm-12";
+            d.className = "list-group-item-heading text-center";
+            f.className = "text-muted text-center";
+            g.className = "lead text-center";
+            h.className = "text-center";
+
+            // c.innerHTML = this.id;
+            d.innerHTML = this.title;
+            // e.innerHTML = this.posterID;
+            f.innerHTML = this.posterFullName;
+            g.innerHTML = this.content;
+            h.innerHTML = this.replyCount;
+
+            a.append(b);
+            b.appendChild(c);
+            c.appendChild(d);
+            b.appendChild(e);
+            e.appendChild(f);
+            b.appendChild(g);
+            b.appendChild(h);
+
+            return a;
+        }
+    }
+</script>
+
 <?php require_once("template/header.phtml"); ?>
 
 <?php
@@ -12,7 +98,7 @@ if (isset($view->message))
 }
 ?>
 
-<h1  id="pageHeading" class="text-center display-4 col-sm-12"><?php echo $view->categoryName ?></h1>
+<h1  id="pageHeading" class="text-center display-4 col-sm-12" onclick="getNextPosts()"><?php echo $view->categoryName ?></h1>
 <?php require_once("template/searchbar.phtml"); ?>
 
 <?php if(isset($_SESSION['loggedIn']))
@@ -20,7 +106,7 @@ if (isset($view->message))
         require_once ("template/newpost.phtml");
     }
     ?>
-<ul class="list-group">
+<ul id='a' class="list-group">
     <?php
     foreach ($view->posts as $post) { ?>
         <li class="list-group-item list-element col-sm-12">

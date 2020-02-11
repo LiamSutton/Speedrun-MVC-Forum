@@ -34,6 +34,7 @@ $categoryID = $_GET['categoryID'];
 $page = $_GET['page'];
 
 $view->pageCount = $postDataSet->getPageCount($categoryID, $limit, $title);
+$view->page = $page;
 
 // clamp page count
 $page = $page < $view->pageCount ? $page : $view->pageCount;

@@ -4,7 +4,7 @@
 /**
  * Class Post
  */
-class Post
+class Post implements JsonSerializable
 {
     /**
      * @var
@@ -178,4 +178,11 @@ class Post
         return $this->_replyCount;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 }
