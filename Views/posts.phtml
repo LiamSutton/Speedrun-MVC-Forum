@@ -13,16 +13,16 @@
             return result.text()
         }).then((data) => {
             const posts = JSON.parse(data);
-            let a = document.getElementById('a');
+            let postList = document.getElementById('postList');
             if (posts.length === 0) {
                 let alert = document.createElement("div");
                 alert.setAttribute("role", "alert");
                 alert.className = "alert alert-danger";
                 alert.innerHTML = "Theres nothing more UwU";
-                a.appendChild(alert)
+                postList.appendChild(alert)
             }
                 posts.forEach((post) => {
-                    a.appendChild(new Post(post._id, post._title, post._posterID, post._posterFullName, post._content, post._replyCount).build());
+                    postList.appendChild(new Post(post._id, post._title, post._posterID, post._posterFullName, post._content, post._replyCount).build());
                 });
 
         }).catch((error) => {
@@ -39,14 +39,6 @@
             }
         }
     });
-    /*
-    $instance->_id = $dbRow['p_id'];
-        $instance->_title = $dbRow['p_title'];
-        $instance->_posterID = $dbRow['p_posterID'];
-        $instance->_posterFullName = $dbRow['u_fullname'];
-        $instance->_content = $dbRow['p_content'];
-        $instance->_replyCount = $dbRow['p_replycount'];
-     */
 
     class Post {
         constructor(id, title, posterID, posterFullName, content, replyCount) {
@@ -59,39 +51,39 @@
         }
 
         build() {
-            let a = document.createElement("li");
-            let b = document.createElement("div");
-            let c = document.createElement("a");
-            let d = document.createElement("h1");
-            let e = document.createElement("a");
-            let f = document.createElement("h4");
-            let g = document.createElement("h4");
-            let h = document.createElement("h5");
+            let list = document.createElement("li");
+            let div = document.createElement("div");
+            let postLink = document.createElement("a");
+            let title = document.createElement("h1");
+            let accountLink = document.createElement("a");
+            let posterName = document.createElement("h4");
+            let content = document.createElement("h4");
+            let commentCount = document.createElement("h5");
 
-            a.className = "list-group-item list-element col-sm-12";
-            d.className = "list-group-item-heading text-center";
-            f.className = "text-muted text-center";
-            g.className = "lead text-center";
-            h.className = "text-center";
 
-            c.href = `fullpost.php?id=${this.id}`;
-            e.href = `account.php?id=${this.posterID}`;
-            // c.innerHTML = this.id;
-            d.innerHTML = this.title;
-            // e.innerHTML = this.posterID;
-            f.innerHTML = this.posterFullName;
-            g.innerHTML = this.content;
-            h.innerHTML = `Number of Comments: ${this.replyCount}`;
 
-            a.append(b);
-            b.appendChild(c);
-            c.appendChild(d);
-            b.appendChild(e);
-            e.appendChild(f);
-            b.appendChild(g);
-            b.appendChild(h);
+            list.className = "list-group-item list-element col-sm-12";
+            title.className = "list-group-item-heading text-center";
+            posterName.className = "text-muted text-center";
+            content .className = "lead text-center";
+            commentCount.className = "text-center";
 
-            return a;
+            postLink.href = `fullpost.php?id=${this.id}`;
+            accountLink.href = `account.php?id=${this.posterID}`;
+            title.innerHTML = this.title;
+            posterName.innerHTML = this.posterFullName;
+            content.innerHTML = this.content;
+            commentCount.innerHTML = `Number of Comments: ${this.replyCount}`;
+
+            list.append(div);
+            div.appendChild(postLink);
+            postLink.appendChild(title);
+            div.appendChild(accountLink);
+            accountLink.appendChild(posterName);
+            div.appendChild(content);
+            div.appendChild(commentCount);
+
+            return list;
         }
     }
 </script>
@@ -118,7 +110,7 @@ if (isset($view->message))
         require_once ("template/newpost.phtml");
     }
     ?>
-<ul id='a' class="list-group">
+<ul id='postList' class="list-group">
     <?php
     foreach ($view->posts as $post) { ?>
         <li class="list-group-item list-element col-sm-12">
