@@ -7,6 +7,19 @@
   </div>
 </div>
 <script>
+    function sendMessage() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "sendmessage.php", true);
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+            }
+        }
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        let recipientID = "67";
+        let content = "TEST MESSAGE 2";
+        xhr.send(`id=${recipientID}&content=${content}`);
+    }
 function createLst() {
   let msgList = document.getElementById('msg');
     for(let i = 0; i < 10; i++) {

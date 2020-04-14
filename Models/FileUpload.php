@@ -13,8 +13,7 @@ class FileUpload
     public function __construct()
     {
     }
-
-
+    
     /**
      * @param $image - the image to upload
      * @return bool - false if it fails, not sophisticated but legit forgot about this :(
