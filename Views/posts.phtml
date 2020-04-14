@@ -100,7 +100,7 @@ if (isset($view->message))
 }
 ?>
 <div class="container">
-    <h1  id="pageHeading" class="text-center display-4 col-sm-12" onclick="getNextPosts()"><?php echo $view->categoryName ?></h1>
+    <h1  id="pageHeading" class="text-center display-4 col-sm-12><?php echo $view->categoryName ?></h1>
     <?php require_once("template/searchbar.phtml"); ?>
 
     <?php if(isset($_SESSION['loggedIn']))
