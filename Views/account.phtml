@@ -1,36 +1,37 @@
 <?php require_once("template/header.phtml"); ?>
-
 <div class="container">
-    <div class="row">
-        <h1 class="col-lg-12 text-center"><?php echo $view->user->getFullname() ?></h1>
-        <?php
-            if (isset($_SESSION['loggedIn']))
-            { ?>
+    <div class="container">
+        <div class="row">
+            <h1 class="col-lg-12 text-center"><?php echo $view->user->getFullname() ?></h1>
+            <?php
+                if (isset($_SESSION['loggedIn']))
+                { ?>
 
-                <img class="col-sm-4 mx-auto" alt="user avatar" align="center" src=<?php echo "images/".$view->user->getAvatar()?>>
-                <h2 class="col-lg-12 text-center"><?php echo $view->user->getUsername() ?></h2>
-              <?php
-            }
-            else
-            { ?>
-                <h2 class="col-lg-12 text-center">Please log in to view user details</h2>
-              <?php
-            }
-        ?>
-        <h3 class="col-lg-12 text-muted text-center">Number of Posts Made: <?php echo $view->postCount ?></h3>
-        <h3 class="col-lg-12 text-muted text-center">Number of Replies: <?php echo $view->replyCount ?></h3>
+                    <img class="col-sm-4 mx-auto" alt="user avatar" align="center" src=<?php echo "images/".$view->user->getAvatar()?>>
+                    <h2 class="col-lg-12 text-center"><?php echo $view->user->getUsername() ?></h2>
+                <?php
+                }
+                else
+                { ?>
+                    <h2 class="col-lg-12 text-center">Please log in to view user details</h2>
+                <?php
+                }
+            ?>
+            <h3 class="col-lg-12 text-muted text-center">Number of Posts Made: <?php echo $view->postCount ?></h3>
+            <h3 class="col-lg-12 text-muted text-center">Number of Replies: <?php echo $view->replyCount ?></h3>
+        </div>
+        <ul class="list-group">
+            <h2></h2>
+            <?php
+            foreach ($view->userPosts as $post) { ?>
+                <li class="list-group-item list-element col-sm-12">
+                    <h1 class="text-center"> <a href="fullpost.php?id=<?php echo $post->getId() ?>"> <?php echo $post->getTitle() ?></a></h1>
+                    <h4 class="text-muted text-center"> <a href="account.php?id=<?php echo $post->getPosterId()?>"><?php echo $post->getPosterFullName()?></a></h4>
+                    <p class="text-center lead"><?php echo $post->getContent() ?></p>
+                    <h4 class="text-center">Number Of Comments: <?php echo $post->getReplyCount() ?></h4>
+                </li>
+            <?php } ?>
+        </ul>
     </div>
-    <ul class="list-group">
-        <h2></h2>
-        <?php
-        foreach ($view->userPosts as $post) { ?>
-            <li class="list-group-item list-element col-sm-12">
-                <h1 class="text-center"> <a href="fullpost.php?id=<?php echo $post->getId() ?>"> <?php echo $post->getTitle() ?></a></h1>
-                <h4 class="text-muted text-center"> <a href="account.php?id=<?php echo $post->getPosterId()?>"><?php echo $post->getPosterFullName()?></a></h4>
-                <p class="text-center lead"><?php echo $post->getContent() ?></p>
-                <h4 class="text-center">Number Of Comments: <?php echo $post->getReplyCount() ?></h4>
-            </li>
-        <?php } ?>
-    </ul>
 </div>
 <?php require_once("template/footer.phtml"); ?>

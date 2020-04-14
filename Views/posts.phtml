@@ -31,9 +31,7 @@
     }
 
     document.addEventListener('scroll', function (event) {
-        if (document.body.scrollHeight ==
-            document.body.scrollTop +
-            window.innerHeight) {
+        if (document.body.scrollHeight === (document.body.scrollTop + window.innerHeight)) {
             if (page <= pageCount) {
                 getNextPosts();
             }
@@ -101,32 +99,33 @@ if (isset($view->message))
     require_once ("template/info.phtml");
 }
 ?>
+<div class="container">
+    <h1  id="pageHeading" class="text-center display-4 col-sm-12" onclick="getNextPosts()"><?php echo $view->categoryName ?></h1>
+    <?php require_once("template/searchbar.phtml"); ?>
 
-<h1  id="pageHeading" class="text-center display-4 col-sm-12" onclick="getNextPosts()"><?php echo $view->categoryName ?></h1>
-<?php require_once("template/searchbar.phtml"); ?>
-
-<?php if(isset($_SESSION['loggedIn']))
-    {
-        require_once ("template/newpost.phtml");
-    }
-    ?>
-<ul id='postList' class="list-group">
-    <?php
-    foreach ($view->posts as $post) { ?>
-        <li class="list-group-item list-element col-sm-12">
-            <div>
-                <a href="fullpost.php?id=<?php echo $post->getId() ?>">
-                    <h1 class="list-group-item-heading text-center"><?php echo $post->getTitle() ?></h1>
-                </a>
-                <a href="account.php?id=<?php echo $post->getPosterID()?>">
-                    <h4 class="text-muted text-center"><?php echo $post->getPosterFullName() ?></h4>
-                </a>
-                <h4 class="lead text-center"><?php echo $post->getContent() ?></h4>
-                <h5 class="text-center">Number of comments: <?php echo $post->getReplyCount() ?></h5>
-            </div>
-        </li>
-    <?php }
-    ?>
-</ul>
+    <?php if(isset($_SESSION['loggedIn']))
+        {
+            require_once ("template/newpost.phtml");
+        }
+        ?>
+    <ul id='postList' class="list-group">
+        <?php
+        foreach ($view->posts as $post) { ?>
+            <li class="list-group-item list-element col-sm-12">
+                <div>
+                    <a href="fullpost.php?id=<?php echo $post->getId() ?>">
+                        <h1 class="list-group-item-heading text-center"><?php echo $post->getTitle() ?></h1>
+                    </a>
+                    <a href="account.php?id=<?php echo $post->getPosterID()?>">
+                        <h4 class="text-muted text-center"><?php echo $post->getPosterFullName() ?></h4>
+                    </a>
+                    <h4 class="lead text-center"><?php echo $post->getContent() ?></h4>
+                    <h5 class="text-center">Number of comments: <?php echo $post->getReplyCount() ?></h5>
+                </div>
+            </li>
+        <?php }
+        ?>
+    </ul>
+</div>
 
 <?php require_once("template/footer.phtml"); ?>
