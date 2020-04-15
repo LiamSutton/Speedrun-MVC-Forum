@@ -125,7 +125,11 @@ if (!isset($_SESSION['username'])) {
         }).catch((error) => {
             console.log(error)
         })
+
+        setTimeout(getNotifications, 2000)
     }
+
+    getNotifications()
 </script>
 
 
