@@ -57,13 +57,16 @@
                 </div>
             </li>
             <?php if(isset($_SESSION['loggedIn'])) { ?>
-                <li>
-                    <a class="btn btn-primary" id="badge">
-                        New Messages:
-                        <span class="badge badge-light" id="notification">
-
+                <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="badge">
+                            New Messages:
+                            <span class="badge badge-light" id="notification">
                         </span>
-                    </a>
+                        </a>
+                    <div class="dropdown-menu">
+                        <a href="#" onclick="clearAllNotifications()">Clear all notifications</a>
+
+                    </div>
                 </li>
             <?php } ?>
         </ul>
@@ -138,6 +141,20 @@ if (!isset($_SESSION['username'])) {
         })
 
         setTimeout(getNotifications, 10000)
+    }
+
+    function clearAllNotifications() {
+        // Make a post request to clearNotifications.php
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "clearNotifications.php", true);
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+            }
+        }
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send();
+        getNotifications();
     }
 
     <?php if (isset($_SESSION['loggedIn'])) { ?>

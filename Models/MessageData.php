@@ -64,4 +64,21 @@ class MessageData
 
         return $count;
     }
+
+    /** This function will set all unopened messages to opened for a given user (clearing notifications)
+     * @param $recipientID : The ID of the user to clear notifications for
+     */
+    public function markAllAsRead($recipientID) {
+        $sqlQuery = "UPDATE Messages
+                     SET m_opened = TRUE
+                     WHERE m_opened IS FALSE AND m_recipientID = :recipientID";
+
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+
+        $statement->bindValue(":recipientID", $recipientID, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        $this->_dbInstance->destruct();
+    }
 }
