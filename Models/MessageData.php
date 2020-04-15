@@ -83,7 +83,7 @@ class MessageData
     }
 
     public function getConversationList($id) {
-        $sqlQuery = "SELECT DISTINCT u_id, u_username FROM Users
+        $sqlQuery = "SELECT DISTINCT u_id as id, u_username as username FROM Users
                      JOIN Messages M on Users.u_id = M.m_recipientID or Users.u_id = M.m_senderID
                      WHERE u_id != :id";
         $statement = $this->_dbHandle->prepare($sqlQuery);

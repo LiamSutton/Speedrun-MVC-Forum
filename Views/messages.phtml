@@ -21,18 +21,21 @@
         xhr.send(`id=${recipientID}&content=${content}`);
     }
 function createLst() {
-        const id = <?php echo $_SESSION['id'] ?>
+        const id = "<?php echo $_SESSION['id'] ?>";
+        const lst = document.getElementById('msg');
     // Make a call to loadInbox.php and retrieve a list of "conversations" ordered by Newest -> Oldest.
     fetch(`getConversations.php?id=${id}`).then((result) => {
         return result.text()
     }).then((data) => {
         console.log(data)
+        let res = JSON.parse(data);
+        res.forEach(conversation => lst.append(new Conversation(conversation.id, conversation.username, null).build()))
     }).catch((error) => {
         console.log(error)
     })
 }
    
-    class MessageHeader {
+    class Conversation {
       constructor(id, author, avatar) {
         this.id = id;
         this.author = author
@@ -46,7 +49,7 @@ function createLst() {
         name.innerHTML = this.author;
         list.className = "list-group-item list-element col-sm-12";
         name.className = "list-group-item-heading text-center";
-        name.href = `messaging.php?id=${this.id}`
+        name.href = `conversation.php?id=${this.id}`
         list.append(div)
         div.append(name)
 
