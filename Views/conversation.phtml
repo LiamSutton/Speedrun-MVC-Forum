@@ -1,0 +1,22 @@
+<?php require_once ("template/header.phtml") ?>
+<div class="container">
+    <div class="container">
+        <ul class="list-group">
+
+        </ul>
+    </div>
+</div>
+
+<script>
+    function getConversationHistory() {
+        fetch("getConversationHistory.php?id=<?php echo $view->other ?>").then((result) => {
+            return result.text();
+        }).then((data) => {
+            let d = JSON.parse(data);
+            console.log(d);
+        })
+    }
+
+    window.addEventListener("load", getConversationHistory);
+</script>
+<?php require_once ("template/footer.phtml") ?>
