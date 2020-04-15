@@ -81,4 +81,20 @@ class MessageData
 
         $this->_dbInstance->destruct();
     }
+
+    public function getConversationList($id) {
+        $sqlQuery = "SELECT DISTINCT u_id, u_username FROM Users
+                     JOIN Messages M on Users.u_id = M.m_recipientID or Users.u_id = M.m_senderID
+                     WHERE u_id != :id";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->bindValue(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $conversations = array();
+        while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC)) {
+            array_push($conversations, $dbRow);
+        }
+        return $conversations;
+
+    }
 }

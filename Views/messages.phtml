@@ -21,10 +21,15 @@
         xhr.send(`id=${recipientID}&content=${content}`);
     }
 function createLst() {
-  let msgList = document.getElementById('msg');
-    for(let i = 0; i < 10; i++) {
-      msgList.appendChild(new MessageHeader(i, "TEST", "NULL").build());
-    }
+        const id = <?php echo $_SESSION['id'] ?>
+    // Make a call to loadInbox.php and retrieve a list of "conversations" ordered by Newest -> Oldest.
+    fetch(`getConversations.php?id=${id}`).then((result) => {
+        return result.text()
+    }).then((data) => {
+        console.log(data)
+    }).catch((error) => {
+        console.log(error)
+    })
 }
    
     class MessageHeader {
