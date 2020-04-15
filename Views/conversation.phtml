@@ -1,7 +1,7 @@
 <?php require_once ("template/header.phtml") ?>
 <div class="container">
     <div class="container">
-        <ul class="list-group">
+        <ul class="list-group" id="r">
 
         </ul>
     </div>
@@ -9,14 +9,46 @@
 
 <script>
     function getConversationHistory() {
+        let h = document.getElementById("r");
         fetch("getConversationHistory.php?id=<?php echo $view->other ?>").then((result) => {
             return result.text();
         }).then((data) => {
-            let d = JSON.parse(data);
-            console.log(d);
+            let messages = JSON.parse(data);
+            console.log(messages[0]);
+
+            messages.forEach(message => h.append(new Message(message._messageSenderName, message._messageContent, message._messageDatecreated).build()))
+        }).catch((error) => {
+            console.error(error);
         })
     }
 
+    class Message {
+        constructor(sender, content, t) {
+            this.sender = sender;
+            this.content = content;
+            this.t = t;
+        }
+
+        build() {
+            let list = document.createElement("li");
+            list.className = "list-group-item list-element col-sm-12"
+            let div = document.createElement("div");
+            let senderName = document.createElement("h3");
+            let tStamp = document.createElement("p");
+            let content = document.createElement("p");
+
+            senderName.innerHTML = this.sender;
+            tStamp.innerHTML = this.t;
+            content.innerHTML = this.content;
+
+            list.append(div);
+            div.append(senderName);
+            div.append(tStamp);
+            div.append(content);
+
+            return list;
+        }
+    }
     window.addEventListener("load", getConversationHistory);
 </script>
 <?php require_once ("template/footer.phtml") ?>
