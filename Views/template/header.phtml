@@ -46,7 +46,6 @@
                         $id = $_SESSION['id'];
                         echo "<a class='dropdown-item' href='account.php?id=$id'>My Account</a>";
                         echo "<a class='dropdown-item' href='watchlist.php?id=$id'>My Watchlist</a>";
-                        echo "<a class='dropdown-item' href='messages.php?id=$id'>Messages</a>";
                         echo "<a class='dropdown-item' href='logout.php'>Logout</a>";
                     } else {
                         echo "<a class=\"dropdown-item\" href=\"#\" data-toggle=\"modal\" role=\"button\" data-target=\"#loginModal\">
@@ -64,7 +63,8 @@
                         </span>
                         </a>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="clearAllNotifications()">Clear all notifications</a>
+                        <a class='dropdown-item' href='messages.php?id=<?php echo $id ?>'>Messages</a>
+                        <a class="dropdown-item" href="#" onclick="clearAllNotifications()">Clear all notifications</a>
 
                     </div>
                 </li>
