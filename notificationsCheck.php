@@ -6,5 +6,5 @@ if (isset($_SESSION['loggedIn'])) {
     $id = $_SESSION['id'];
     $messageData = new MessageData();
     $count = $messageData->getUnopenedMessages($id);
-    echo json_encode($count, true);
+    echo json_encode($count);
 }

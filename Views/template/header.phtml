@@ -56,6 +56,16 @@
                     ?>
                 </div>
             </li>
+            <?php if(isset($_SESSION['loggedIn'])) { ?>
+                <li>
+                    <a class="btn btn-primary" id="badge">
+                        New Messages:
+                        <span class="badge badge-light" id="notification">
+
+                        </span>
+                    </a>
+                </li>
+            <?php } ?>
         </ul>
     </div>
 </nav>
@@ -121,15 +131,18 @@ if (!isset($_SESSION['username'])) {
             return result.text()
         }).then((data) => {
             const count = JSON.parse(data);
-            console.log(count)
+            const notificationBar = document.getElementById("notification")
+            notificationBar.innerHTML = count['count'];
         }).catch((error) => {
             console.log(error)
         })
 
-        setTimeout(getNotifications, 2000)
+        setTimeout(getNotifications, 10000)
     }
 
-    getNotifications()
+    <?php if (isset($_SESSION['loggedIn'])) { ?>
+        getNotifications()
+   <?php } ?>
 </script>
 
 

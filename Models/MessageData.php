@@ -50,7 +50,7 @@ class MessageData
      * @return mixed : The number of unopened messages for a given user
      */
     public function getUnopenedMessages($recipientID) {
-        $sqlQuery = "SELECT COUNT(m_id) FROM Messages
+        $sqlQuery = "SELECT COUNT(m_id) AS count FROM Messages
                      WHERE m_recipientID = :recipientID AND m_opened IS FALSE";
         $statement = $this->_dbHandle->prepare($sqlQuery);
 
