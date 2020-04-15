@@ -11,28 +11,29 @@
         require_once ("template/error.phtml");
     }
 ?>
+<div class="container">
+    <h1 id="pageHeading" class="text-center display-4">Watchlist</h1>
+    <ul class="list-group">
+    <?php
+    foreach ($view->userWatchlist as $post)
+    { ?>
+        <li class="list-group-item list-element col-sm-12">
+            <a href="unsubscribe.php?id=<?php echo $post->getId()?>&from=Watchlist">
+                <i class='fas fa-bookmark icon-lg'></i>
+            </a>
+            <a href="fullpost.php?id=<?php echo $post->getId()?>">
+                <h1 class="list-group-item-heading text-center"><?php echo $post->getTitle() ?>
+                </h1>
+            </a>
+            <a href="account.php?id=<?php echo $post->getPosterID()?>">
+                <h4 class="text-muted text-center"><?php echo $post->getPosterFullname() ?></h4>
+            </a>
+            <p class="text-center lead"><?php echo $post->getContent() ?></p>
+            <h4 class="text-center">Number of Comments: <?php echo $post->getReplyCount() ?></h4>
+        </li>
 
-<h1 id="pageHeading" class="text-center display-4">Watchlist</h1>
-<ul class="list-group">
-<?php
- foreach ($view->userWatchlist as $post)
- { ?>
-     <li class="list-group-item list-element col-sm-12">
-         <a href="unsubscribe.php?id=<?php echo $post->getId()?>&from=Watchlist">
-             <i class='fas fa-bookmark icon-lg'></i>
-         </a>
-         <a href="fullpost.php?id=<?php echo $post->getId()?>">
-             <h1 class="list-group-item-heading text-center"><?php echo $post->getTitle() ?>
-             </h1>
-         </a>
-         <a href="account.php?id=<?php echo $post->getPosterID()?>">
-             <h4 class="text-muted text-center"><?php echo $post->getPosterFullname() ?></h4>
-         </a>
-         <p class="text-center lead"><?php echo $post->getContent() ?></p>
-         <h4 class="text-center">Number of Comments: <?php echo $post->getReplyCount() ?></h4>
-     </li>
-
- <?php }
-?>
-</ul>
+    <?php }
+    ?>
+    </ul>
+</div>
 <?php require_once ("template/footer.phtml"); ?>

@@ -1,33 +1,55 @@
 <?php require_once ("template/header.phtml"); ?>
 
-<h3>Recieved Messages</h3>
-<ul class="list-group">
-    <?php
-        foreach ($view->recievedMessages as $message)
-        { ?>
-            <li class="list-group-item">
-                <h3>From: <?php echo $message->getMessageSenderUsername() ?></h3>
-                <p><?php echo $message->getMessageContent() ?></p>
-            </li>
-          <?php
+<div class="container">
+  <div class="container">
+    <ul id="msg" class="list-group">
+    <ul>
+  </div>
+</div>
+<script>
+    function sendMessage() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "sendmessage.php", true);
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+            }
         }
-    ?>
-</ul>
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        let recipientID = "67";
+        let content = "TEST MESSAGE 2";
+        xhr.send(`id=${recipientID}&content=${content}`);
+    }
+function createLst() {
+  let msgList = document.getElementById('msg');
+    for(let i = 0; i < 10; i++) {
+      msgList.appendChild(new MessageHeader(i, "TEST", "NULL").build());
+    }
+}
+   
+    class MessageHeader {
+      constructor(id, author, avatar) {
+        this.id = id;
+        this.author = author
+        this.avatar = avatar
+      }
 
-<hr>
+      build() {
+        let list = document.createElement("li");
+        let div = document.createElement("div");
+        let name = document.createElement("a");
+        name.innerHTML = this.author;
+        list.className = "list-group-item list-element col-sm-12";
+        name.className = "list-group-item-heading text-center";
+        name.href = `messaging.php?id=${this.id}`
+        list.append(div)
+        div.append(name)
 
-<h3>Sent Messages</h3>
-<ul class="list-group">
-    <?php
-        foreach ($view->sentMessages as $message)
-        { ?>
-            <li class="list-group-item">
-                <h3>To: <?php echo $message->getMessageRecipientUsername() ?></h3>
-                <p><?php echo $message->getMessageContent() ?></p>
-            </li>
-          <?php
-        }
-    ?>
-</ul>
+        return list
+      }
+    }
 
+window.addEventListener("load", createLst);
+</script>
 <?php require_once ("template/footer.phtml"); ?>
+  

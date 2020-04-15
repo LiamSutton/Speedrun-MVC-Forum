@@ -25,6 +25,21 @@ class MessageData
         $this->_dbHandle = $this->_dbInstance->getConnection();
     }
 
+    public function sendMessage($senderID, $recipientID, $content) {
+        $sqlQuery = "INSERT INTO Messages
+                     (m_senderID, m_recipientID, m_content, m_image, m_opened, m_datecreated) 
+                     VALUES (:senderID, :recipientID, :content, NULL, FALSE, NOW())";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+
+        $statement->bindValue(":senderID", $senderID, PDO::PARAM_INT);
+        $statement->bindValue(":recipientID", $recipientID, PDO::PARAM_INT);
+        $statement->bindValue(":content", $content, PDO::PARAM_STR);
+//        $statement->bindValue(":image", $imageURL, PDO::PARAM_STR);
+
+        $statement->execute();
+        $this->_dbInstance->destruct();
+    }
+
     // i know this isnt worth any marks but i built it before i got your email saying you just need to hide contact details
     // feels-bad-man.jpg
     /**

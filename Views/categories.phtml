@@ -9,24 +9,25 @@
         require_once ("template/error.phtml");
     }
 ?>
+<div class="container">
+    <h1 class="text-center display-4 col-sm-12">Categories</h1>
+    <ul class="list-group">
+    <?php
+    foreach ($view->categories as $category)
+    {
+    ?>
+        <li class="list-group-item list-element col-sm-12">
 
-<h1 class="text-center display-4 col-sm-12">Categories</h1>
-<ul class="list-group">
-<?php
-foreach ($view->categories as $category)
-{
- ?>
-    <li class="list-group-item list-element col-sm-12">
+                <a href="posts.php?categoryID=<?php echo $category->getCategoryID()?>&page=1&limit=5&date=1&comment=1&title=">
+                    <h2 class="list-group-item-heading"><?php echo $category->getCategoryName()?></h2>
+                </a>
 
-            <a href="posts.php?categoryID=<?php echo $category->getCategoryID()?>&page=1&limit=5&date=1&comment=1&title=">
-                <h2 class="list-group-item-heading"><?php echo $category->getCategoryName()?></h2>
-            </a>
+                <h5>Current post count: <?php echo $category->getCategoryPostCount()?></h5>
 
-            <h5>Current post count: <?php echo $category->getCategoryPostCount()?></h5>
-
-    </li>
- <?php
-}
-?>
-</ul>
+        </li>
+    <?php
+    }
+    ?>
+    </ul>
+</div>
 <?php require_once ("template/footer.phtml"); ?>
