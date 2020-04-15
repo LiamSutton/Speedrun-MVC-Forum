@@ -46,7 +46,6 @@
                         $id = $_SESSION['id'];
                         echo "<a class='dropdown-item' href='account.php?id=$id'>My Account</a>";
                         echo "<a class='dropdown-item' href='watchlist.php?id=$id'>My Watchlist</a>";
-                        echo "<a class='dropdown-item' href='messages.php?id=$id'>Messages</a>";
                         echo "<a class='dropdown-item' href='logout.php'>Logout</a>";
                     } else {
                         echo "<a class=\"dropdown-item\" href=\"#\" data-toggle=\"modal\" role=\"button\" data-target=\"#loginModal\">
@@ -56,6 +55,20 @@
                     ?>
                 </div>
             </li>
+            <?php if(isset($_SESSION['loggedIn'])) { ?>
+                <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="badge">
+                            New Messages:
+                            <span class="badge badge-light" id="notification">
+                        </span>
+                        </a>
+                    <div class="dropdown-menu">
+                        <a class='dropdown-item' href='messages.php?id=<?php echo $id ?>'>Messages</a>
+                        <a class="dropdown-item" href="#" onclick="clearAllNotifications()">Clear all notifications</a>
+
+                    </div>
+                </li>
+            <?php } ?>
         </ul>
     </div>
 </nav>
@@ -115,5 +128,38 @@ if (!isset($_SESSION['username'])) {
 }
 ?>
 
+<script>
+    function getNotifications() {
+        fetch("notificationsCheck.php").then((result) => {
+            return result.text()
+        }).then((data) => {
+            const count = JSON.parse(data);
+            const notificationBar = document.getElementById("notification")
+            notificationBar.innerHTML = count['count'];
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        setTimeout(getNotifications, 10000)
+    }
+
+    function clearAllNotifications() {
+        // Make a post request to clearNotifications.php
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "clearNotifications.php", true);
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+            }
+        }
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send();
+        getNotifications();
+    }
+
+    <?php if (isset($_SESSION['loggedIn'])) { ?>
+        getNotifications()
+   <?php } ?>
+</script>
 
 
