@@ -29,29 +29,35 @@ function createLst() {
     }).then((data) => {
         console.log(data)
         let res = JSON.parse(data);
-        res.forEach(conversation => lst.append(new Conversation(conversation.id, conversation.username, null).build()))
+        lst.innerHTML = "";
+        res.forEach(conversation => lst.append(new Conversation(conversation.id, conversation.username, conversation.fullname).build()))
     }).catch((error) => {
         console.log(error)
     })
+
+    setTimeout(createLst, 5000);
 }
    
     class Conversation {
-      constructor(id, author, avatar) {
+      constructor(id, author, name) {
         this.id = id;
         this.author = author
-        this.avatar = avatar
+        this.name = name
       }
 
       build() {
         let list = document.createElement("li");
         let div = document.createElement("div");
         let name = document.createElement("a");
+        let fullname = document.createElement("p");
+        fullname.innerHTML = this.name;
         name.innerHTML = this.author;
         list.className = "list-group-item list-element col-sm-12";
         name.className = "list-group-item-heading text-center";
         name.href = `conversation.php?id=${this.id}`
-        list.append(div)
-        div.append(name)
+        list.append(div);
+        div.append(fullname);
+        div.append(name);
 
         return list
       }
