@@ -12,8 +12,6 @@ if (isset($_SESSION['loggedIn']))
 {
     $userID = $_SESSION['id'];
 
-    $view->recievedMessages = $messageData->getRecievedMessages($userID);
-    $view->sentMessages = $messageData->getSentMessages($userID);
 }
 
 require_once ("Views/messages.phtml");
