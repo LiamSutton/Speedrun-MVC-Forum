@@ -2,9 +2,42 @@
 
 <div class="container">
   <div class="container">
+<!--      <a class="dropdown-item" href="#" data-toggle="modal" role="button" data-target="#newMessageButton">-->
+      <input type="button" data-toggle="modal" data-target="#newMessageButton" value="New Message">
     <ul id="msg" class="list-group">
     <ul>
   </div>
+</div>
+
+<div class="modal fade" id="newMessageButton" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalTitle">New Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <input type="text" id="recipientName" class="form-control" placeholder="To">
+                        <textarea class="form-control" id="messageContent" placeholder="Type message here:"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button class="btn btn-outline-primary" data-dismiss="modal" type="button" name="submit" value="submit" onclick="sendMessage()">
+                        Send
+                    </button>
+
+                </div>
+        </div>
+    </div>
 </div>
 <script>
 function createLst() {
@@ -51,6 +84,27 @@ function createLst() {
     }
 
 window.addEventListener("load", createLst);
+
+/**
+ *  This function parses the contents of the messageInput field, makes a POST request to sendMessage.php
+ *  and when the transaction completes, it will refresh the users conversation history
+ */
+function sendMessage() {
+    // TODO: This is soooo fucking jank lmao LIAM REFACTOR THE FUCK OUT OF THIS SHIT
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "startNewConversation.php", true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            console.log(this.responseText)
+        }
+    }
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    let i = document.getElementById("recipientName").value;
+    let content = document.getElementById("messageContent").value;
+    console.log(content)
+    xhr.send(`id=${i}&content=${content}`);
+    createLst()
+}
 </script>
 <?php require_once ("template/footer.phtml"); ?>
   
