@@ -1,0 +1,74 @@
+<?php require_once ("template/header.phtml") ?>
+<div class="container">
+    <div class="container" id="message-container">
+        <ul class="list-group" id="r">
+
+        </ul>
+        <input id="messageInput" type="text" class="form-control" placeholder="Enter message here...">
+        <input type="button" onclick="sendMessage()" placeholder="Send">
+    </div>
+</div>
+
+<script>
+    function getConversationHistory() {
+        let h = document.getElementById("r");
+        fetch("getConversationHistory.php?id=<?php echo $view->other ?>").then((result) => {
+            return result.text();
+        }).then((data) => {
+            let messages = JSON.parse(data);
+            h.innerHTML = ""
+            messages.forEach(message => h.append(new Message(message._messageSenderName, message._messageContent, message._messageDatecreated).build()))
+        }).catch((error) => {
+            console.error(error);
+        })
+    }
+
+    function sendMessage() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "sendmessage.php", true);
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+            }
+        }
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        let recipientID = <?php echo $view->other ?>;
+        let i = document.getElementById("messageInput");
+        let content = i.value
+        console.log(content)
+        xhr.send(`id=${recipientID}&content=${content}`);
+        getConversationHistory()
+        content.innerHTML = "";
+        content.focus()
+    }
+
+    class Message {
+        constructor(sender, content, t) {
+            this.sender = sender;
+            this.content = content;
+            this.t = t;
+        }
+
+        build() {
+            let list = document.createElement("li");
+            list.className = "list-group-item list-element col-sm-12"
+            let div = document.createElement("div");
+            let senderName = document.createElement("h3");
+            let tStamp = document.createElement("p");
+            let content = document.createElement("p");
+
+            senderName.innerHTML = this.sender;
+            tStamp.innerHTML = this.t;
+            content.innerHTML = this.content;
+
+            list.append(div);
+            div.append(senderName);
+            div.append(tStamp);
+            div.append(content);
+
+            return list;
+        }
+    }
+    window.addEventListener("load", getConversationHistory);
+</script>
+<?php require_once ("template/footer.phtml") ?>

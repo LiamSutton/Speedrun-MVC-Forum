@@ -82,6 +82,10 @@ class MessageData
         $this->_dbInstance->destruct();
     }
 
+    /** This function gets a list of all users that the currently logged in user has had conversations with
+     * @param $id: the id of the logged in user
+     * @return array: an associative array of all the messages
+     */
     public function getConversationList($id) {
         $sqlQuery = "SELECT DISTINCT u_id as id, u_username as username, concat(u_firstname, ' ', u_lastname) as fullname FROM Users
                      JOIN Messages M on Users.u_id = M.m_recipientID or Users.u_id = M.m_senderID
@@ -96,5 +100,39 @@ class MessageData
         }
         return $conversations;
 
+    }
+
+    public function getSentMessages($sender, $recipient) {
+        $sqlQuery = "SELECT m_id, m_senderID, m_recipientID, m_content, m_datecreated, concat(A.u_firstname, ' ', A.u_lastname) as 'senderName', concat(B.u_firstname, ' ', B.u_lastname) as 'recipientName' FROM Messages
+                     JOIN Users A on Messages.m_senderID = A.u_id
+                     JOIN Users B on Messages.m_recipientID = B.u_id
+                     WHERE m_senderID = :sender AND m_recipientID = :recipient
+                     ORDER BY m_datecreated";
+        $statement = $this->_dbHandle->prepare($sqlQuery);
+        $statement->bindValue(":sender", $sender, PDO::PARAM_INT);
+        $statement->bindValue(":recipient", $recipient, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        $sent = [];
+        while ($dbRow = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $sent[] = Message::Message($dbRow);
+        }
+        $this->_dbInstance->destruct();
+        return $sent;
+    }
+
+    public function getConversationHistory($user, $other) {
+        $userSent = $this->getSentMessages($user, $other);
+        $otherSent = $this->getSentMessages($other, $user);
+
+        $history = array_merge($userSent, $otherSent);
+
+        usort($history, function($a, $b) {
+           $ad = new DateTime($a->getMessageDatecreated());
+           $bd = new DateTime($b->getMessageDatecreated());
+           return $ad < $bd ? -1 : 1;
+        });
+        return $history;
     }
 }

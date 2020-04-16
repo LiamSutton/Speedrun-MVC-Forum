@@ -4,7 +4,7 @@
 /**
  * Class Message
  */
-class Message
+class Message implements JsonSerializable
 {
     /**
      * @var
@@ -24,7 +24,7 @@ class Message
     /**
      * @var
      */
-    protected $_messageID, $_messageSenderID, $_messageRecipientID, $_messageContent, $_messageSenderUsername, $_messageRecipientUsername;
+    protected $_messageID, $_messageSenderID, $_messageRecipientID, $_messageContent, $_messageDatecreated, $_messageSenderName, $_messageRecipientName;
 
     /**
      * Message constructor.
@@ -46,8 +46,9 @@ class Message
         $instance->_messageSenderID = $dbRow['m_senderID'];
         $instance->_messageRecipientID = $dbRow['m_recipientID'];
         $instance->_messageContent = $dbRow['m_content'];
-        $instance->_messageSenderUsername = $dbRow['sender'];
-        $instance->_messageRecipientUsername = $dbRow['recipient'];
+        $instance->_messageDatecreated = $dbRow['m_datecreated'];
+        $instance->_messageSenderName = $dbRow['senderName'];
+        $instance->_messageRecipientName = $dbRow['recipientName'];
 
         return $instance;
     }
@@ -84,19 +85,23 @@ class Message
         return $this->_messageContent;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMessageSenderUsername()
-    {
-        return $this->_messageSenderUsername;
+    public function getMessageDatecreated() {
+        return $this->_messageDatecreated;
+    }
+
+    public function getMessageSenderName() {
+        return $this->_messageSenderName;
+    }
+
+    public function getMessageRecipientName() {
+        return $this->_messageRecipientName;
     }
 
     /**
-     * @return mixed
+     * @inheritDoc
      */
-    public function getMessageRecipientUsername()
+    public function jsonSerialize()
     {
-        return $this->_messageRecipientUsername;
+        return get_object_vars($this);
     }
 }

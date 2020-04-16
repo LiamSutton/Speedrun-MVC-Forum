@@ -5,6 +5,5 @@ session_start();
     $senderID = $_SESSION['id'];
     $recipientID = htmlentities($_POST['id']);
     $content = htmlentities($_POST['content']);
-
     $messageData->sendMessage($senderID, $recipientID, $content);
 
