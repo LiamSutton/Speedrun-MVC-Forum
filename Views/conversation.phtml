@@ -40,8 +40,8 @@
         console.log(content)
         xhr.send(`id=${recipientID}&content=${content}`);
         getConversationHistory()
-        content.innerHTML = "";
-        content.focus()
+        i.value = ""
+        i.focus()
     }
 
     class Message {
