@@ -5,7 +5,7 @@
 
         </ul>
         <input id="messageInput" type="text" class="form-control" placeholder="Enter message here...">
-        <input type="button" onclick="sendMessage()" placeholder="Send">
+        <input type="button" onclick="sendMessage()" value="Send">
     </div>
 </div>
 
@@ -21,6 +21,8 @@
         }).catch((error) => {
             console.error(error);
         })
+
+        setTimeout(getConversationHistory, 2000)
     }
 
     function sendMessage() {
