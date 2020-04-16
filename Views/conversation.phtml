@@ -4,8 +4,8 @@
         <ul class="list-group" id="r">
 
         </ul>
-        <input id="messageInput" type="text" class="form-control" placeholder="Enter message here...">
-        <input type="button" onclick="sendMessage()" value="Send">
+        <input id="messageInput" type="text" class="form-control" placeholder="Enter message here..." onkeyup="checkMinLength()">
+        <input id="messageSendButton" type="button" onclick="sendMessage()" value="Send" disabled="true">
     </div>
 </div>
 
@@ -24,12 +24,25 @@
 
         setTimeout(getConversationHistory, 2000)
     }
+    /**
+     * This function will enable / disable the send message button depending on the length of the message input field
+     */
+    function checkMinLength() {
+        let btn = document.getElementById('messageSendButton')
+        let txt = document.getElementById('messageInput')
+        // TODO: disable the button if the input only contains whitespace
+        btn.disabled = txt.value.length <= 0
+    }
 
+    /**
+     *  This function parses the contents of the messageInput field, makes a POST request to sendMessage.php
+     *  and when the transaction completes, it will refresh the users conversation history
+     */
     function sendMessage() {
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "sendMessage.php", true);
         xhr.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState === 4 && this.status === 200) {
                 console.log(this.responseText)
             }
         }
@@ -42,6 +55,7 @@
         getConversationHistory()
         i.value = ""
         i.focus()
+        checkMinLength()
     }
 
     class Message {
