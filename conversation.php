@@ -9,4 +9,4 @@ $view->other = $other;
 $user = $_SESSION['id'];
 // Get all messages between two users
 
-require_once ("views/conversation.phtml");
+require_once ("Views/conversation.phtml");

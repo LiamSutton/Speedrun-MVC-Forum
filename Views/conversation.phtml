@@ -27,7 +27,7 @@
 
     function sendMessage() {
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "sendmessage.php", true);
+        xhr.open("POST", "sendMessage.php", true);
         xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(this.responseText)
