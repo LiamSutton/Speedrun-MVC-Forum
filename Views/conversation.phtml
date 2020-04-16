@@ -1,9 +1,11 @@
 <?php require_once ("template/header.phtml") ?>
 <div class="container">
-    <div class="container">
+    <div class="container" id="message-container">
         <ul class="list-group" id="r">
 
         </ul>
+        <input id="messageInput" type="text" class="form-control" placeholder="Enter message here...">
+        <input type="button" onclick="sendMessage()" placeholder="Send">
     </div>
 </div>
 
@@ -14,12 +16,30 @@
             return result.text();
         }).then((data) => {
             let messages = JSON.parse(data);
-            console.log(messages[0]);
-
+            h.innerHTML = ""
             messages.forEach(message => h.append(new Message(message._messageSenderName, message._messageContent, message._messageDatecreated).build()))
         }).catch((error) => {
             console.error(error);
         })
+    }
+
+    function sendMessage() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "sendmessage.php", true);
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+            }
+        }
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        let recipientID = <?php echo $view->other ?>;
+        let i = document.getElementById("messageInput");
+        let content = i.value
+        console.log(content)
+        xhr.send(`id=${recipientID}&content=${content}`);
+        getConversationHistory()
+        content.innerHTML = "";
+        content.focus()
     }
 
     class Message {
