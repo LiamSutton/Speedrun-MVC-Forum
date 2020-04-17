@@ -87,9 +87,16 @@ class MessageData
      * @return array: an associative array of all the messages
      */
     public function getConversationList($id) {
-        $sqlQuery = "SELECT DISTINCT u_id as id, u_username as username, concat(u_firstname, ' ', u_lastname) as fullname FROM Users
-                     JOIN Messages M on Users.u_id = M.m_recipientID or Users.u_id = M.m_senderID
-                     WHERE u_id != :id";
+        $sqlQuery = "SELECT DISTINCT u_id as id, u_username as username, CONCAT(u_firstname, ' ', u_lastname) as fullname
+                     FROM Users
+                     JOIN Messages M on Users.u_id = M.m_recipientID
+                     WHERE m_senderID = :id
+                     UNION
+                     SELECT DISTINCT u_id as id, u_username as username, CONCAT(u_firstname, ' ', u_lastname) as fullname
+                     FROM Users
+                     JOIN Messages M on Users.u_id = M.m_senderID
+                     WHERE m_recipientID = :id";
+        
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->bindValue(":id", $id, PDO::PARAM_INT);
         $statement->execute();
