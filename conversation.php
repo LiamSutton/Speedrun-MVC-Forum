@@ -7,6 +7,7 @@ $view->pageTitle = "Conversation";
 $other = $_GET['id'];
 $view->other = $other;
 $user = $_SESSION['id'];
-// Get all messages between two users
 
+$messageData = new MessageData();
+$messageData->openMessages($other, $user);
 require_once ("Views/conversation.phtml");
