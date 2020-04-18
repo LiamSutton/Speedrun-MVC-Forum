@@ -88,14 +88,12 @@ class MessageData
      * @return array: an associative array of all the messages
      */
     public function getConversationList($id) {
-        $sqlQuery = "SELECT DISTINCT u_id as id,
-                u_username as username,
-                concat (u_firstname, ' ', u_lastname) as fullname,
-                (SELECT count(m_id) FROM Messages where m_senderID = u_id AND m_recipientID = :id and m_opened = false) as unopened,
-                (SELECT MAX(m_datecreated) from Messages where m_senderID = u_id and m_recipientID = :id) as lastmsg
-                FROM Users
-                WHERE (SELECT count(m_id) FROM Messages where m_senderID = u_id and m_recipientID = :id) > 0
-                order by unopened desc , lastmsg desc";
+        $sqlQuery = "SELECT distinct u_id as id, u_username as username, concat(u_firstname, ' ', u_lastname) as fullname,    (SELECT MAX(m_datecreated) FROM Messages WHERE (m_senderID = :id AND m_recipientID = u_id) OR (m_senderID = u_id AND m_recipientID = :id)) as lastmsg,
+                (SELECT count(m_id) FROM Messages where m_senderID = u_id AND m_recipientID = :id and m_opened = false) as unopened
+FROM Users
+WHERE u_id IN (SELECT m_recipientID FROM Messages WHERE (m_senderID = u_id AND m_recipientID = :id) OR (m_senderID = :id AND m_recipientID = u_id)) or u_id IN
+      (SELECT m_senderID FROM Messages WHERE (m_senderID = u_id AND m_recipientID = :id) OR (m_senderID = :id AND m_recipientID = u_id))
+order by unopened desc, lastmsg desc";
         
         $statement = $this->_dbHandle->prepare($sqlQuery);
         $statement->bindValue(":id", $id, PDO::PARAM_INT);
