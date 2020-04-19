@@ -50,7 +50,7 @@ function createLst() {
         console.log(data)
         let res = JSON.parse(data);
         lst.innerHTML = "";
-        res.forEach(conversation => lst.append(new Conversation(conversation.id, conversation.username, conversation.fullname).build()))
+        res.forEach(conversation => lst.append(new Conversation(conversation.id, conversation.username, conversation.fullname, conversation.lastmsg, conversation.unopened).build()))
     }).catch((error) => {
         console.log(error)
     })
@@ -59,10 +59,12 @@ function createLst() {
 }
    
     class Conversation {
-      constructor(id, author, name) {
+      constructor(id, author, name, d, u) {
         this.id = id;
         this.author = author
-        this.name = name
+        this.name = name;
+        this.d = d;
+        this.u = u
       }
 
       build() {
@@ -70,14 +72,21 @@ function createLst() {
         let div = document.createElement("div");
         let name = document.createElement("a");
         let fullname = document.createElement("p");
+        let stamp = document.createElement("p");
+        let unopened = document.createElement("p");
+
         fullname.innerHTML = this.name;
         name.innerHTML = this.author;
+        stamp.innerHTML = this.d;
+        unopened.innerHTML = this.u
         list.className = "list-group-item list-element col-sm-12";
         name.className = "list-group-item-heading text-center";
         name.href = `conversation.php?id=${this.id}`
         list.append(div);
         div.append(fullname);
         div.append(name);
+        div.append(stamp)
+          div.append(unopened)
 
         return list
       }
