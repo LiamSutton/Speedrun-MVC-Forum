@@ -3,19 +3,19 @@
  * This function will enable / disable the send message button depending on the length of the message input field
  */
 function checkMinLength() {
-    let btn = document.getElementById('messageSendButton');
-    let txt = document.getElementById('messageInput');
-    btn.disabled = txt.value.trim().length <= 0;
+    let sendButton = document.getElementById('messageSendButton');
+    let messageInput = document.getElementById('messageInput');
+    sendButton.disabled = messageInput.value.trim().length <= 0;
 }
 
 function getConversationHistory(otherID) {
-    let h = document.getElementById("r");
+    let messagesList = document.getElementById("message-list");
     fetch(`getConversationHistory.php?id=${otherID}`).then((result) => {
         return result.text();
     }).then((data) => {
         let messages = JSON.parse(data);
-        h.innerHTML = ""
-        messages.forEach(message => h.append(new Message(message._messageSenderName, message._messageContent, message._messageDatecreated).build()))
+        messagesList.innerHTML = ""
+        messages.forEach(message => messagesList.append(new Message(message._messageSenderName, message._messageContent, message._messageDatecreated).build()))
     }).catch((error) => {
         console.error(error);
     })
@@ -28,7 +28,7 @@ function getConversationHistory(otherID) {
  *  and when the transaction completes, it will refresh the users conversation history
  */
 function sendMessage(recipientID) {
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open("POST", "sendMessage.php", true);
     xhr.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
@@ -36,13 +36,12 @@ function sendMessage(recipientID) {
         }
     }
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    let i = document.getElementById("messageInput");
-    let content = i.value
-    console.log(content)
+    let messageInput = document.getElementById("messageInput");
+    let content = messageInput.value
     xhr.send(`id=${recipientID}&content=${content}`);
     getConversationHistory(other)
-    i.value = ""
-    i.focus()
+    messageInput.value = ""
+    messageInput.focus()
     checkMinLength()
 }
 

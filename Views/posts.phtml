@@ -1,91 +1,4 @@
-<script>
-    let page = Number(<?php echo $view->currentPage?>);
-    let pageCount = Number(<?php echo $view->pageCount?>);
-    let categoryID = Number(<?php echo $view->currentCategory?>);
-    let limit = Number(<?php echo $view->limit?>);
-    let dateOrder = Number(<?php echo $view->dateOrder?>);
-    let title = "<?php echo $view->title?>";
-    let comment = <?php echo $view->commentOrder?>;
-
-    function getNextPosts() {
-        page++;
-        fetch(`getNextPosts.php?categoryID=${categoryID}&page=${page}&limit=${limit}&date=${dateOrder}&comment=${comment}&title=${title}`).then((result) => {
-            return result.text()
-        }).then((data) => {
-            const posts = JSON.parse(data);
-            let postList = document.getElementById('postList');
-            if (posts.length === 0) {
-                let alert = document.createElement("div");
-                alert.setAttribute("role", "alert");
-                alert.className = "alert alert-danger";
-                alert.innerHTML = "Theres nothing more UwU";
-                postList.appendChild(alert)
-            }
-                posts.forEach((post) => {
-                    postList.appendChild(new Post(post._id, post._title, post._posterID, post._posterFullName, post._content, post._replyCount).build());
-                });
-
-        }).catch((error) => {
-            console.error(error)
-        })
-    }
-
-    document.addEventListener('scroll', function (event) {
-        if (document.body.scrollHeight === (document.body.scrollTop + window.innerHeight)) {
-            if (page <= pageCount) {
-                getNextPosts();
-            }
-        }
-    });
-
-    class Post {
-        constructor(id, title, posterID, posterFullName, content, replyCount) {
-            this.id = id;
-            this.title = title;
-            this.posterID = posterID;
-            this.posterFullName = posterFullName;
-            this.content = content;
-            this.replyCount = replyCount;
-        }
-
-        build() {
-            let list = document.createElement("li");
-            let div = document.createElement("div");
-            let postLink = document.createElement("a");
-            let title = document.createElement("h1");
-            let accountLink = document.createElement("a");
-            let posterName = document.createElement("h4");
-            let content = document.createElement("h4");
-            let commentCount = document.createElement("h5");
-
-
-
-            list.className = "list-group-item list-element col-sm-12";
-            title.className = "list-group-item-heading text-center";
-            posterName.className = "text-muted text-center";
-            content .className = "lead text-center";
-            commentCount.className = "text-center";
-
-            postLink.href = `fullpost.php?id=${this.id}`;
-            accountLink.href = `account.php?id=${this.posterID}`;
-            title.innerHTML = this.title;
-            posterName.innerHTML = this.posterFullName;
-            content.innerHTML = this.content;
-            commentCount.innerHTML = `Number of Comments: ${this.replyCount}`;
-
-            list.append(div);
-            div.appendChild(postLink);
-            postLink.appendChild(title);
-            div.appendChild(accountLink);
-            accountLink.appendChild(posterName);
-            div.appendChild(content);
-            div.appendChild(commentCount);
-
-            return list;
-        }
-    }
-</script>
-
+<script type="text/javascript" src="../js/scrollingPosts.js"></script>
 <?php require_once("template/header.phtml"); ?>
 
 <?php
@@ -100,7 +13,7 @@ if (isset($view->message))
 }
 ?>
 <div class="container">
-    <h1  id="pageHeading" class="text-center display-4 col-sm-12><?php echo $view->categoryName ?></h1>
+    <h1  id="pageHeading" class="text-center display-4 col-sm-12"><?php echo $view->categoryName ?></h1>
     <?php require_once("template/searchbar.phtml"); ?>
 
     <?php if(isset($_SESSION['loggedIn']))
@@ -127,5 +40,22 @@ if (isset($view->message))
         ?>
     </ul>
 </div>
+<script>
+    let page = Number(<?php echo $view->currentPage?>);
+    let pageCount = Number(<?php echo $view->pageCount?>);
+    let categoryID = Number(<?php echo $view->currentCategory?>);
+    let limit = Number(<?php echo $view->limit?>);
+    let dateOrder = Number(<?php echo $view->dateOrder?>);
+    let title = "<?php echo $view->title?>";
+    let comment = <?php echo $view->commentOrder?>;
 
+    document.addEventListener('scroll', () => {
+        if (document.body.scrollHeight === (document.body.scrollTop + window.innerHeight)) {
+            if (page <= pageCount) {
+                getNextPosts(categoryID, page, limit, dateOrder, comment, title);
+                page++
+            }
+        }
+    });
+</script>
 <?php require_once("template/footer.phtml"); ?>
