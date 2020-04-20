@@ -1,10 +1,9 @@
 <?php require_once ("template/header.phtml"); ?>
-
+<script type="text/javascript" src="../js/conversations.js"></script>
 <div class="container">
   <div class="container">
-<!--      <a class="dropdown-item" href="#" data-toggle="modal" role="button" data-target="#newMessageButton">-->
       <input type="button" data-toggle="modal" data-target="#newMessageButton" value="New Message">
-    <ul id="msg" class="list-group">
+    <ul id="conversations" class="list-group">
     <ul>
   </div>
 </div>
@@ -40,67 +39,17 @@
     </div>
 </div>
 <script>
-function createLst() {
-        const id = "<?php echo $_SESSION['id'] ?>";
-        const lst = document.getElementById('msg');
-    // Make a call to loadInbox.php and retrieve a list of "conversations" ordered by Newest -> Oldest.
-    fetch(`getConversations.php?id=${id}`).then((result) => {
-        return result.text()
-    }).then((data) => {
-        console.log(data)
-        let res = JSON.parse(data);
-        lst.innerHTML = "";
-        res.forEach(conversation => lst.append(new Conversation(conversation.id, conversation.username, conversation.fullname, conversation.lastmsg, conversation.unopened).build()))
-    }).catch((error) => {
-        console.log(error)
-    })
 
-    setTimeout(createLst, 5000);
-}
-   
-    class Conversation {
-      constructor(id, author, name, d, u) {
-        this.id = id;
-        this.author = author
-        this.name = name;
-        this.d = d;
-        this.u = u
-      }
 
-      build() {
-        let list = document.createElement("li");
-        let div = document.createElement("div");
-        let name = document.createElement("a");
-        let fullname = document.createElement("p");
-        let stamp = document.createElement("p");
-        let unopened = document.createElement("p");
-
-        fullname.innerHTML = this.name;
-        name.innerHTML = this.author;
-        stamp.innerHTML = this.d;
-        unopened.innerHTML = this.u
-        list.className = "list-group-item list-element col-sm-12";
-        name.className = "list-group-item-heading text-center";
-        name.href = `conversation.php?id=${this.id}`
-        list.append(div);
-        div.append(fullname);
-        div.append(name);
-        div.append(stamp)
-          div.append(unopened)
-
-        return list
-      }
-    }
-
-window.addEventListener("load", createLst);
+window.addEventListener("load", getAllConversations);
 
 /**
  *  This function parses the contents of the messageInput field, makes a POST request to sendMessage.php
  *  and when the transaction completes, it will refresh the users conversation history
  */
-function sendMessage() {
+async function sendMessage() {
     // TODO: This is soooo fucking jank lmao LIAM REFACTOR THE FUCK OUT OF THIS SHIT
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open("POST", "startNewConversation.php", true);
     xhr.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
@@ -112,8 +61,9 @@ function sendMessage() {
     let content = document.getElementById("messageContent").value;
     console.log(content)
     xhr.send(`id=${i}&content=${content}`);
-    createLst()
+    await getAllConversations()
 }
+
 </script>
 <?php require_once ("template/footer.phtml"); ?>
   
