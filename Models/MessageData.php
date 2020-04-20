@@ -121,7 +121,7 @@ order by unopened desc, lastmsg desc";
     }
 
     public function getSentMessages($sender, $recipient) {
-        $sqlQuery = "SELECT m_id, m_senderID, m_recipientID, m_content, m_datecreated, concat(A.u_firstname, ' ', A.u_lastname) as 'senderName', concat(B.u_firstname, ' ', B.u_lastname) as 'recipientName' FROM Messages
+        $sqlQuery = "SELECT m_id, m_senderID, m_recipientID, m_content, m_datecreated, concat(A.u_firstname, ' ', A.u_lastname) as 'senderName', concat(B.u_firstname, ' ', B.u_lastname) as 'recipientName', m_image FROM Messages
                      JOIN Users A on Messages.m_senderID = A.u_id
                      JOIN Users B on Messages.m_recipientID = B.u_id
                      WHERE m_senderID = :sender AND m_recipientID = :recipient

@@ -14,8 +14,9 @@ function getConversationHistory(otherID) {
         return result.text();
     }).then((data) => {
         let messages = JSON.parse(data);
+        console.log(messages)
         messagesList.innerHTML = ""
-        messages.forEach(message => messagesList.append(new Message(message._messageSenderName, message._messageContent, message._messageDatecreated).build()))
+        messages.forEach(message => messagesList.append(new Message(message._messageSenderName, message._messageContent, message._messageDatecreated, message._messageImage).build()))
     }).catch((error) => {
         console.error(error);
     })
@@ -52,9 +53,10 @@ function sendMessage(recipientID) {
 }
 
 class Message {
-    constructor(senderName, content, timeSent) {
+    constructor(senderName, content, timeSent, img) {
         this.sender = senderName;
         this.content = content;
+        this.img = img
         this.timeSent = timeSent;
     }
 
@@ -64,17 +66,23 @@ class Message {
         let div = document.createElement("div");
         let senderName = document.createElement("h3");
         let timeSent = document.createElement("p");
+        let img = document.createElement("img");
+        img.className = "img-fluid"
         let content = document.createElement("p");
 
         senderName.innerHTML = this.sender;
         timeSent.innerHTML = this.timeSent;
         content.innerHTML = this.content;
+        if (this.img != null) {
+            img.src = `Images/${this.img}`
+        }
 
         listElement.append(div);
         div.append(senderName);
         div.append(timeSent);
         div.append(content);
-
+        div.append(content);
+        div.append(img);
         return listElement;
     }
 }
