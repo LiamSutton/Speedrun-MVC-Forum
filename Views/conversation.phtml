@@ -1,9 +1,10 @@
 <?php require_once ("template/header.phtml") ?>
 <div class="container">
     <div class="container" id="message-container">
-        <ul class="list-group" id="message-list">
+            <ul class="list-group" id="message-list">
 
-        </ul>
+            </ul>
+        </div>
             <input id="messageInput" type="text" class="form-control" placeholder="Enter message here..." onkeyup="checkMinLength()" required>
             <input id="imageInput" name="img" type="file" accept="image/*" class="form-control">
             <input id="messageSendButton" type="button" onclick="sendMessage(<?php echo $view->other ?>)" value="Send" disabled="true">

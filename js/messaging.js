@@ -67,6 +67,7 @@ class Message {
         let senderName = document.createElement("h3");
         let timeSent = document.createElement("p");
         let img = document.createElement("img");
+        img.className = "img-fluid"
         let content = document.createElement("p");
 
         senderName.innerHTML = this.sender;
