@@ -47,6 +47,7 @@ function sendMessage(recipientID) {
 
     xhr.send(formData);
     getConversationHistory(other)
+    imageInput.value = ""
     messageInput.value = ""
     messageInput.focus()
     checkMinLength()

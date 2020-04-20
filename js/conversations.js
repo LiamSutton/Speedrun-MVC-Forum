@@ -37,7 +37,7 @@ class Conversation {
         fullname.innerHTML = this.name;
         name.innerHTML = this.author;
         stamp.innerHTML = this.d;
-        unopened.innerHTML = this.u
+        unopened.innerHTML = `Unopened Messages: ${this.u}`
         list.className = "list-group-item list-element col-sm-12";
         name.className = "list-group-item-heading text-center";
         name.href = `conversation.php?id=${this.id}`
