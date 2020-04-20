@@ -20,7 +20,6 @@ class FileUpload
      */
     public static function uploadImage($image)
     {
-        $postImage = $_FILES[$image]['name'];
         $dir = "images/";
         $uploadFile = $dir .basename($_FILES[$image]['name']);
 

@@ -4,8 +4,9 @@
         <ul class="list-group" id="message-list">
 
         </ul>
-        <input id="messageInput" type="text" class="form-control" placeholder="Enter message here..." onkeyup="checkMinLength()">
-        <input id="messageSendButton" type="button" onclick="sendMessage(<?php echo $view->other ?>)" value="Send" disabled="true">
+            <input id="messageInput" type="text" class="form-control" placeholder="Enter message here..." onkeyup="checkMinLength()" required>
+            <input id="imageInput" name="img" type="file" accept="image/*" class="form-control">
+            <input id="messageSendButton" type="button" onclick="sendMessage(<?php echo $view->other ?>)" value="Send" disabled="true">
     </div>
 </div>
 <script>

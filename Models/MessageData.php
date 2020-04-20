@@ -29,17 +29,18 @@ class MessageData
      * @param $senderID : The ID of the user who sent the message
      * @param $recipientID : The ID of the user the message is for
      * @param $content : The text content contained in the body of the message
+     * @param $image : The URL of the image sent with the message (optional)
      */
-    public function sendMessage($senderID, $recipientID, $content) {
+    public function sendMessage($senderID, $recipientID, $content, $image) {
         $sqlQuery = "INSERT INTO Messages
                      (m_senderID, m_recipientID, m_content, m_image, m_opened, m_datecreated) 
-                     VALUES (:senderID, :recipientID, :content, NULL, FALSE, NOW())";
+                     VALUES (:senderID, :recipientID, :content, :image, FALSE, NOW())";
         $statement = $this->_dbHandle->prepare($sqlQuery);
 
         $statement->bindValue(":senderID", $senderID, PDO::PARAM_INT);
         $statement->bindValue(":recipientID", $recipientID, PDO::PARAM_INT);
         $statement->bindValue(":content", $content, PDO::PARAM_STR);
-//        $statement->bindValue(":image", $imageURL, PDO::PARAM_STR);
+        $statement->bindValue(":image", $image, PDO::PARAM_STR);
 
         $statement->execute();
         $this->_dbInstance->destruct();

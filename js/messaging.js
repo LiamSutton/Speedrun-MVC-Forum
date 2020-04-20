@@ -35,10 +35,16 @@ function sendMessage(recipientID) {
             console.log(this.responseText)
         }
     }
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    let formData = new FormData();
     let messageInput = document.getElementById("messageInput");
-    let content = messageInput.value
-    xhr.send(`id=${recipientID}&content=${content}`);
+    let content = messageInput.value;
+    let imageInput = document.getElementById("imageInput")
+    let imageValue = imageInput.files[0];
+    formData.append("content", content);
+    formData.append("id", other);
+    formData.append("img", imageValue)
+
+    xhr.send(formData);
     getConversationHistory(other)
     messageInput.value = ""
     messageInput.focus()
