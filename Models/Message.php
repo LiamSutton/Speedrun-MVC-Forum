@@ -24,7 +24,7 @@ class Message implements JsonSerializable
     /**
      * @var
      */
-    protected $_messageID, $_messageSenderID, $_messageRecipientID, $_messageContent, $_messageDatecreated, $_messageSenderName, $_messageRecipientName;
+    protected $_messageID, $_messageSenderID, $_messageRecipientID, $_messageContent, $_messageDatecreated, $_messageSenderName, $_messageRecipientName, $_messageImage;
 
     /**
      * Message constructor.
@@ -49,6 +49,7 @@ class Message implements JsonSerializable
         $instance->_messageDatecreated = $dbRow['m_datecreated'];
         $instance->_messageSenderName = $dbRow['senderName'];
         $instance->_messageRecipientName = $dbRow['recipientName'];
+        $instance->_messageImage = $dbRow['m_image'];
 
         return $instance;
     }
@@ -97,6 +98,13 @@ class Message implements JsonSerializable
         return $this->_messageRecipientName;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getMessageImage()
+    {
+        return $this->_messageImage;
+    }
     /**
      * @inheritDoc
      */
