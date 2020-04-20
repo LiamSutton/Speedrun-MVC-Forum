@@ -38,7 +38,7 @@ function sendMessage(recipientID) {
     }
     let formData = new FormData();
     let messageInput = document.getElementById("messageInput");
-    let content = messageInput.value;
+    let content = stripHTML(messageInput.value);
     let imageInput = document.getElementById("imageInput")
     let imageValue = imageInput.files[0];
     formData.append("content", content);
@@ -86,4 +86,9 @@ class Message {
         return listElement;
     }
 }
+
+function stripHTML(html)
+{ return html.replace(/(<([^>]+)>)/ig,"");
+}
+
 window.addEventListener("load", getConversationHistory.bind(null, other));

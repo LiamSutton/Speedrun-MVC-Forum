@@ -50,3 +50,7 @@ class Conversation {
         return list
     }
 }
+
+function stripHTML(html)
+{ return html.replace(/(<([^>]+)>)/ig,"");
+}

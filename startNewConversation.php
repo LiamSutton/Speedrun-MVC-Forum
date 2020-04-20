@@ -11,4 +11,4 @@ $recipientUsername = $_POST['id'];
 $sender = $_SESSION['id'];
 $recipient = $userData->getUser($recipientUsername);
 $content = $_POST['content'];
-$messageData->sendMessage($sender, $recipient->getId(), $content);
+$messageData->sendMessage($sender, $recipient->getId(), $content, null);
