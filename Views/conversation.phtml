@@ -4,10 +4,10 @@
             <ul class="list-group" id="message-list">
 
             </ul>
-        </div>
-            <input id="messageInput" type="text" class="form-control" placeholder="Enter message here..." onkeyup="checkMinLength()" required>
-            <input id="imageInput" name="img" type="file" accept="image/*" class="form-control">
-            <input id="messageSendButton" type="button" onclick="sendMessage(<?php echo $view->other ?>)" value="Send" disabled="true">
+
+        <input id="imageInput" name="img" type="file" accept="image/*" class="form-group-file col-sm-12">
+            <input id="messageInput" type="text" class="form-control col-sm-12 col-md-8 float-left" placeholder="Enter message here..." onkeyup="checkMinLength()" required>
+            <input id="messageSendButton" class="form-control col-sm-12 col-md-3 btn-outline-primary" type="button" onclick="sendMessage(<?php echo $view->other ?>)" value="Send" disabled="true">
     </div>
 </div>
 <script>

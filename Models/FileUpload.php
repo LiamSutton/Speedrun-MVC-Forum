@@ -20,7 +20,7 @@ class FileUpload
      */
     public static function uploadImage($image)
     {
-        $dir = "images/";
+        $dir = "Images/";
         $uploadFile = $dir .basename($_FILES[$image]['name']);
 
         if (move_uploaded_file($_FILES[$image]['tmp_name'], $uploadFile))

@@ -2,9 +2,12 @@
 <script type="text/javascript" src="../js/conversations.js"></script>
 <div class="container">
   <div class="container">
-      <input type="button" data-toggle="modal" data-target="#newMessageButton" value="New Message">
+      <div>
+      <input type="button" id=createPostButton class="btn btn-outline-primary col-sm-12" data-toggle="modal" data-target="#newMessageButton" value="New Message">
+      </div>
     <ul id="conversations" class="list-group">
     <ul>
+
   </div>
 </div>
 
@@ -48,7 +51,7 @@ window.addEventListener("load", getAllConversations);
  *  and when the transaction completes, it will refresh the users conversation history
  */
 async function sendMessage() {
-    // TODO: This is soooo fucking jank lmao LIAM REFACTOR THE FUCK OUT OF THIS SHIT
+    // TODO: This is soooo janky, must be a better way
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "startNewConversation.php", true);
     xhr.onreadystatechange = function() {
